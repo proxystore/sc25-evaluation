@@ -1,0 +1,148 @@
+[build-system]
+requires = ["setuptools>=64.0", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bench"
+version = "0.1.0"
+authors = [
+    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+    {name = "Globus Labs"},
+]
+maintainers = [
+    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+]
+description = "SC25 agents paper benchmarks."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    "aeris@git+https://github.com/proxystore/aeris#egg=main",
+    "dask[distributed]==2025.2.0",
+    "parsl==2025.03.03",
+    "proxystore==0.8.0",
+    "pydantic>=2",
+    "ray==2.43.0",
+    "typing-extensions>=4.3.0 ; python_version<'3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "pre-commit",
+    "ruff>=0.2.0",
+]
+
+[tool.codespell]
+skip = """
+.git,
+.github,
+__pycache__,
+build,
+dist,
+.*egg-info
+"""
+
+[tool.mypy]
+python_version = "3.12"
+plugins = [
+    "mypy.plugins.proper_plugin",
+    "pydantic.mypy",
+]
+check_untyped_defs = true
+disable_error_code = "import-untyped"
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.ruff]
+line-length = 79
+target-version = "py310"
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "single"
+
+[tool.ruff.lint]
+# See all rules here: https://beta.ruff.rs/docs/rules
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    # mccabe
+    "C90",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # flake8-2020
+    "YTT",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-commas
+    "COM",
+    # flake8-comprehensions
+    "C4",
+    # flake8-implicit-str-concat
+    "ISC",
+    # flake8-pytest-style
+    "PT",
+    # flake8-quotes
+    "Q",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # PyLint
+    "PL",
+    # ruff-specific
+    "RUF",
+]
+extend-ignore = [
+    # Allow builtin module shadowing.
+    "A005",
+    # Allow nested with statements.
+    "SIM117",
+    # Too many arguments in function definition.
+    "PLR0913",
+]
+
+[tool.ruff.lint.flake8-pytest-style]
+parametrize-values-type = "tuple"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "double"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+known-first-party = ["aeris", "test", "testing"]
+order-by-type = false
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"*/__init__.py" = ["F401"]
+"tests/conftest.py" = ["F401"]
+"*/*_test.py" = ["D10"]
+"examples/*" = ["D"]
+"testing/*" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.setuptools.packages.find]
+exclude = ["tests*", "testing*"]
+namespaces = false
