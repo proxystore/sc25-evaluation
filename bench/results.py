@@ -115,6 +115,7 @@ class CSVResultLogger(Generic[DTYPE_contra]):
 
         make_parent_dirs(filepath)
         self.f = open(filepath, 'a', newline='')  # noqa: SIM115
+        self.filepath = filepath
         self.writer = csv.DictWriter(self.f, fieldnames=fields)
         if not has_headers:
             self.writer.writeheader()

@@ -29,7 +29,7 @@ dependencies = [
     "proxystore==0.8.0",
     "pydantic>=2",
     "ray==2.43.0",
-    "typing-extensions>=4.3.0 ; python_version<'3.11'",
+    "typing-extensions",
 ]
 
 [project.optional-dependencies]

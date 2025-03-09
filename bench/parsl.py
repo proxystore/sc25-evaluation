@@ -22,3 +22,6 @@ def get_htex_local_config(
         run_dir=run_dir,
         initialize_logging=False,
     )
+
+
+PARSL_CONFIGS = {'htex-local': get_htex_local_config}
