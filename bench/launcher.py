@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import json
 import os
 import sys
 from typing import Any
@@ -90,6 +91,7 @@ class DaskConfig:
         self,
         *,
         scheduler: str | None = None,
+        shutdown: bool = False,
         workers: int | None = None,
     ) -> None:
         self.scheduler = scheduler
@@ -99,11 +101,24 @@ class DaskConfig:
     def from_args(cls, args: dict[str, Any], run_dir: str) -> Self:
         return cls(
             scheduler=args['dask_scheduler'],
+            shutdown=args['dask_shutdown'],
             workers=args['workers_per_node'],
         )
 
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[DaskClient]:
+        if self.scheduler is not None:
+            try:
+                # See if the scheduler is a filepath
+                with open(fname, 'r') as f:
+                    scheduler_config = json.load(f)
+                    scheduler = scheduler_config['address']
+            except OSError:
+                # Otherwise its an address
+                scheduler = self.scheduler
+        else:
+            scheduler = None
+
         client = DaskClient(
             address=self.scheduler,
             dashboard_address=None,
@@ -113,7 +128,7 @@ class DaskConfig:
         try:
             yield client
         finally:
-            if self.scheduler is None:
+            if self.scheduler is None or self.shutdown:
                 client.shutdown()
             client.close()
 

@@ -97,7 +97,11 @@ def add_dask_parser_group(
         metavar='ADDR',
         help='dask scheduler address (default uses LocalCluster)',
     )
-
+    group.add_argument(
+        '--dask-shutdown',
+        action='store_true',
+        help='shutdown the connected scheduler and workers',
+    )
 
 def add_ray_parser_group(
     parser: argparse.ArgumentParser,
