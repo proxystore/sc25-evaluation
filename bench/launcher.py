@@ -29,7 +29,7 @@ from parsl.config import Config as ParslConfig
 from aeris.exchange.redis import RedisExchange
 from aeris.launcher.executor import ExecutorLauncher
 from aeris.manager import Manager
-from bench.parsl import get_htex_local_config
+from bench.parsl import PARSL_CONFIGS
 
 LauncherT_co = TypeVar('LauncherT_co', covariant=True)
 
@@ -62,13 +62,15 @@ class AerisConfig:
         run_dir: str,
     ) -> Self:
         parsl_config = args['parsl_config']
-        if parsl_config == 'htex-local':
-            config = get_htex_local_config(
+        try:
+            config = PARSL_CONFIGS[parsl_config](
                 os.path.join(run_dir, 'parsl'),
                 workers_per_node=args['workers_per_node'],
             )
-        else:
-            raise TypeError(f'Unknown parsl config type "{parsl_config}".')
+        except KeyError as e:
+            raise TypeError(
+                f'Unknown parsl config type "{parsl_config}".'
+            ) from e
 
         return cls(
             redis_host=args['redis_host'],
@@ -95,6 +97,7 @@ class DaskConfig:
         workers: int | None = None,
     ) -> None:
         self.scheduler = scheduler
+        self.shutdown = shutdown
         self.workers = workers
 
     @classmethod
@@ -110,21 +113,22 @@ class DaskConfig:
         if self.scheduler is not None:
             try:
                 # See if the scheduler is a filepath
-                with open(fname, 'r') as f:
+                with open(self.scheduler, 'r') as f:
                     scheduler_config = json.load(f)
                     scheduler = scheduler_config['address']
             except OSError:
                 # Otherwise its an address
                 scheduler = self.scheduler
+            kwargs = {}
         else:
             scheduler = None
+            kwargs = {
+                'dashboard_address': None,
+                'worker_dashboard_address': None,
+                'n_workers': self.workers,
+            }
 
-        client = DaskClient(
-            address=self.scheduler,
-            dashboard_address=None,
-            worker_dashboard_address=None,
-            n_workers=self.workers,
-        )
+        client = DaskClient(address=scheduler, **kwargs)
         try:
             yield client
         finally:
@@ -161,7 +165,11 @@ class RayConfig:
 
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[RayClient]:
-        ray.init(address=self.address)
+        ray.init(
+            address=self.address,
+            configure_logging=False,
+            log_to_driver=False,
+        )
         try:
             yield RayClient()
         finally:

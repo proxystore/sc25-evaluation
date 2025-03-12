@@ -5,7 +5,7 @@ from parsl.addresses import address_by_hostname
 from parsl.config import Config
 from parsl.executors import HighThroughputExecutor
 from parsl.providers import LocalProvider
-from parsl.launcher import MpiExecLauncher
+from parsl.launchers import MpiExecLauncher
 
 
 def get_htex_local_config(

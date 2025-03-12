@@ -2,10 +2,10 @@
 
 # start_dask_aurora.sh
 # Usage: 
-# mpiexec -n NNODES * NUM_WORKERS_PER_NODE --ppn NUM_WORKERS_PER_NODE ./start_dask_aurora.sh WORKER_TYPE NUM_WORKERS_PER_NODE
+# mpiexec -n NNODES --ppn 1 ./start_dask_aurora.sh WORKER_TYPE NUM_WORKERS_PER_NODE
 # Examples on two nodes:
-# mpiexec -n 12 --ppn 6 ./scripts/start_dask_aurora.sh gpu 6
-# mpiexec -n 208 --ppn 104 ./scripts/start_dask_aurora.sh cpu 104
+# mpiexec -n 2 --ppn 1 ./scripts/start_dask_aurora.sh gpu 6
+# mpiexec -n 2 --ppn 1 ./scripts/start_dask_aurora.sh cpu 104
 
 WORKER_TYPE=$1
 NUM_WORKERS_PER_NODE=$2
@@ -21,26 +21,32 @@ fi
 NTHREADS=$(( 208 / NUM_WORKERS_PER_NODE ))  # 208 / 12 ≈ 17
 # Memory limit per worker (1100GB RAM per node divided by num workers)
 MEMORY_PER_WORKER=$(( 1100 / NUM_WORKERS_PER_NODE ))GB  # 1100GB / 12 ≈ 91GB
-LOCAL_DIRECTORY=~/dask-local-directory
+export DASK_LOCAL_DIRECTORY="$PWD/dask-local-directory"
 DASK_SCHEDULER_PORT=${DASK_SCHEDULER_PORT:-8786}
 
 # Start Dask scheduler on rank 0
 if [ $PALS_RANKID = 0 ]; then
     # Purge Dask worker, log directories and config directories
-    rm -rf ${LOCAL_DIRECTORY}/* /tmp/dask-workers/*  ~/.config/dask
-    mkdir -p ${LOCAL_DIRECTORY}/logs /tmp/dask-workers
+    rm -rf ${DASK_LOCAL_DIRECTORY}/* /tmp/dask-workers/*  ~/.config/dask
+    mkdir -p ${DASK_LOCAL_DIRECTORY}/logs /tmp/dask-workers
     # Setup scheduler
-    nohup dask scheduler --port ${DASK_SCHEDULER_PORT} --scheduler-file ${LOCAL_DIRECTORY}/scheduler.json > ${LOCAL_DIRECTORY}/logs/$HOSTNAME-scheduler.log 2>&1 &
+    nohup dask scheduler --port ${DASK_SCHEDULER_PORT} \
+        --no-dashboard --no-show \
+        --scheduler-file ${DASK_LOCAL_DIRECTORY}/scheduler.json > ${DASK_LOCAL_DIRECTORY}/logs/$HOSTNAME-scheduler.log 2>&1 &
+    echo "Started Dask scheduler"
 fi
 sleep 10
 # Setup workers
 if [ $WORKER_TYPE = 'gpu' ]; then
     ZE_AFFINITY_MASK=$PALS_LOCAL_RANKID dask worker \
         --resources "GPU=1" --memory-limit ${MEMORY_PER_WORKER} \
-        --nthreads ${NTHREADS}  --local-directory /tmp/dask-workers \
-        --scheduler-file ${LOCAL_DIRECTORY}/scheduler.json >> ${LOCAL_DIRECTORY}/logs/$HOSTNAME-worker.log 2>&1
+        --nthreads ${NTHREADS}  --local-directory /tmp/dask-workers --no-dashboard \
+        --scheduler-file ${DASK_LOCAL_DIRECTORY}/scheduler.json >> ${DASK_LOCAL_DIRECTORY}/logs/$HOSTNAME-worker.log 2>&1 &
 else
     dask worker \
-        --nthreads ${NTHREADS} --local-directory /tmp/dask-workers \
-        --scheduler-file ${LOCAL_DIRECTORY}/scheduler.json >> ${LOCAL_DIRECTORY}/logs/$HOSTNAME-worker.log 2>&1
+        --nworkers ${NUM_WORKERS_PER_NODE} --nthreads ${NTHREADS} \
+        --memory-limit ${MEMORY_PER_WORKER} --no-dashboard \
+        --local-directory /tmp/dask-workers \
+        --scheduler-file ${DASK_LOCAL_DIRECTORY}/scheduler.json >> ${DASK_LOCAL_DIRECTORY}/logs/$HOSTNAME-worker.log 2>&1 &
+    echo "Started Dask worker"
 fi
