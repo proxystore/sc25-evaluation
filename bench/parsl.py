@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import os
+
 from parsl.addresses import address_by_hostname
 from parsl.config import Config
 from parsl.executors import HighThroughputExecutor
-from parsl.providers import LocalProvider
 from parsl.launchers import MpiExecLauncher
+from parsl.providers import LocalProvider
 
 
 def get_htex_local_config(
@@ -31,8 +32,8 @@ def get_htex_aurora_cpu_config(
     workers_per_node: int,
 ) -> Config:
     # Get the number of nodes:
-    node_file = os.getenv("PBS_NODEFILE")
-    with open(node_file,"r") as f:
+    node_file = os.getenv('PBS_NODEFILE')
+    with open(node_file, 'r') as f:
         node_list = f.readlines()
         num_nodes = len(node_list)
 
@@ -44,7 +45,9 @@ def get_htex_aurora_cpu_config(
         provider=LocalProvider(
             # Number of nodes job
             nodes_per_block=num_nodes,
-            launcher=MpiExecLauncher(bind_cmd='--cpu-bind', overrides='--ppn 1'),
+            launcher=MpiExecLauncher(
+                bind_cmd='--cpu-bind', overrides='--ppn 1',
+            ),
             init_blocks=1,
             max_blocks=1,
         ),

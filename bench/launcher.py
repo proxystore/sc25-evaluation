@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import json
+import logging
 import os
 import sys
 from typing import Any
@@ -31,11 +32,15 @@ from aeris.launcher.executor import ExecutorLauncher
 from aeris.manager import Manager
 from bench.parsl import PARSL_CONFIGS
 
+logger = logging.getLogger(__name__)
+
 LauncherT_co = TypeVar('LauncherT_co', covariant=True)
 
 
 @runtime_checkable
 class LauncherConfig(Protocol[LauncherT_co]):
+    name: str
+
     @classmethod
     def from_args(cls, args: dict[str, Any], run_dir: str) -> Self: ...
 
@@ -51,6 +56,7 @@ class AerisConfig:
         redis_port: int,
         parsl_config: ParslConfig,
     ) -> None:
+        self.name = 'aeris'
         self.redis_host = redis_host
         self.redis_port = redis_port
         self.parsl_config = parsl_config
@@ -69,7 +75,7 @@ class AerisConfig:
             )
         except KeyError as e:
             raise TypeError(
-                f'Unknown parsl config type "{parsl_config}".'
+                f'Unknown parsl config type "{parsl_config}".',
             ) from e
 
         return cls(
@@ -94,17 +100,22 @@ class DaskConfig:
         *,
         scheduler: str | None = None,
         shutdown: bool = False,
-        workers: int | None = None,
+        nodes: int = 1,
+        workers: int = 1,
     ) -> None:
+        self.name = 'dask'
         self.scheduler = scheduler
         self.shutdown = shutdown
+        self.nodes = nodes
         self.workers = workers
 
     @classmethod
     def from_args(cls, args: dict[str, Any], run_dir: str) -> Self:
+        scheduler = args['dask_scheduler']
         return cls(
-            scheduler=args['dask_scheduler'],
+            scheduler=scheduler,
             shutdown=args['dask_shutdown'],
+            nodes=args['num_nodes'] if scheduler is not None else 1,
             workers=args['workers_per_node'],
         )
 
@@ -130,6 +141,12 @@ class DaskConfig:
 
         client = DaskClient(address=scheduler, **kwargs)
         try:
+            logger.info('Waiting for all workers to connect...')
+            client.wait_for_workers(self.nodes * self.workers, timeout=300)
+            logger.info(
+                'Connected Dask workers: %s',
+                len(client.scheduler_info()['workers']),
+            )
             yield client
         finally:
             if self.scheduler is None or self.shutdown:
@@ -156,19 +173,31 @@ class RayClient:
 
 
 class RayConfig:
-    def __init__(self, *, address: str | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        address: str | None = None,
+        workers: int | None = None,
+    ) -> None:
+        self.name = 'ray'
         self.address = address
+        self.workers = workers
 
     @classmethod
     def from_args(cls, args: dict[str, Any], run_dir: str) -> Self:
-        return cls(address=args['ray_cluster'])
+        return cls(
+            address=args['ray_cluster'],
+            workers=args['workers_per_node'],
+        )
 
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[RayClient]:
         ray.init(
             address=self.address,
-            configure_logging=False,
-            log_to_driver=False,
+            # configure_logging=False,
+            # log_to_driver=False,
+            num_cpus=self.workers if self.address is None else None,
+            _temp_dir='/tmp/ray' if self.address is None else None,
         )
         try:
             yield RayClient()

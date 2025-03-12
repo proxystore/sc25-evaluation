@@ -25,10 +25,13 @@ classifiers = [
 dependencies = [
     "aeris@git+https://github.com/proxystore/aeris#egg=main",
     "dask[distributed]==2025.2.0",
+    "jupyterlab",
     "parsl==2025.03.03",
+    "polars",
     "proxystore==0.8.0",
     "pydantic>=2",
     "ray==2.43.0",
+    "seaborn",
     "typing-extensions",
 ]
 

@@ -103,6 +103,7 @@ def add_dask_parser_group(
         help='shutdown the connected scheduler and workers',
     )
 
+
 def add_ray_parser_group(
     parser: argparse.ArgumentParser,
     required: bool = True,

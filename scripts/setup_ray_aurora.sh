@@ -62,7 +62,7 @@ start_ray_head() {
 start_ray_worker() {
     echo "[$(hostname)] Starting Ray worker, connecting to head at $RAY_HEAD_IP..."
     echo "HSN IP Address : $HSN_IP_ADDRESS"
-    ray start --num-gpus=$RAY_GPU_PER_NODE --num-cpus=$RAY_CPU_PER_NODE --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ray start --num-gpus=$RAY_GPU_PER_NODE --num-cpus=$RAY_CPU_PER_NODE --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS"
 
     echo "[$(hostname)] Waiting for Ray worker to be up..."
     until ray status &>/dev/null; do
@@ -125,7 +125,7 @@ start_ray_cluster() {
     # --- Launch Ray workers on each of the other nodes via SSH ---
     for worker in "${worker_nodes_full[@]}"; do
         echo "[$(hostname)] Launching Ray worker on $worker..."
-        ssh "$worker" "bash -l -c 'set -x; export RAY_HEAD_IP=${RAY_HEAD_IP}; export RAY_CPU_PER_NODE=${RAY_CPU_PER_NODE}; RAY_GPU_PER_NODE=${RAY_GPU_PER_NODE}; source \$COMMON_SETUP_SCRIPT; setup_environment; stop_ray; start_ray_worker'" &
+        ssh "$worker" "bash -c 'export RAY_HEAD_IP=${RAY_HEAD_IP}; export RAY_CPU_PER_NODE=${RAY_CPU_PER_NODE}; RAY_GPU_PER_NODE=${RAY_GPU_PER_NODE}; source ${COMMON_SETUP_SCRIPT}; setup_environment; stop_ray; start_ray_worker'" &
     done
 
     # Wait for all background SSH jobs to finish.

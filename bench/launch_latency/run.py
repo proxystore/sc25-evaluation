@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import logging
 import os
 import sys
@@ -8,6 +9,7 @@ from collections.abc import Sequence
 from datetime import datetime
 from typing import Any
 
+import ray
 from proxystore.utils.timer import Timer
 
 from aeris.logging import init_logging
@@ -39,8 +41,9 @@ def run_benchmark_aeris(num_actors: int, manager: Manager) -> Times:
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
-        for handle in handles:
-            handle.action('noop').result(timeout=30)
+        ops = [handle.action('noop') for handle in handles]
+        for op in ops:
+            op.result(timeout=30)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
@@ -68,15 +71,16 @@ def run_benchmark_dask(num_actors: int, client: DaskClient) -> Times:
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
-        for handle in handles:
-            actor = handle.result()
-            actor.noop().result(timeout=30)
+        ops = [handle.result().noop() for handle in handles]
+        for op in ops:
+            op.result(timeout=30)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
         for handle in handles:
             client.cancel(handle)
+        for handle in handles:
             handle.exception()
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
@@ -98,15 +102,17 @@ def run_benchmark_ray(num_actors: int, client: RayClient) -> Times:
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
-        for handle in handles:
-            ref = handle.noop.remote()
-            client.get(ref, timeout=30)
+        ops = [handle.noop.remote() for handle in handles]
+        for op in ops:
+            client.get(op, timeout=30)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
-        for handle in handles:
-            client.kill(handle)
+        refs = [handle.exit.remote() for handle in handles]
+        for ref in refs:
+            with contextlib.suppress(ray.exceptions.RayActorError):
+                client.get(ref)
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
     times = Times(
@@ -160,7 +166,7 @@ def run(
             for i in range(repeat):
                 times = run_benchmark(num_actors, launcher)
                 result = Result(
-                    framework='aeris',
+                    framework=launcher_config.name,
                     num_nodes=num_nodes,
                     num_workers_per_node=num_workers_per_node,
                     num_actors=num_actors,
@@ -192,8 +198,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     init_logging(
         level=args.log_level,
         logfile=os.path.join(run_dir, 'log.txt'),
+        color=False,
+        extra=False,
     )
 
+    logger.info('Args: %s', vars(args))
     launcher_config = get_launcher_config_from_args(args, run_dir)
 
     run(

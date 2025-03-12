@@ -19,5 +19,8 @@ class DaskActor:
 
 @ray.remote
 class RayActor:
+    def exit(self) -> None:
+        ray.actor.exit_actor()
+
     def noop(self) -> None:
         return None
