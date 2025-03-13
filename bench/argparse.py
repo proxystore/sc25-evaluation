@@ -67,6 +67,12 @@ def add_aeris_parser_group(
     group = parser.add_argument_group(title='AERIS Configuration')
 
     group.add_argument(
+        '--exchange',
+        choices=['hybrid', 'redis'],
+        default='redis',
+        help='exchange type',
+    )
+    group.add_argument(
         '--parsl-config',
         choices=tuple(PARSL_CONFIGS.keys()),
         required=required,

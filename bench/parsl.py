@@ -46,7 +46,8 @@ def get_htex_aurora_cpu_config(
             # Number of nodes job
             nodes_per_block=num_nodes,
             launcher=MpiExecLauncher(
-                bind_cmd='--cpu-bind', overrides='--ppn 1',
+                bind_cmd='--cpu-bind',
+                overrides='--ppn 1',
             ),
             init_blocks=1,
             max_blocks=1,

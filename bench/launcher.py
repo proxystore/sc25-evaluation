@@ -27,6 +27,7 @@ from dask.distributed import Client as DaskClient
 from parsl.concurrent import ParslPoolExecutor
 from parsl.config import Config as ParslConfig
 
+from aeris.exchange.hybrid import HybridExchange
 from aeris.exchange.redis import RedisExchange
 from aeris.launcher.executor import ExecutorLauncher
 from aeris.manager import Manager
@@ -52,11 +53,13 @@ class AerisConfig:
     def __init__(
         self,
         *,
+        exchange: str,
         redis_host: str,
         redis_port: int,
         parsl_config: ParslConfig,
     ) -> None:
         self.name = 'aeris'
+        self.exchange = exchange
         self.redis_host = redis_host
         self.redis_port = redis_port
         self.parsl_config = parsl_config
@@ -79,6 +82,7 @@ class AerisConfig:
             ) from e
 
         return cls(
+            exchange=args['exchange'],
             redis_host=args['redis_host'],
             redis_port=args['redis_port'],
             parsl_config=config,
@@ -87,8 +91,14 @@ class AerisConfig:
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[Manager]:
         executor = ParslPoolExecutor(self.parsl_config)
+        if self.exchange == 'redis':
+            exchange = RedisExchange(self.redis_host, self.redis_port)
+        elif self.exchange == 'hybrid':
+            exchange = HybridExchange(self.redis_host, self.redis_port)
+        else:
+            raise ValueError(f'Unsupported exchange type "{self.exchange}".')
         with Manager(
-            exchange=RedisExchange(self.redis_host, self.redis_port),
+            exchange=exchange,
             launcher=ExecutorLauncher(executor, close_exchange=True),
         ) as manager:
             yield manager

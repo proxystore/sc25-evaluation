@@ -1,18 +1,21 @@
 #!/bin/bash -e
 #PBS -A proxystore
-#PBS -N agents-launch-latency
-#PBS -l walltime=00:15:00
+#PBS -N agents-action-latency
+#PBS -q debug
+#PBS -l select=2
+#PBS -l walltime=00:30:00
 #PBS -l filesystems=flare
 #PBS -l place=scatter
 #PBS -j oe
 
 NUM_NODES=`wc -l < $PBS_NODEFILE`
-NUM_RANKS=32
+NUM_RANKS=1
 NUM_WORKERS=$(( NUM_NODES * NUM_RANKS ))
 echo "NODES: $NUM_NODES; RANKS: $NUM_RANKS; WORKERS: $NUM_WORKERS"
 
-DEFAULT_ARGS=" --repeat 6 --num-nodes $NUM_NODES --workers-per-node $NUM_RANKS "
+DEFAULT_ARGS=" --repeat 100 --num-nodes $NUM_NODES --workers-per-node $NUM_RANKS "
 DEFAULT_ARGS+=" --run-dir /flare/proxystore/jgpaul/agents/sc25-evaluation/runs-prod "
+DEFAULT_ARGS+=" --data-sizes 1kb 10kb 100kb 1mb 10mb 100mb "
  
 module load python/3.10.13
 cd /flare/proxystore/jgpaul/agents/sc25-evaluation
@@ -30,7 +33,7 @@ redis-server --port $REDIS_PORT --save "" --appendonly no --protected-mode no &>
 REDIS=$!
 echo "Redis server started"
 
-python -m bench.launch_latency $DEFAULT_ARGS \
+python -m bench.action_latency $DEFAULT_ARGS \
     --launcher aeris --parsl-config htex-aurora-cpu --redis-host $HEAD_NODE_IP --redis-port $REDIS_PORT
 
 kill $REDIS
@@ -42,7 +45,7 @@ echo "Redis server stopped"
 
 source scripts/setup_dask_aurora.sh $NUM_NODES $NUM_RANKS
 # --dask-shutdown flag should cause workers and scheduler to exit
-python -m bench.launch_latency $DEFAULT_ARGS --launcher dask --dask-scheduler $DASK_SCHEDULER_ADDRESS --dask-shutdown
+python -m bench.action_latency $DEFAULT_ARGS --launcher dask --dask-scheduler $DASK_SCHEDULER_ADDRESS --dask-shutdown
 
 ###########
 # RUN RAY #
@@ -52,5 +55,5 @@ export RAY_CPU_PER_NODE=$NUM_RANKS
 export RAY_GPU_PER_NODE=0
 source scripts/setup_ray_aurora.sh
 start_ray_cluster
-python -m bench.launch_latency $DEFAULT_ARGS --launcher ray --ray-cluster $RAY_HEAD_IP:6379
+python -m bench.action_latency $DEFAULT_ARGS --launcher ray --ray-cluster $RAY_HEAD_IP:6379
 mpiexec -n $NUM_NODES --ppn ray stop -g 30
