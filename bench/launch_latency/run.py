@@ -8,6 +8,7 @@ import sys
 from collections.abc import Sequence
 from datetime import datetime
 from typing import Any
+from typing import NamedTuple
 
 import ray
 from proxystore.utils.timer import Timer
@@ -19,8 +20,6 @@ from bench.argparse import add_launcher_groups
 from bench.launch_latency.actor import AerisActor
 from bench.launch_latency.actor import DaskActor
 from bench.launch_latency.actor import RayActor
-from bench.launch_latency.utils import Result
-from bench.launch_latency.utils import Times
 from bench.launcher import DaskClient
 from bench.launcher import get_launcher_config_from_args
 from bench.launcher import is_aeris_launcher
@@ -31,6 +30,20 @@ from bench.launcher import RayClient
 from bench.results import CSVResultLogger
 
 logger = logging.getLogger(__name__)
+
+
+class Result(NamedTuple):
+    framework: str
+    num_nodes: int
+    num_workers_per_node: int
+    num_actors: int
+    startup_time: float
+    shutdown_time: float
+
+
+class Times(NamedTuple):
+    startup: float
+    shutdown: float
 
 
 def run_benchmark_aeris(num_actors: int, manager: Manager) -> Times:
