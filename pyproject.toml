@@ -30,7 +30,7 @@ dependencies = [
     "polars",
     "proxystore==0.8.0",
     "pydantic>=2",
-    "ray==2.43.0",
+    "ray[default]==2.43.0",
     "seaborn",
     "typing-extensions",
 ]

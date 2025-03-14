@@ -53,4 +53,4 @@ export RAY_GPU_PER_NODE=0
 source scripts/setup_ray_aurora.sh
 start_ray_cluster
 python -m bench.launch_latency $DEFAULT_ARGS --launcher ray --ray-cluster $RAY_HEAD_IP:6379
-mpiexec -n $NUM_NODES --ppn ray stop -g 30
+mpiexec -n $NUM_NODES --ppn 1 ray stop -g 30
