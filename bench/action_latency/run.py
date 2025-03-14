@@ -50,11 +50,17 @@ def run_benchmark_aeris(
     repeat: int,
     result_logger: CSVResultLogger,
 ) -> None:
+    logger.info('Running warmup task...')
+    manager.launcher._executor.submit(sum, [1, 2, 3]).result(timeout=60)
     logger.info('Starting actors...')
     reply_handle = manager.launch(AerisReplyActor())
     request_handle = manager.launch(AerisRequestActor(reply_handle))
-    # reply_handle.action('noop').result(timeout=30)
-    # request_handle.action('noop').result(timeout=30)
+    import time
+
+    logger.warning('Waiting 5 seconds...')
+    time.sleep(30)
+    reply_handle.action('noop').result(timeout=30)
+    request_handle.action('noop').result(timeout=30)
     logger.info('Started actors')
 
     for data_size in data_sizes:
@@ -71,7 +77,7 @@ def run_benchmark_aeris(
             )
             mean, std = future.result()
         result = Result(
-            framework='aeris',
+            framework=f'AERIS[{type(manager.exchange).__name__}]',
             trials=repeat,
             data_size_bytes=data_size,
             mean_latency_s=mean,
@@ -113,7 +119,7 @@ def run_benchmark_dask(
             future = request_handle.run(size=data_size, trials=repeat)
             mean, std = future.result()
         result = Result(
-            framework='dask',
+            framework='Dask',
             trials=repeat,
             data_size_bytes=data_size,
             mean_latency_s=mean,
@@ -153,7 +159,7 @@ def run_benchmark_ray(
             ref = request_actor.run.remote(size=data_size, trials=repeat)
             mean, std = client.get(ref)
         result = Result(
-            framework='ray',
+            framework='Ray',
             trials=repeat,
             data_size_bytes=data_size,
             mean_latency_s=mean,
