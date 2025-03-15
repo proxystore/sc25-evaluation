@@ -73,8 +73,8 @@ def add_aeris_parser_group(
         help='exchange type',
     )
     group.add_argument(
-        '--parsl-config',
-        choices=tuple(PARSL_CONFIGS.keys()),
+        '--executor',
+        choices=['process-pool', *PARSL_CONFIGS.keys()],
         required=required,
     )
     group.add_argument(

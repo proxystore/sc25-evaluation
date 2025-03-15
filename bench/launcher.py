@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from typing import Any
 from typing import Generator
 from typing import Protocol
@@ -25,7 +26,6 @@ else:
 import ray
 from dask.distributed import Client as DaskClient
 from parsl.concurrent import ParslPoolExecutor
-from parsl.config import Config as ParslConfig
 
 from aeris.exchange.hybrid import HybridExchange
 from aeris.exchange.redis import RedisExchange
@@ -54,15 +54,19 @@ class AerisConfig:
         self,
         *,
         exchange: str,
+        executor: str,
         redis_host: str,
         redis_port: int,
-        parsl_config: ParslConfig,
+        run_dir: str,
+        workers_per_node: int,
     ) -> None:
         self.name = 'aeris'
         self.exchange = exchange
+        self.executor = executor
+        self.run_dir = run_dir
         self.redis_host = redis_host
         self.redis_port = redis_port
-        self.parsl_config = parsl_config
+        self.workers_per_node = workers_per_node
 
     @classmethod
     def from_args(
@@ -70,27 +74,31 @@ class AerisConfig:
         args: dict[str, Any],
         run_dir: str,
     ) -> Self:
-        parsl_config = args['parsl_config']
-        try:
-            config = PARSL_CONFIGS[parsl_config](
-                os.path.join(run_dir, 'parsl'),
-                workers_per_node=args['workers_per_node'],
-            )
-        except KeyError as e:
-            raise TypeError(
-                f'Unknown parsl config type "{parsl_config}".',
-            ) from e
-
         return cls(
             exchange=args['exchange'],
+            executor=args['executor'],
             redis_host=args['redis_host'],
             redis_port=args['redis_port'],
-            parsl_config=config,
+            run_dir=run_dir,
+            workers_per_node=args['workers_per_node'],
         )
 
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[Manager]:
-        executor = ParslPoolExecutor(self.parsl_config)
+        if self.executor == 'process-pool':
+            executor = ProcessPoolExecutor(self.workers_per_node)
+        else:
+            try:
+                config = PARSL_CONFIGS[self.executor](
+                    os.path.join(self.run_dir, 'parsl'),
+                    workers_per_node=self.workers_per_node,
+                )
+            except KeyError as e:
+                raise TypeError(
+                    f'Unknown parsl config type "{self.executor}".',
+                ) from e
+            executor = ParslPoolExecutor(config)
+
         if self.exchange == 'redis':
             exchange = RedisExchange(self.redis_host, self.redis_port)
         elif self.exchange == 'hybrid':

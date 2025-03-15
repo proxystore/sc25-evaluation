@@ -34,10 +34,10 @@ REDIS=$!
 echo "Redis server started"
 
 python -m bench.action_latency $DEFAULT_ARGS \
-    --launcher aeris --exchange redis --parsl-config htex-aurora-cpu \
+    --launcher aeris --exchange redis --executor htex-aurora-cpu \
     --redis-host $HEAD_NODE_IP --redis-port $REDIS_PORT
 # python -m bench.action_latency $DEFAULT_ARGS \
-#     --launcher aeris --exchange hybrid --parsl-config htex-aurora-cpu \
+#     --launcher aeris --exchange hybrid --executor htex-aurora-cpu \
 #     --redis-host $HEAD_NODE_IP --redis-port $REDIS_PORT
 
 kill $REDIS
