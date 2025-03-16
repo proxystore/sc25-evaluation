@@ -1,3 +1,5 @@
+# All options: https://matplotlib.org/stable/users/explain/customizing.html#customizing-with-matplotlibrc-files
+
 # Font sizes
 font.size: 6
 axes.titlesize: 6
@@ -11,7 +13,12 @@ ytick.labelsize: 6
 
 # Figure parameters
 axes.linewidth: 0.5
+axes.grid: True
+axes.grid.axes: both
 grid.linewidth: 0.5
+grid.alpha: 0.5
+grid.color: '#6D6B71'
+grid.linestyle: :
 lines.markersize: 6
 lines.linewidth: 1.0
 xtick.major.width: 0.5
