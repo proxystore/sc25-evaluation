@@ -5,6 +5,7 @@ import contextlib
 import logging
 import os
 import sys
+import time
 from collections.abc import Sequence
 from concurrent.futures import FIRST_EXCEPTION
 from concurrent.futures import Future
@@ -19,11 +20,11 @@ from proxystore.utils.timer import Timer
 
 from aeris.logging import init_logging
 from aeris.manager import Manager
+from bench.action_throughput.actor import AerisActor
+from bench.action_throughput.actor import DaskActor
+from bench.action_throughput.actor import RayActor
 from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
-from bench.launch_latency.actor import AerisActor
-from bench.launch_latency.actor import DaskActor
-from bench.launch_latency.actor import RayActor
 from bench.launcher import DaskClient
 from bench.launcher import get_launcher_config_from_args
 from bench.launcher import is_aeris_launcher
@@ -54,6 +55,9 @@ def run_benchmark_aeris(
     with Timer() as submit_timer:
         handles = [manager.launch(AerisActor()) for _ in range(num_actors)]
     logger.info('Submitted actors in %.3fs', submit_timer.elapsed_s)
+
+    logger.warning('Waiting 120 seconds...')
+    time.sleep(120)
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
@@ -127,7 +131,9 @@ def run_benchmark_dask(
 
 
 def run_benchmark_ray(
-    num_actors: int, actions_per_actor: int, client: RayClient,
+    num_actors: int,
+    actions_per_actor: int,
+    client: RayClient,
 ) -> float:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
@@ -214,7 +220,9 @@ def run(
         ) as result_logger:
             for i in range(repeat):
                 runtime = run_benchmark(
-                    num_actors, actions_per_actor, launcher,
+                    num_actors,
+                    actions_per_actor,
+                    launcher,
                 )
                 result = Result(
                     framework=launcher_config.name,

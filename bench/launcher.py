@@ -4,6 +4,7 @@ import argparse
 import contextlib
 import json
 import logging
+import multiprocessing
 import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
@@ -86,7 +87,11 @@ class AerisConfig:
     @contextlib.contextmanager
     def get_launcher(self) -> Generator[Manager]:
         if self.executor == 'process-pool':
-            executor = ProcessPoolExecutor(self.workers_per_node)
+            mp_context = multiprocessing.get_context('spawn')
+            executor = ProcessPoolExecutor(
+                self.workers_per_node,
+                mp_context=mp_context,
+            )
         else:
             try:
                 config = PARSL_CONFIGS[self.executor](
@@ -215,6 +220,7 @@ class RayConfig:
             # configure_logging=False,
             # log_to_driver=False,
             num_cpus=self.workers if self.address is None else None,
+            num_gpus=0 if self.address is None else None,
             _temp_dir='/tmp/ray' if self.address is None else None,
         )
         try:

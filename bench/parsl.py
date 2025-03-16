@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 
 from parsl.addresses import address_by_hostname
+from parsl.addresses import address_by_interface
 from parsl.config import Config
 from parsl.executors import HighThroughputExecutor
 from parsl.launchers import MpiExecLauncher
@@ -61,7 +62,26 @@ def get_htex_aurora_cpu_config(
     )
 
 
+def get_htex_aurora_local_config(
+    run_dir: str,
+    workers_per_node: int,
+) -> Config:
+    executor = HighThroughputExecutor(
+        label='htex-local',
+        max_workers_per_node=workers_per_node,
+        address=address_by_interface('hsn0'),
+        cores_per_worker=1,
+        provider=LocalProvider(init_blocks=1, max_blocks=1),
+    )
+    return Config(
+        executors=[executor],
+        run_dir=run_dir,
+        initialize_logging=False,
+    )
+
+
 PARSL_CONFIGS = {
     'htex-local': get_htex_local_config,
     'htex-aurora-cpu': get_htex_aurora_cpu_config,
+    'htex-aurora-local': get_htex_aurora_local_config,
 }
