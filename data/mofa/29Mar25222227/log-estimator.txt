@@ -1,0 +1,216 @@
+[2025-03-29 22:22:37.878] INFO     (root) Configured logger (level=INFO, file=/home/cc/mofa-runs/29Mar25222227/estimator/log.txt)
+[2025-03-29 22:22:37.885] INFO     (parsl.dataflow.dflow) Starting DataFlowKernel with config
+Config(
+    app_cache=False, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(HighThroughputExecutor(
+        address='10.52.2.137', 
+        address_probe_timeout=None, 
+        available_accelerators=[], 
+        block_error_handler=<function simple_error_handler at 0x7f89733829e0>, 
+        cores_per_worker=1, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=30, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='htex-local', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_port={task_port} --result_port={result_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7f8973362860>, 
+        max_workers_per_node=16, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=LocalProvider(
+            cmd_timeout=30, 
+            init_blocks=1, 
+            launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            worker_init=''
+        ), 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port_range=(54000, 55000), 
+        worker_ports=None, 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=False, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=0, 
+    retry_handler=None, 
+    run_dir='/home/cc/mofa-runs/29Mar25222227/estimator', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+[2025-03-29 22:22:37.885] INFO     (parsl.dataflow.dflow) Parsl version: 2025.02.17
+[2025-03-29 22:22:37.885] INFO     (parsl.dataflow.dflow) Run id is: 4a716206-ee83-4a5d-a0e8-a867ff71f2ff
+[2025-03-29 22:22:37.937] INFO     (parsl.dataflow.memoization) App caching disabled for all apps
+[2025-03-29 22:22:38.559] INFO     (aeris.agent) Running agent (AgentID<91fa5e1d>; Behavior<Estimator>)
+[2025-03-29 22:22:42.939] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 22:22:42.940] INFO     (parsl.executors.status_handling) Allocated block ID 0
+[2025-03-29 22:50:54.411] INFO     (Estimator) Added atoms to estimator queue (name=mof-e4add519)
+[2025-03-29 22:50:54.417] INFO     (parsl.dataflow.dflow) Task 0 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 22:50:54.425] INFO     (Estimator) START estimate-adsorption 24b9bc94-6293-4648-810d-48bb613a9a86
+[2025-03-29 22:50:54.426] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-e4add519)
+[2025-03-29 22:50:54.456] INFO     (parsl.dataflow.dflow) Parsl task 0 try 0 launched on executor htex-local with executor id 1
+[2025-03-29 22:50:54.456] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-03-29 22:50:54.456] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-03-29 22:50:56.215] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 22:50:56.215] INFO     (parsl.executors.status_handling) Allocated block ID 1
+[2025-03-29 22:51:05.491] INFO     (Estimator) Added atoms to estimator queue (name=mof-7038d336)
+[2025-03-29 22:51:05.492] INFO     (parsl.dataflow.dflow) Task 1 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 22:51:05.493] INFO     (Estimator) START estimate-adsorption 95ac3902-e243-42b6-acd0-be416fabe5f7
+[2025-03-29 22:51:05.494] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-7038d336)
+[2025-03-29 22:51:05.495] INFO     (parsl.dataflow.dflow) Parsl task 1 try 0 launched on executor htex-local with executor id 2
+[2025-03-29 22:51:05.495] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-03-29 22:51:05.495] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-03-29 22:51:18.787] INFO     (parsl.dataflow.dflow) Task 0 completed (launched -> exec_done)
+[2025-03-29 22:51:18.787] INFO     (Estimator) END estimate-adsorption 24b9bc94-6293-4648-810d-48bb613a9a86
+[2025-03-29 22:51:18.787] INFO     (Estimator) Completed estimate-adsorption task (name=mof-e4add519)
+[2025-03-29 22:51:18.800] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-03-29 22:51:18.800] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-03-29 22:51:25.221] INFO     (parsl.dataflow.dflow) Task 1 completed (launched -> exec_done)
+[2025-03-29 22:51:25.222] INFO     (Estimator) END estimate-adsorption 95ac3902-e243-42b6-acd0-be416fabe5f7
+[2025-03-29 22:51:25.222] INFO     (Estimator) Completed estimate-adsorption task (name=mof-7038d336)
+[2025-03-29 22:51:25.231] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-03-29 22:51:25.231] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-03-29 22:57:36.006] INFO     (Estimator) Added atoms to estimator queue (name=mof-08bcf054)
+[2025-03-29 22:57:36.008] INFO     (parsl.dataflow.dflow) Task 2 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 22:57:36.010] INFO     (Estimator) START estimate-adsorption 39b81a4d-05ce-49b0-b2dd-46eeca715493
+[2025-03-29 22:57:36.012] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-08bcf054)
+[2025-03-29 22:57:36.012] INFO     (parsl.dataflow.dflow) Parsl task 2 try 0 launched on executor htex-local with executor id 3
+[2025-03-29 22:57:36.012] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-03-29 22:57:36.012] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-03-29 22:57:39.836] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 22:57:39.837] INFO     (parsl.executors.status_handling) Allocated block ID 2
+[2025-03-29 22:58:09.384] INFO     (parsl.dataflow.dflow) Task 2 completed (launched -> exec_done)
+[2025-03-29 22:58:09.384] INFO     (Estimator) END estimate-adsorption 39b81a4d-05ce-49b0-b2dd-46eeca715493
+[2025-03-29 22:58:09.384] INFO     (Estimator) Completed estimate-adsorption task (name=mof-08bcf054)
+[2025-03-29 22:58:09.389] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-03-29 22:58:09.389] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-03-29 23:03:57.450] INFO     (Estimator) Added atoms to estimator queue (name=mof-55cd53ad)
+[2025-03-29 23:03:57.452] INFO     (parsl.dataflow.dflow) Task 3 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 23:03:57.454] INFO     (Estimator) START estimate-adsorption 890d0401-40dd-4258-b69f-663e7079f943
+[2025-03-29 23:03:57.456] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-55cd53ad)
+[2025-03-29 23:03:57.456] INFO     (parsl.dataflow.dflow) Parsl task 3 try 0 launched on executor htex-local with executor id 4
+[2025-03-29 23:03:57.457] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-03-29 23:03:57.457] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2025-03-29 23:03:58.413] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 23:03:58.414] INFO     (parsl.executors.status_handling) Allocated block ID 3
+[2025-03-29 23:04:19.495] INFO     (parsl.dataflow.dflow) Task 3 completed (launched -> exec_done)
+[2025-03-29 23:04:19.496] INFO     (Estimator) END estimate-adsorption 890d0401-40dd-4258-b69f-663e7079f943
+[2025-03-29 23:04:19.496] INFO     (Estimator) Completed estimate-adsorption task (name=mof-55cd53ad)
+[2025-03-29 23:04:19.510] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-03-29 23:04:19.510] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2025-03-29 23:09:18.683] INFO     (Estimator) Added atoms to estimator queue (name=mof-137c55da)
+[2025-03-29 23:09:18.685] INFO     (parsl.dataflow.dflow) Task 4 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 23:09:18.687] INFO     (Estimator) START estimate-adsorption 09a3348b-dc8e-4d6d-bd9f-9372d160774f
+[2025-03-29 23:09:18.688] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-137c55da)
+[2025-03-29 23:09:18.689] INFO     (parsl.dataflow.dflow) Parsl task 4 try 0 launched on executor htex-local with executor id 5
+[2025-03-29 23:09:18.689] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-03-29 23:09:18.689] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-03-29 23:09:21.773] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 23:09:21.773] INFO     (parsl.executors.status_handling) Allocated block ID 4
+[2025-03-29 23:09:45.269] INFO     (parsl.dataflow.dflow) Task 4 completed (launched -> exec_done)
+[2025-03-29 23:09:45.269] INFO     (Estimator) END estimate-adsorption 09a3348b-dc8e-4d6d-bd9f-9372d160774f
+[2025-03-29 23:09:45.269] INFO     (Estimator) Completed estimate-adsorption task (name=mof-137c55da)
+[2025-03-29 23:09:45.283] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-03-29 23:09:45.284] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-03-29 23:21:10.864] INFO     (Estimator) Added atoms to estimator queue (name=mof-05ee0dc5)
+[2025-03-29 23:21:10.867] INFO     (parsl.dataflow.dflow) Task 5 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 23:21:10.868] INFO     (Estimator) START estimate-adsorption f6733e5e-9079-49f5-9fee-dfe4d41ac0ac
+[2025-03-29 23:21:10.869] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-05ee0dc5)
+[2025-03-29 23:21:10.872] INFO     (parsl.dataflow.dflow) Parsl task 5 try 0 launched on executor htex-local with executor id 6
+[2025-03-29 23:21:10.873] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-03-29 23:21:10.873] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-03-29 23:21:15.090] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 23:21:15.091] INFO     (parsl.executors.status_handling) Allocated block ID 5
+[2025-03-29 23:21:29.126] INFO     (Estimator) Added atoms to estimator queue (name=mof-0cbf8b44)
+[2025-03-29 23:21:29.128] INFO     (parsl.dataflow.dflow) Task 6 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 23:21:29.129] INFO     (Estimator) START estimate-adsorption d86afc3e-e0ee-4e90-b8ed-0253421b5591
+[2025-03-29 23:21:29.130] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-0cbf8b44)
+[2025-03-29 23:21:29.130] INFO     (parsl.dataflow.dflow) Parsl task 6 try 0 launched on executor htex-local with executor id 7
+[2025-03-29 23:21:29.131] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-03-29 23:21:29.131] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-03-29 23:21:41.851] INFO     (parsl.dataflow.dflow) Task 5 completed (launched -> exec_done)
+[2025-03-29 23:21:41.852] INFO     (Estimator) END estimate-adsorption f6733e5e-9079-49f5-9fee-dfe4d41ac0ac
+[2025-03-29 23:21:41.852] INFO     (Estimator) Completed estimate-adsorption task (name=mof-05ee0dc5)
+[2025-03-29 23:21:41.865] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-03-29 23:21:41.865] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-03-29 23:21:49.950] INFO     (parsl.dataflow.dflow) Task 6 completed (launched -> exec_done)
+[2025-03-29 23:21:49.950] INFO     (Estimator) END estimate-adsorption d86afc3e-e0ee-4e90-b8ed-0253421b5591
+[2025-03-29 23:21:49.951] INFO     (Estimator) Completed estimate-adsorption task (name=mof-0cbf8b44)
+[2025-03-29 23:21:49.958] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-03-29 23:21:49.959] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-03-29 23:22:49.445] INFO     (Estimator) Added atoms to estimator queue (name=mof-9f382cfe)
+[2025-03-29 23:22:49.447] INFO     (parsl.dataflow.dflow) Task 7 submitted for App estimate_adsorption_task, not waiting on any dependency
+[2025-03-29 23:22:49.448] INFO     (Estimator) START estimate-adsorption 8caaad2b-8734-4ef5-8bcb-2a31ea60492c
+[2025-03-29 23:22:49.448] INFO     (Estimator) Submitted estimate-adsorption task (name=mof-9f382cfe)
+[2025-03-29 23:22:49.451] INFO     (parsl.dataflow.dflow) Parsl task 7 try 0 launched on executor htex-local with executor id 8
+[2025-03-29 23:22:49.451] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:22:49.451] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:23:18.759] INFO     (parsl.dataflow.dflow) Task 7 completed (launched -> exec_done)
+[2025-03-29 23:23:18.759] INFO     (Estimator) END estimate-adsorption 8caaad2b-8734-4ef5-8bcb-2a31ea60492c
+[2025-03-29 23:23:18.760] INFO     (Estimator) Completed estimate-adsorption task (name=mof-9f382cfe)
+[2025-03-29 23:23:18.772] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:23:18.772] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:24:38.474] WARNING  (Estimator) There are 0 remaining estimate-adsorption task(s) after shutdown
+[2025-03-29 23:24:38.476] INFO     (parsl.dataflow.dflow) DFK cleanup initiated
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Summary of tasks in DFK:
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.unsched: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.pending: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.running: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.exec_done: 8
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.failed: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.dep_fail: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.launched: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.fail_retryable: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.memo_done: 0
+[2025-03-29 23:24:38.477] INFO     (parsl.dataflow.dflow) Tasks in state States.joining: 0
+[2025-03-29 23:24:38.478] INFO     (parsl.dataflow.dflow) Tasks in state States.running_ended: 0
+[2025-03-29 23:24:38.478] INFO     (parsl.dataflow.dflow) End of summary
+[2025-03-29 23:24:38.478] INFO     (parsl.dataflow.dflow) Closing job status poller
+[2025-03-29 23:24:38.478] INFO     (parsl.jobs.job_status_poller) Scaling in executor htex-local
+[2025-03-29 23:24:38.596] INFO     (parsl.dataflow.dflow) Terminated job status poller
+[2025-03-29 23:24:38.598] INFO     (parsl.dataflow.dflow) Shutting down executors
+[2025-03-29 23:24:38.598] INFO     (parsl.dataflow.dflow) Shutting down executor htex-local
+[2025-03-29 23:24:38.599] INFO     (parsl.executors.high_throughput.executor) Attempting HighThroughputExecutor shutdown
+[2025-03-29 23:24:38.599] INFO     (parsl.executors.high_throughput.executor) Terminating interchange and result queue thread
+[2025-03-29 23:24:38.603] INFO     (parsl.executors.high_throughput.executor) Closing result ZMQ pipe
+[2025-03-29 23:24:38.605] INFO     (parsl.executors.high_throughput.executor) Result queue worker finished
+[2025-03-29 23:24:38.630] INFO     (parsl.executors.high_throughput.executor) Closing ZMQ pipes
+[2025-03-29 23:24:38.631] INFO     (parsl.executors.high_throughput.executor) Closing outgoing_q
+[2025-03-29 23:24:38.631] INFO     (parsl.executors.high_throughput.executor) Closing command client
+[2025-03-29 23:24:38.632] INFO     (parsl.executors.high_throughput.executor) Waiting for result queue thread exit
+[2025-03-29 23:24:38.632] INFO     (parsl.executors.high_throughput.executor) Finished HighThroughputExecutor shutdown attempt
+[2025-03-29 23:24:38.632] INFO     (parsl.dataflow.dflow) Shut down executor htex-local
+[2025-03-29 23:24:38.632] INFO     (parsl.dataflow.dflow) Shutting down executor _parsl_internal
+[2025-03-29 23:24:38.632] INFO     (parsl.dataflow.dflow) Shut down executor _parsl_internal
+[2025-03-29 23:24:38.632] INFO     (parsl.dataflow.dflow) Terminated executors
+[2025-03-29 23:24:38.632] INFO     (parsl.dataflow.dflow) Terminating dependency launch pool
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) Terminated dependency launch pool
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) Unregistering atexit hook
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) Unregistered atexit hook
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) Unregistering default DFK
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) Unregistered default DFK
+[2025-03-29 23:24:38.633] INFO     (parsl.dataflow.dflow) DFK cleanup complete
+[2025-03-29 23:24:38.633] INFO     (aeris.agent) Shutdown agent (AgentID<91fa5e1d>; Behavior<Estimator>)
+[2025-03-29 23:24:38.636] INFO     (worker_log) Completed executor task 3
+[2025-03-29 23:24:38.637] INFO     (worker_log) All processing finished for executor task 3

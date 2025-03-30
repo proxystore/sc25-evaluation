@@ -1,0 +1,871 @@
+[2025-03-29 22:22:42.066] INFO     (root) Configured logger (level=INFO, file=/eagle/MOFA/jgpaul/scratch/mofa-runs/29Mar25222227/optimizer/log.txt)
+[2025-03-29 22:22:42.162] INFO     (parsl.dataflow.dflow) Starting DataFlowKernel with config
+Config(
+    app_cache=False, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=['0', '1', '2', '3'], 
+        block_error_handler=<function simple_error_handler at 0x7f1c5e6fbf40>, 
+        cores_per_worker=1.0, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=15, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='polaris-htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_port={task_port} --result_port={result_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7f1c5e6ebac0>, 
+        max_workers_per_node=4, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=PBSProProvider(
+            account='proxystore', 
+            cmd_timeout=120, 
+            cpus_per_node=32, 
+            init_blocks=0, 
+            launcher=SimpleLauncher(debug=True), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            queue='debug', 
+            scheduler_options='#PBS -l filesystems=home:eagle', 
+            select_options='ngpus=4', 
+            walltime='1:00:00', 
+            worker_init='module use /soft/modulefiles; module load conda; conda activate /eagle/MOFA/jgpaul/agentic-mof-workflow/env; cd /eagle/MOFA/jgpaul/agentic-mof-workflow/'
+        ), 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port_range=(54000, 55000), 
+        worker_ports=None, 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=False, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=1, 
+    retry_handler=None, 
+    run_dir='/eagle/MOFA/jgpaul/scratch/mofa-runs/29Mar25222227/optimizer', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+[2025-03-29 22:22:42.162] INFO     (parsl.dataflow.dflow) Parsl version: 2025.02.17
+[2025-03-29 22:22:42.162] INFO     (parsl.dataflow.dflow) Run id is: 16b55e90-2b1b-4084-8092-84b4bca15384
+[2025-03-29 22:22:42.388] INFO     (parsl.dataflow.memoization) App caching disabled for all apps
+[2025-03-29 22:22:43.502] INFO     (aeris.agent) Running agent (AgentID<bfcc1f16>; Behavior<Optimizer>)
+[2025-03-29 22:22:47.390] INFO     (parsl.executors.status_handling) Scaling out by 0 blocks
+[2025-03-29 22:37:24.073] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7038d336)
+[2025-03-29 22:37:24.074] INFO     (parsl.dataflow.dflow) Task 0 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:37:24.076] INFO     (Optimizer) START optimize-cells 6a0512d6-e836-4b19-80c3-6e1f44051f35
+[2025-03-29 22:37:24.077] INFO     (Optimizer) Submitted optimize-cells task (name=mof-7038d336)
+[2025-03-29 22:37:24.084] INFO     (parsl.dataflow.dflow) Parsl task 0 try 0 launched on executor polaris-htex with executor id 1
+[2025-03-29 22:37:24.084] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-03-29 22:37:24.084] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-03-29 22:37:26.130] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e4add519)
+[2025-03-29 22:37:26.130] INFO     (parsl.dataflow.dflow) Task 1 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:37:26.132] INFO     (Optimizer) START optimize-cells 0cd296eb-bf5a-479e-9b04-45ba52891bdd
+[2025-03-29 22:37:26.132] INFO     (Optimizer) Submitted optimize-cells task (name=mof-e4add519)
+[2025-03-29 22:37:26.132] INFO     (parsl.dataflow.dflow) Parsl task 1 try 0 launched on executor polaris-htex with executor id 2
+[2025-03-29 22:37:26.132] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-03-29 22:37:26.132] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-03-29 22:37:27.578] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 22:37:27.578] INFO     (parsl.executors.status_handling) Allocated block ID 0
+[2025-03-29 22:37:37.711] INFO     (Optimizer) Added mof to optimizer queue (name=mof-08bcf054)
+[2025-03-29 22:37:37.712] INFO     (parsl.dataflow.dflow) Task 2 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:37:37.713] INFO     (Optimizer) START optimize-cells 2bfb4801-7bf6-4be7-b790-5c6d43c60fbd
+[2025-03-29 22:37:37.714] INFO     (parsl.dataflow.dflow) Parsl task 2 try 0 launched on executor polaris-htex with executor id 3
+[2025-03-29 22:37:37.714] INFO     (Optimizer) Submitted optimize-cells task (name=mof-08bcf054)
+[2025-03-29 22:37:37.714] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-03-29 22:37:37.714] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-03-29 22:37:38.576] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5e92fbd1)
+[2025-03-29 22:37:38.577] INFO     (parsl.dataflow.dflow) Task 3 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:37:38.577] INFO     (Optimizer) START optimize-cells a51e05ea-78d8-4573-98f4-dcd910ef9702
+[2025-03-29 22:37:38.579] INFO     (Optimizer) Submitted optimize-cells task (name=mof-5e92fbd1)
+[2025-03-29 22:37:38.579] INFO     (parsl.dataflow.dflow) Parsl task 3 try 0 launched on executor polaris-htex with executor id 4
+[2025-03-29 22:37:38.579] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-03-29 22:37:38.579] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2025-03-29 22:37:39.179] INFO     (Optimizer) Added mof to optimizer queue (name=mof-57f91775)
+[2025-03-29 22:37:41.036] INFO     (Optimizer) Added mof to optimizer queue (name=mof-57583e71)
+[2025-03-29 22:37:46.778] INFO     (Optimizer) Added mof to optimizer queue (name=mof-58ec26f1)
+[2025-03-29 22:37:47.226] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d85b10a0)
+[2025-03-29 22:37:59.683] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2ac6c124)
+[2025-03-29 22:38:32.976] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0415d166)
+[2025-03-29 22:38:42.605] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b429a563)
+[2025-03-29 22:38:47.878] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6ef3ed89)
+[2025-03-29 22:38:48.759] INFO     (Optimizer) Added mof to optimizer queue (name=mof-08bcf054)
+[2025-03-29 22:38:54.803] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2cd3b7b5)
+[2025-03-29 22:38:56.101] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ad845371)
+[2025-03-29 22:38:59.911] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ff67c14f)
+[2025-03-29 22:39:10.404] INFO     (Optimizer) Added mof to optimizer queue (name=mof-524ad8f3)
+[2025-03-29 22:39:11.987] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0382fe76)
+[2025-03-29 22:39:23.622] INFO     (Optimizer) Added mof to optimizer queue (name=mof-be8ecc3a)
+[2025-03-29 22:39:24.100] INFO     (Optimizer) Added mof to optimizer queue (name=mof-29c405dc)
+[2025-03-29 22:39:27.012] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f856ab1a)
+[2025-03-29 22:39:36.144] INFO     (Optimizer) Added mof to optimizer queue (name=mof-66d72742)
+[2025-03-29 22:39:47.891] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c4bc4f53)
+[2025-03-29 22:39:48.405] INFO     (Optimizer) Added mof to optimizer queue (name=mof-82d24d0d)
+[2025-03-29 22:40:04.106] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0b57705b)
+[2025-03-29 22:40:05.873] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1726eb96)
+[2025-03-29 22:40:09.400] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ed916025)
+[2025-03-29 22:40:09.922] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eacb4ab9)
+[2025-03-29 22:40:12.166] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c9c45a0b)
+[2025-03-29 22:40:13.264] INFO     (Optimizer) Added mof to optimizer queue (name=mof-296b8c38)
+[2025-03-29 22:40:17.062] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7d132d98)
+[2025-03-29 22:40:21.679] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8528ff03)
+[2025-03-29 22:40:24.223] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fae9f147)
+[2025-03-29 22:40:30.012] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2b3e8122)
+[2025-03-29 22:40:44.695] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1191d833)
+[2025-03-29 22:41:01.538] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c6d93ea8)
+[2025-03-29 22:41:02.029] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8a2bed98)
+[2025-03-29 22:41:06.170] INFO     (Optimizer) Added mof to optimizer queue (name=mof-db132943)
+[2025-03-29 22:41:06.656] INFO     (Optimizer) Added mof to optimizer queue (name=mof-04c2871a)
+[2025-03-29 22:41:15.852] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1219f05e)
+[2025-03-29 22:41:22.152] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d47ac123)
+[2025-03-29 22:41:23.165] INFO     (Optimizer) Added mof to optimizer queue (name=mof-644d6a87)
+[2025-03-29 22:41:27.089] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d0cb8317)
+[2025-03-29 22:41:28.235] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4a051ccd)
+[2025-03-29 22:41:32.286] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7a6dc495)
+[2025-03-29 22:41:32.813] INFO     (Optimizer) Added mof to optimizer queue (name=mof-edfce7b9)
+[2025-03-29 22:41:38.869] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6463d2b3)
+[2025-03-29 22:41:43.113] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5d31fc73)
+[2025-03-29 22:41:47.705] INFO     (Optimizer) Added mof to optimizer queue (name=mof-080eb5ad)
+[2025-03-29 22:41:50.716] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2cee1857)
+[2025-03-29 22:42:02.684] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c793c77a)
+[2025-03-29 22:42:09.027] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ca2f0185)
+[2025-03-29 22:42:13.438] INFO     (Optimizer) Added mof to optimizer queue (name=mof-81d613ba)
+[2025-03-29 22:42:16.800] INFO     (Optimizer) Added mof to optimizer queue (name=mof-05ee0dc5)
+[2025-03-29 22:42:19.266] INFO     (Optimizer) Added mof to optimizer queue (name=mof-203a1f1c)
+[2025-03-29 22:42:23.625] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f23a77c1)
+[2025-03-29 22:42:26.033] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1ffc7943)
+[2025-03-29 22:42:26.561] INFO     (Optimizer) Added mof to optimizer queue (name=mof-887b9fd1)
+[2025-03-29 22:42:34.788] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5e923fd4)
+[2025-03-29 22:42:36.041] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8dab0344)
+[2025-03-29 22:42:46.725] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f08a09f0)
+[2025-03-29 22:42:50.814] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2294dcee)
+[2025-03-29 22:42:54.360] INFO     (Optimizer) Added mof to optimizer queue (name=mof-260ef4ea)
+[2025-03-29 22:42:58.255] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4654db60)
+[2025-03-29 22:43:04.205] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6c4ec35d)
+[2025-03-29 22:43:04.718] INFO     (Optimizer) Added mof to optimizer queue (name=mof-47eac077)
+[2025-03-29 22:43:11.126] INFO     (Optimizer) Added mof to optimizer queue (name=mof-51a5356a)
+[2025-03-29 22:43:14.181] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e5112f50)
+[2025-03-29 22:43:28.334] INFO     (Optimizer) Added mof to optimizer queue (name=mof-afadcd66)
+[2025-03-29 22:43:33.750] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f60174c1)
+[2025-03-29 22:43:37.078] INFO     (Optimizer) Added mof to optimizer queue (name=mof-14244871)
+[2025-03-29 22:43:40.994] INFO     (Optimizer) Added mof to optimizer queue (name=mof-440026da)
+[2025-03-29 22:43:47.266] INFO     (Optimizer) Added mof to optimizer queue (name=mof-00951a81)
+[2025-03-29 22:43:48.102] INFO     (Optimizer) Added mof to optimizer queue (name=mof-17cfb300)
+[2025-03-29 22:43:49.576] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1bd0d9a3)
+[2025-03-29 22:43:53.508] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0758a3cc)
+[2025-03-29 22:43:57.258] INFO     (Optimizer) Added mof to optimizer queue (name=mof-da2c71df)
+[2025-03-29 22:44:01.234] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4967973e)
+[2025-03-29 22:44:10.802] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fd0dae42)
+[2025-03-29 22:44:12.058] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eb931382)
+[2025-03-29 22:44:18.505] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cf398331)
+[2025-03-29 22:44:34.079] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a34e42ea)
+[2025-03-29 22:44:36.370] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8e250b9e)
+[2025-03-29 22:44:38.232] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5f62fc67)
+[2025-03-29 22:44:39.821] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a97a2ba3)
+[2025-03-29 22:44:41.238] INFO     (Optimizer) Added mof to optimizer queue (name=mof-71b057f5)
+[2025-03-29 22:45:08.362] INFO     (Optimizer) Added mof to optimizer queue (name=mof-13793959)
+[2025-03-29 22:45:15.065] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7ab03791)
+[2025-03-29 22:45:15.612] INFO     (Optimizer) Added mof to optimizer queue (name=mof-70bcf8f9)
+[2025-03-29 22:45:16.128] INFO     (Optimizer) Added mof to optimizer queue (name=mof-27288bd3)
+[2025-03-29 22:45:18.471] INFO     (Optimizer) Added mof to optimizer queue (name=mof-04ad0969)
+[2025-03-29 22:45:21.017] INFO     (Optimizer) Added mof to optimizer queue (name=mof-116cddda)
+[2025-03-29 22:45:27.273] INFO     (Optimizer) Added mof to optimizer queue (name=mof-55bd51a9)
+[2025-03-29 22:45:30.502] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9d467999)
+[2025-03-29 22:45:35.372] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0cbf8b44)
+[2025-03-29 22:45:44.390] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d4e866df)
+[2025-03-29 22:45:49.534] INFO     (Optimizer) Added mof to optimizer queue (name=mof-92ef8aa6)
+[2025-03-29 22:45:52.305] INFO     (Optimizer) Added mof to optimizer queue (name=mof-55cd53ad)
+[2025-03-29 22:45:52.897] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8a34d033)
+[2025-03-29 22:45:54.876] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6dddd5d9)
+[2025-03-29 22:46:01.359] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3120b530)
+[2025-03-29 22:46:08.689] INFO     (Optimizer) Added mof to optimizer queue (name=mof-961744e8)
+[2025-03-29 22:46:12.476] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f4c51c68)
+[2025-03-29 22:46:21.440] INFO     (Optimizer) Added mof to optimizer queue (name=mof-620dc0c8)
+[2025-03-29 22:46:26.951] INFO     (Optimizer) Added mof to optimizer queue (name=mof-51a5161c)
+[2025-03-29 22:46:29.614] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3d6c8eb3)
+[2025-03-29 22:46:37.522] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7f41daab)
+[2025-03-29 22:46:38.519] INFO     (Optimizer) Added mof to optimizer queue (name=mof-90cece3a)
+[2025-03-29 22:46:47.659] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bcd9b3a2)
+[2025-03-29 22:47:02.943] INFO     (Optimizer) Added mof to optimizer queue (name=mof-591f3124)
+[2025-03-29 22:47:08.786] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d14753a1)
+[2025-03-29 22:47:09.262] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2b51b8d0)
+[2025-03-29 22:47:18.656] INFO     (Optimizer) Added mof to optimizer queue (name=mof-17793165)
+[2025-03-29 22:47:19.097] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6b8ab438)
+[2025-03-29 22:47:24.407] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5265991e)
+[2025-03-29 22:47:32.913] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9367805d)
+[2025-03-29 22:47:35.666] INFO     (Optimizer) Added mof to optimizer queue (name=mof-083c696f)
+[2025-03-29 22:47:36.119] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5e647696)
+[2025-03-29 22:47:36.553] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9ec55649)
+[2025-03-29 22:47:38.864] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ed86bf61)
+[2025-03-29 22:47:40.879] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bad92ecb)
+[2025-03-29 22:47:47.271] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d287121b)
+[2025-03-29 22:48:06.025] INFO     (Optimizer) Added mof to optimizer queue (name=mof-523e6dfc)
+[2025-03-29 22:48:06.537] INFO     (Optimizer) Added mof to optimizer queue (name=mof-38ce692f)
+[2025-03-29 22:48:19.911] INFO     (Optimizer) Added mof to optimizer queue (name=mof-54ce78c6)
+[2025-03-29 22:48:23.388] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4be183b0)
+[2025-03-29 22:48:28.854] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d4768756)
+[2025-03-29 22:48:32.459] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4157714b)
+[2025-03-29 22:48:41.941] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e45ef5f5)
+[2025-03-29 22:48:42.450] INFO     (Optimizer) Added mof to optimizer queue (name=mof-71fceac6)
+[2025-03-29 22:48:42.940] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ac566ab9)
+[2025-03-29 22:48:49.919] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d91ce2d0)
+[2025-03-29 22:48:50.895] INFO     (Optimizer) Added mof to optimizer queue (name=mof-929fdb0f)
+[2025-03-29 22:48:54.608] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f3674d2b)
+[2025-03-29 22:48:56.396] INFO     (Optimizer) Added mof to optimizer queue (name=mof-df293ead)
+[2025-03-29 22:49:01.514] INFO     (Optimizer) Added mof to optimizer queue (name=mof-065a2022)
+[2025-03-29 22:49:05.108] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c43cbb07)
+[2025-03-29 22:49:06.411] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e41f4f5b)
+[2025-03-29 22:49:19.352] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a6db883b)
+[2025-03-29 22:49:22.421] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eb292ef8)
+[2025-03-29 22:49:26.001] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d8a3747c)
+[2025-03-29 22:49:29.265] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6993af2f)
+[2025-03-29 22:49:35.723] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a03b549f)
+[2025-03-29 22:49:37.805] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f223e2e5)
+[2025-03-29 22:49:38.366] INFO     (Optimizer) Added mof to optimizer queue (name=mof-999dcb9b)
+[2025-03-29 22:49:47.133] INFO     (Optimizer) Added mof to optimizer queue (name=mof-dadfcce2)
+[2025-03-29 22:49:49.264] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ea763c09)
+[2025-03-29 22:50:01.603] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e2fb4ffc)
+[2025-03-29 22:50:02.076] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bda69f43)
+[2025-03-29 22:50:10.284] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8bdc20ae)
+[2025-03-29 22:50:17.150] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5bc9a4c2)
+[2025-03-29 22:50:20.153] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5fb223f0)
+[2025-03-29 22:50:25.006] INFO     (Optimizer) Added mof to optimizer queue (name=mof-29204d2c)
+[2025-03-29 22:50:26.400] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9f382cfe)
+[2025-03-29 22:50:28.103] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a7d1d90d)
+[2025-03-29 22:50:28.655] INFO     (Optimizer) Added mof to optimizer queue (name=mof-add1aa43)
+[2025-03-29 22:50:29.376] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ac6665ce)
+[2025-03-29 22:50:41.564] INFO     (Optimizer) Added mof to optimizer queue (name=mof-59d6b32f)
+[2025-03-29 22:50:47.450] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3e7f221f)
+[2025-03-29 22:50:54.078] INFO     (parsl.dataflow.dflow) Task 1 completed (launched -> exec_done)
+[2025-03-29 22:50:54.079] INFO     (Optimizer) END optimize-cells 0cd296eb-bf5a-479e-9b04-45ba52891bdd
+[2025-03-29 22:50:54.079] INFO     (Optimizer) Completed optimize-cells task (name=mof-e4add519)
+[2025-03-29 22:50:54.079] INFO     (parsl.dataflow.dflow) Task 4 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:50:54.080] INFO     (Optimizer) START optimize-cells 4d352063-afce-44c6-90fd-1015e377e3c8
+[2025-03-29 22:50:54.081] INFO     (Optimizer) Submitted optimize-cells task (name=mof-55cd53ad)
+[2025-03-29 22:50:54.082] INFO     (parsl.dataflow.dflow) Parsl task 4 try 0 launched on executor polaris-htex with executor id 5
+[2025-03-29 22:50:54.082] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-03-29 22:50:54.082] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-03-29 22:50:54.203] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1da7bc19)
+[2025-03-29 22:50:54.492] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 22:50:54.492] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-03-29 22:50:54.492] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-03-29 22:50:58.724] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3d0aa189)
+[2025-03-29 22:51:05.250] INFO     (parsl.dataflow.dflow) Task 0 completed (launched -> exec_done)
+[2025-03-29 22:51:05.250] INFO     (Optimizer) END optimize-cells 6a0512d6-e836-4b19-80c3-6e1f44051f35
+[2025-03-29 22:51:05.251] INFO     (Optimizer) Completed optimize-cells task (name=mof-7038d336)
+[2025-03-29 22:51:05.251] INFO     (parsl.dataflow.dflow) Task 5 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:51:05.252] INFO     (Optimizer) START optimize-cells 2f8dc61a-86a9-46bc-a40b-38d187e5629d
+[2025-03-29 22:51:05.254] INFO     (parsl.dataflow.dflow) Parsl task 5 try 0 launched on executor polaris-htex with executor id 6
+[2025-03-29 22:51:05.254] INFO     (Optimizer) Submitted optimize-cells task (name=mof-9f382cfe)
+[2025-03-29 22:51:05.254] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-03-29 22:51:05.254] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-03-29 22:51:05.615] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 22:51:05.616] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-03-29 22:51:05.616] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-03-29 22:51:11.962] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d0f591e5)
+[2025-03-29 22:51:24.665] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e989c78f)
+[2025-03-29 22:51:29.380] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3b40eb6c)
+[2025-03-29 22:51:29.940] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4d84db93)
+[2025-03-29 22:51:33.054] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ddb8ba6f)
+[2025-03-29 22:51:34.074] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fc545843)
+[2025-03-29 22:51:34.796] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0b861e28)
+[2025-03-29 22:51:41.731] INFO     (Optimizer) Added mof to optimizer queue (name=mof-52a51e4e)
+[2025-03-29 22:52:03.851] INFO     (Optimizer) Added mof to optimizer queue (name=mof-929ef299)
+[2025-03-29 22:52:08.651] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ee8eb41c)
+[2025-03-29 22:52:09.970] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9f47b3b1)
+[2025-03-29 22:52:13.370] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3ded16e0)
+[2025-03-29 22:52:36.659] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9ff07954)
+[2025-03-29 22:52:47.142] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cad8752b)
+[2025-03-29 22:52:47.619] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a5842f2e)
+[2025-03-29 22:53:04.007] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3cd8ed8c)
+[2025-03-29 22:53:05.940] INFO     (Optimizer) Added mof to optimizer queue (name=mof-75b56b89)
+[2025-03-29 22:53:06.459] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0fb28642)
+[2025-03-29 22:53:08.703] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1c02fe72)
+[2025-03-29 22:53:09.335] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ab0c7bba)
+[2025-03-29 22:53:18.454] INFO     (Optimizer) Added mof to optimizer queue (name=mof-16d5dbd1)
+[2025-03-29 22:53:20.853] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ed32de0b)
+[2025-03-29 22:53:21.367] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0abed5ae)
+[2025-03-29 22:53:21.925] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8a343a4e)
+[2025-03-29 22:53:24.436] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ffb624df)
+[2025-03-29 22:53:27.842] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4ed091cb)
+[2025-03-29 22:53:28.391] INFO     (Optimizer) Added mof to optimizer queue (name=mof-28389541)
+[2025-03-29 22:53:38.097] INFO     (Optimizer) Added mof to optimizer queue (name=mof-de18ce80)
+[2025-03-29 22:53:40.779] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a998322e)
+[2025-03-29 22:53:44.158] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1b991b1d)
+[2025-03-29 22:53:51.806] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3789353d)
+[2025-03-29 22:54:08.960] INFO     (Optimizer) Added mof to optimizer queue (name=mof-290c1e20)
+[2025-03-29 22:54:09.494] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9291445c)
+[2025-03-29 22:54:12.603] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b2cd4cbb)
+[2025-03-29 22:54:20.978] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0799aa92)
+[2025-03-29 22:54:28.736] INFO     (Optimizer) Added mof to optimizer queue (name=mof-304cd297)
+[2025-03-29 22:54:40.101] INFO     (Optimizer) Added mof to optimizer queue (name=mof-92c30f5c)
+[2025-03-29 22:54:40.592] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bb413c69)
+[2025-03-29 22:54:42.111] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2cdeb585)
+[2025-03-29 22:54:50.359] INFO     (Optimizer) Added mof to optimizer queue (name=mof-33e2ed15)
+[2025-03-29 22:54:59.057] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2f8cf1df)
+[2025-03-29 22:55:00.975] INFO     (Optimizer) Added mof to optimizer queue (name=mof-df06a8f0)
+[2025-03-29 22:55:07.224] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b2dbb207)
+[2025-03-29 22:55:13.634] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8edfb444)
+[2025-03-29 22:55:17.806] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0d5cbfbe)
+[2025-03-29 22:55:24.864] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5109aa72)
+[2025-03-29 22:55:36.296] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3fe5af46)
+[2025-03-29 22:55:37.938] INFO     (Optimizer) Added mof to optimizer queue (name=mof-943ca6ed)
+[2025-03-29 22:55:40.016] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e780293d)
+[2025-03-29 22:55:41.133] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e7649be3)
+[2025-03-29 22:55:48.759] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cdaed14c)
+[2025-03-29 22:55:53.869] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2c41e12f)
+[2025-03-29 22:56:00.893] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3094a5e1)
+[2025-03-29 22:56:01.393] INFO     (Optimizer) Added mof to optimizer queue (name=mof-136ef467)
+[2025-03-29 22:56:08.442] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0d0980fe)
+[2025-03-29 22:56:13.151] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f0bd5774)
+[2025-03-29 22:56:14.163] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e82b7e33)
+[2025-03-29 22:56:17.529] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1ea05950)
+[2025-03-29 22:56:32.499] INFO     (Optimizer) Added mof to optimizer queue (name=mof-58ac9ae3)
+[2025-03-29 22:56:39.121] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5f64f787)
+[2025-03-29 22:56:39.735] INFO     (Optimizer) Added mof to optimizer queue (name=mof-930ca3b3)
+[2025-03-29 22:56:54.297] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d5b73507)
+[2025-03-29 22:56:55.435] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c8b9770b)
+[2025-03-29 22:56:57.663] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e7eb8814)
+[2025-03-29 22:57:10.564] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0637a78c)
+[2025-03-29 22:57:11.420] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f262902a)
+[2025-03-29 22:57:23.126] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1d967f19)
+[2025-03-29 22:57:26.224] INFO     (Optimizer) Added mof to optimizer queue (name=mof-137c55da)
+[2025-03-29 22:57:26.749] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a4d46915)
+[2025-03-29 22:57:31.549] INFO     (Optimizer) Added mof to optimizer queue (name=mof-91d85e01)
+[2025-03-29 22:57:32.984] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7c111cea)
+[2025-03-29 22:57:33.527] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a64f6dfa)
+[2025-03-29 22:57:35.831] INFO     (parsl.dataflow.dflow) Task 2 completed (launched -> exec_done)
+[2025-03-29 22:57:35.831] INFO     (Optimizer) END optimize-cells 2bfb4801-7bf6-4be7-b790-5c6d43c60fbd
+[2025-03-29 22:57:35.831] INFO     (Optimizer) Completed optimize-cells task (name=mof-08bcf054)
+[2025-03-29 22:57:35.832] INFO     (parsl.dataflow.dflow) Task 6 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 22:57:35.832] INFO     (Optimizer) START optimize-cells 75913caf-bb08-43b7-94f5-397f97092a10
+[2025-03-29 22:57:35.834] INFO     (Optimizer) Submitted optimize-cells task (name=mof-137c55da)
+[2025-03-29 22:57:35.835] INFO     (parsl.dataflow.dflow) Parsl task 6 try 0 launched on executor polaris-htex with executor id 7
+[2025-03-29 22:57:35.835] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-03-29 22:57:35.835] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-03-29 22:57:36.100] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 22:57:36.100] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-03-29 22:57:36.100] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-03-29 22:57:36.922] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e95f2327)
+[2025-03-29 22:57:49.332] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fccb50df)
+[2025-03-29 22:57:55.473] INFO     (Optimizer) Added mof to optimizer queue (name=mof-24f0b726)
+[2025-03-29 22:57:56.018] INFO     (Optimizer) Added mof to optimizer queue (name=mof-35004f64)
+[2025-03-29 22:58:06.163] INFO     (Optimizer) Added mof to optimizer queue (name=mof-995d3ad8)
+[2025-03-29 22:58:06.708] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7df2fd13)
+[2025-03-29 22:58:18.307] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d70fa790)
+[2025-03-29 22:58:23.876] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cba656e5)
+[2025-03-29 22:58:28.389] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8c44c647)
+[2025-03-29 22:58:33.213] INFO     (Optimizer) Added mof to optimizer queue (name=mof-14ead3df)
+[2025-03-29 22:58:37.898] INFO     (Optimizer) Added mof to optimizer queue (name=mof-744bb497)
+[2025-03-29 22:58:41.840] INFO     (Optimizer) Added mof to optimizer queue (name=mof-16459eb7)
+[2025-03-29 22:59:03.390] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8256f18d)
+[2025-03-29 22:59:12.677] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8c6ddad1)
+[2025-03-29 22:59:13.224] INFO     (Optimizer) Added mof to optimizer queue (name=mof-798265fb)
+[2025-03-29 22:59:19.302] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ca526e67)
+[2025-03-29 22:59:20.825] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0f4c6396)
+[2025-03-29 22:59:21.588] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3448d811)
+[2025-03-29 22:59:22.961] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c004d964)
+[2025-03-29 22:59:25.135] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e90cf172)
+[2025-03-29 22:59:30.194] INFO     (Optimizer) Added mof to optimizer queue (name=mof-21c7db35)
+[2025-03-29 22:59:31.454] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d91f6143)
+[2025-03-29 22:59:32.040] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fb642cd7)
+[2025-03-29 22:59:35.056] INFO     (Optimizer) Added mof to optimizer queue (name=mof-95127f51)
+[2025-03-29 22:59:37.560] INFO     (Optimizer) Added mof to optimizer queue (name=mof-39fc5c7b)
+[2025-03-29 22:59:42.208] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0b82c12b)
+[2025-03-29 22:59:48.152] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2a7fd838)
+[2025-03-29 23:00:03.552] INFO     (Optimizer) Added mof to optimizer queue (name=mof-355b7034)
+[2025-03-29 23:00:07.991] INFO     (Optimizer) Added mof to optimizer queue (name=mof-94508404)
+[2025-03-29 23:00:12.844] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1e038134)
+[2025-03-29 23:00:18.266] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8aa87a72)
+[2025-03-29 23:00:25.197] INFO     (Optimizer) Added mof to optimizer queue (name=mof-05bf6dab)
+[2025-03-29 23:00:25.786] INFO     (Optimizer) Added mof to optimizer queue (name=mof-217a38ee)
+[2025-03-29 23:00:26.260] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5edf326e)
+[2025-03-29 23:00:29.922] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6f964a51)
+[2025-03-29 23:00:34.024] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7f07dbc0)
+[2025-03-29 23:00:46.655] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7152412b)
+[2025-03-29 23:00:49.483] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3b63e806)
+[2025-03-29 23:00:52.547] INFO     (Optimizer) Added mof to optimizer queue (name=mof-db10a6ec)
+[2025-03-29 23:00:57.856] INFO     (Optimizer) Added mof to optimizer queue (name=mof-33eb896a)
+[2025-03-29 23:01:12.733] INFO     (Optimizer) Added mof to optimizer queue (name=mof-08554790)
+[2025-03-29 23:01:13.320] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d6621359)
+[2025-03-29 23:01:15.024] INFO     (Optimizer) Added mof to optimizer queue (name=mof-19efe3c2)
+[2025-03-29 23:01:15.638] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9b2e8fde)
+[2025-03-29 23:01:23.520] INFO     (Optimizer) Added mof to optimizer queue (name=mof-39539ee4)
+[2025-03-29 23:01:35.633] INFO     (Optimizer) Added mof to optimizer queue (name=mof-982c5873)
+[2025-03-29 23:01:40.007] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f8d597c8)
+[2025-03-29 23:01:48.352] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e018a08c)
+[2025-03-29 23:01:58.101] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c7ffff49)
+[2025-03-29 23:01:58.606] INFO     (Optimizer) Added mof to optimizer queue (name=mof-37372447)
+[2025-03-29 23:02:00.767] INFO     (Optimizer) Added mof to optimizer queue (name=mof-43c3d142)
+[2025-03-29 23:02:09.731] INFO     (Optimizer) Added mof to optimizer queue (name=mof-dd235b8f)
+[2025-03-29 23:02:15.192] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1999eba4)
+[2025-03-29 23:02:16.476] INFO     (Optimizer) Added mof to optimizer queue (name=mof-073634ce)
+[2025-03-29 23:02:17.964] INFO     (Optimizer) Added mof to optimizer queue (name=mof-be1ce24b)
+[2025-03-29 23:02:18.467] INFO     (Optimizer) Added mof to optimizer queue (name=mof-96963771)
+[2025-03-29 23:02:30.668] INFO     (Optimizer) Added mof to optimizer queue (name=mof-40f8acaf)
+[2025-03-29 23:02:32.232] INFO     (Optimizer) Added mof to optimizer queue (name=mof-487fc980)
+[2025-03-29 23:02:36.140] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f5e67748)
+[2025-03-29 23:02:41.080] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d95ec518)
+[2025-03-29 23:02:43.084] INFO     (Optimizer) Added mof to optimizer queue (name=mof-023efdb3)
+[2025-03-29 23:02:49.831] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d5980343)
+[2025-03-29 23:03:01.276] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b8b07702)
+[2025-03-29 23:03:03.100] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0b286b51)
+[2025-03-29 23:03:10.490] INFO     (Optimizer) Added mof to optimizer queue (name=mof-418ad2d8)
+[2025-03-29 23:03:12.640] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eaf0a3a4)
+[2025-03-29 23:03:18.678] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1ecc7341)
+[2025-03-29 23:03:24.661] INFO     (Optimizer) Added mof to optimizer queue (name=mof-639f89f8)
+[2025-03-29 23:03:29.292] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2d8fd2fa)
+[2025-03-29 23:03:29.996] INFO     (Optimizer) Added mof to optimizer queue (name=mof-44798718)
+[2025-03-29 23:03:35.342] INFO     (Optimizer) Added mof to optimizer queue (name=mof-16dd027c)
+[2025-03-29 23:03:36.475] INFO     (Optimizer) Added mof to optimizer queue (name=mof-43688923)
+[2025-03-29 23:03:44.009] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a2efee82)
+[2025-03-29 23:03:44.522] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0f46d303)
+[2025-03-29 23:03:45.864] INFO     (Optimizer) Added mof to optimizer queue (name=mof-732d8b1a)
+[2025-03-29 23:03:48.785] INFO     (Optimizer) Added mof to optimizer queue (name=mof-614f1348)
+[2025-03-29 23:03:50.696] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2a3cbd53)
+[2025-03-29 23:03:57.206] INFO     (parsl.dataflow.dflow) Task 4 completed (launched -> exec_done)
+[2025-03-29 23:03:57.206] INFO     (Optimizer) END optimize-cells 4d352063-afce-44c6-90fd-1015e377e3c8
+[2025-03-29 23:03:57.207] INFO     (Optimizer) Completed optimize-cells task (name=mof-55cd53ad)
+[2025-03-29 23:03:57.207] INFO     (parsl.dataflow.dflow) Task 7 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:03:57.208] INFO     (Optimizer) START optimize-cells 41f1d0c0-cc80-4af1-a738-8f3ad39f5402
+[2025-03-29 23:03:57.210] INFO     (Optimizer) Submitted optimize-cells task (name=mof-1ea05950)
+[2025-03-29 23:03:57.210] INFO     (parsl.dataflow.dflow) Parsl task 7 try 0 launched on executor polaris-htex with executor id 8
+[2025-03-29 23:03:57.211] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:03:57.211] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:03:57.572] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 23:03:57.572] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-03-29 23:03:57.572] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-03-29 23:04:04.819] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6594c691)
+[2025-03-29 23:04:20.150] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b36427e6)
+[2025-03-29 23:04:22.210] INFO     (Optimizer) Added mof to optimizer queue (name=mof-79270873)
+[2025-03-29 23:04:23.835] INFO     (Optimizer) Added mof to optimizer queue (name=mof-aa0ed760)
+[2025-03-29 23:04:33.630] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6357a9f8)
+[2025-03-29 23:04:35.382] INFO     (Optimizer) Added mof to optimizer queue (name=mof-20d9c008)
+[2025-03-29 23:04:37.276] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bc896696)
+[2025-03-29 23:04:39.579] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b4e36a85)
+[2025-03-29 23:04:40.161] INFO     (Optimizer) Added mof to optimizer queue (name=mof-37cd812b)
+[2025-03-29 23:04:40.956] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0fc53501)
+[2025-03-29 23:04:45.651] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b248042a)
+[2025-03-29 23:04:52.614] INFO     (Optimizer) Added mof to optimizer queue (name=mof-91a9a129)
+[2025-03-29 23:05:00.140] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5d1971f9)
+[2025-03-29 23:05:02.961] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ba2eed2a)
+[2025-03-29 23:05:08.300] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9f96d8c1)
+[2025-03-29 23:05:16.184] INFO     (Optimizer) Added mof to optimizer queue (name=mof-834cc49a)
+[2025-03-29 23:05:18.851] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1cff189a)
+[2025-03-29 23:05:19.414] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3218ce54)
+[2025-03-29 23:05:45.984] INFO     (Optimizer) Added mof to optimizer queue (name=mof-aedc59b1)
+[2025-03-29 23:05:48.891] INFO     (Optimizer) Added mof to optimizer queue (name=mof-af72d803)
+[2025-03-29 23:05:57.125] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b1c43899)
+[2025-03-29 23:06:05.872] INFO     (Optimizer) Added mof to optimizer queue (name=mof-146f3642)
+[2025-03-29 23:06:08.451] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fd53dcb7)
+[2025-03-29 23:06:09.462] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c99d2bb1)
+[2025-03-29 23:06:10.213] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2f22018b)
+[2025-03-29 23:06:19.501] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ef811b7d)
+[2025-03-29 23:06:20.067] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d70065c0)
+[2025-03-29 23:06:29.291] INFO     (Optimizer) Added mof to optimizer queue (name=mof-48ec92ec)
+[2025-03-29 23:06:34.660] INFO     (Optimizer) Added mof to optimizer queue (name=mof-521676e9)
+[2025-03-29 23:06:37.129] INFO     (Optimizer) Added mof to optimizer queue (name=mof-287cf417)
+[2025-03-29 23:06:39.194] INFO     (Optimizer) Added mof to optimizer queue (name=mof-af03f717)
+[2025-03-29 23:06:40.460] INFO     (Optimizer) Added mof to optimizer queue (name=mof-251df2ca)
+[2025-03-29 23:06:43.267] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c83a4175)
+[2025-03-29 23:06:44.030] INFO     (Optimizer) Added mof to optimizer queue (name=mof-10d83ee5)
+[2025-03-29 23:06:45.006] INFO     (parsl.dataflow.dflow) Task 7 try 0 failed with exception of type AssertionError
+[2025-03-29 23:06:45.006] INFO     (parsl.dataflow.dflow) Task 7 marked for retry
+[2025-03-29 23:06:45.006] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:06:45.006] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:06:45.009] INFO     (parsl.dataflow.dflow) Parsl task 7 try 1 launched on executor polaris-htex with executor id 9
+[2025-03-29 23:06:45.009] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:06:45.009] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:06:47.188] INFO     (Optimizer) Added mof to optimizer queue (name=mof-878db160)
+[2025-03-29 23:07:02.071] INFO     (Optimizer) Added mof to optimizer queue (name=mof-dbd9687c)
+[2025-03-29 23:07:05.702] INFO     (Optimizer) Added mof to optimizer queue (name=mof-914eccd8)
+[2025-03-29 23:07:12.970] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cb7b29ef)
+[2025-03-29 23:07:16.633] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9e03a69f)
+[2025-03-29 23:07:17.139] INFO     (Optimizer) Added mof to optimizer queue (name=mof-45499250)
+[2025-03-29 23:07:18.396] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a0171982)
+[2025-03-29 23:07:25.629] INFO     (Optimizer) Added mof to optimizer queue (name=mof-451bf1f1)
+[2025-03-29 23:07:26.361] INFO     (Optimizer) Added mof to optimizer queue (name=mof-129c9660)
+[2025-03-29 23:07:31.739] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b4b98227)
+[2025-03-29 23:07:36.333] INFO     (Optimizer) Added mof to optimizer queue (name=mof-69a1974e)
+[2025-03-29 23:07:47.625] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8c626d77)
+[2025-03-29 23:08:07.939] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3de428ac)
+[2025-03-29 23:08:11.229] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3c08dc77)
+[2025-03-29 23:08:11.943] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6fd32047)
+[2025-03-29 23:08:13.558] INFO     (Optimizer) Added mof to optimizer queue (name=mof-84529342)
+[2025-03-29 23:08:14.612] INFO     (Optimizer) Added mof to optimizer queue (name=mof-557eed31)
+[2025-03-29 23:08:21.003] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a90f1cb5)
+[2025-03-29 23:08:21.553] INFO     (Optimizer) Added mof to optimizer queue (name=mof-200430da)
+[2025-03-29 23:08:22.101] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4e1988e5)
+[2025-03-29 23:08:23.158] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4561102b)
+[2025-03-29 23:08:57.501] INFO     (Optimizer) Added mof to optimizer queue (name=mof-36a7cd7b)
+[2025-03-29 23:09:01.753] INFO     (Optimizer) Added mof to optimizer queue (name=mof-20f8598e)
+[2025-03-29 23:09:04.032] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b5662e04)
+[2025-03-29 23:09:06.366] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1767c1a1)
+[2025-03-29 23:09:09.130] INFO     (Optimizer) Added mof to optimizer queue (name=mof-13b48707)
+[2025-03-29 23:09:18.438] INFO     (parsl.dataflow.dflow) Task 6 completed (launched -> exec_done)
+[2025-03-29 23:09:18.438] INFO     (Optimizer) END optimize-cells 75913caf-bb08-43b7-94f5-397f97092a10
+[2025-03-29 23:09:18.438] INFO     (Optimizer) Completed optimize-cells task (name=mof-137c55da)
+[2025-03-29 23:09:18.439] INFO     (parsl.dataflow.dflow) Task 8 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:09:18.440] INFO     (Optimizer) START optimize-cells cb4d94a3-f1aa-4201-a1d2-24c975a4390d
+[2025-03-29 23:09:18.442] INFO     (Optimizer) Submitted optimize-cells task (name=mof-0cbf8b44)
+[2025-03-29 23:09:18.442] INFO     (parsl.dataflow.dflow) Parsl task 8 try 0 launched on executor polaris-htex with executor id 10
+[2025-03-29 23:09:18.442] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-03-29 23:09:18.442] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-03-29 23:09:18.768] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 23:09:18.768] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-03-29 23:09:18.768] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-03-29 23:09:24.005] INFO     (Optimizer) Added mof to optimizer queue (name=mof-393df6d3)
+[2025-03-29 23:09:28.836] INFO     (Optimizer) Added mof to optimizer queue (name=mof-67ae4946)
+[2025-03-29 23:09:33.719] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cf143d81)
+[2025-03-29 23:09:37.502] INFO     (parsl.dataflow.dflow) Task 7 try 1 failed with exception of type AssertionError
+[2025-03-29 23:09:37.502] ERROR    (parsl.dataflow.dflow) Task 7 failed after 1 retry attempts
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 603, in _unwrap_remote_exception_wrapper
+    result.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 139, in wrapper
+    except Exception:
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/task.py", line 86, in optimize_cells_and_compute_charges_task
+    atoms = compute_partial_charges(path)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/simulation/cp2k.py", line 155, in run_optimization
+    return self._run_cp2k(mof.name, atoms, 'optimize', level, steps, fmax, ignore_failure=True)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/simulation/cp2k.py", line 214, in _run_cp2k
+    dyn.run(fmax=fmax, steps=steps)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 415, in run
+    return Dynamics.run(self, steps=steps)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 284, in run
+    for converged in Dynamics.irun(self, steps=steps):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 234, in irun
+    self.optimizable.get_forces()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/filters.py", line 30, in get_forces
+    return self.filterobj.get_forces()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/filters.py", line 456, in get_forces
+    stress = self.atoms.get_stress(**kwargs)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/atoms.py", line 859, in get_stress
+    stress = self._calc.get_stress(self)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/abc.py", line 33, in get_stress
+    return self.get_property('stress', atoms)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/calculator.py", line 538, in get_property
+    self.calculate(atoms, [name], system_changes)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/cp2k.py", line 336, in calculate
+    self._shell.expect('* READY')
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/cp2k.py", line 603, in expect
+    assert received == line
+AssertionError
+[2025-03-29 23:09:37.507] INFO     (Optimizer) END optimize-cells 41f1d0c0-cc80-4af1-a738-8f3ad39f5402
+[2025-03-29 23:09:37.508] ERROR    (Optimizer) Failure in optimize-cells task
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 822, in _optimize_cells_task_callback
+    record, atoms = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 603, in _unwrap_remote_exception_wrapper
+    result.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 139, in wrapper
+    except Exception:
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/task.py", line 86, in optimize_cells_and_compute_charges_task
+    atoms = compute_partial_charges(path)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/simulation/cp2k.py", line 155, in run_optimization
+    return self._run_cp2k(mof.name, atoms, 'optimize', level, steps, fmax, ignore_failure=True)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/simulation/cp2k.py", line 214, in _run_cp2k
+    dyn.run(fmax=fmax, steps=steps)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 415, in run
+    return Dynamics.run(self, steps=steps)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 284, in run
+    for converged in Dynamics.irun(self, steps=steps):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/optimize/optimize.py", line 234, in irun
+    self.optimizable.get_forces()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/filters.py", line 30, in get_forces
+    return self.filterobj.get_forces()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/filters.py", line 456, in get_forces
+    stress = self.atoms.get_stress(**kwargs)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/atoms.py", line 859, in get_stress
+    stress = self._calc.get_stress(self)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/abc.py", line 33, in get_stress
+    return self.get_property('stress', atoms)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/calculator.py", line 538, in get_property
+    self.calculate(atoms, [name], system_changes)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/cp2k.py", line 336, in calculate
+    self._shell.expect('* READY')
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/ase/calculators/cp2k.py", line 603, in expect
+    assert received == line
+AssertionError
+[2025-03-29 23:09:37.508] INFO     (parsl.dataflow.dflow) Task 9 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:09:37.509] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-03-29 23:09:37.509] INFO     (Optimizer) START optimize-cells 855cd27b-e788-4b9a-9a5c-98db88b417f6
+[2025-03-29 23:09:37.510] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-03-29 23:09:37.511] INFO     (Optimizer) Submitted optimize-cells task (name=mof-05ee0dc5)
+[2025-03-29 23:09:37.511] INFO     (parsl.dataflow.dflow) Parsl task 9 try 0 launched on executor polaris-htex with executor id 11
+[2025-03-29 23:09:37.511] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-03-29 23:09:37.511] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-03-29 23:09:39.326] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cd1749ac)
+[2025-03-29 23:09:45.746] INFO     (Optimizer) Added mof to optimizer queue (name=mof-89e63b32)
+[2025-03-29 23:09:47.982] INFO     (Optimizer) Added mof to optimizer queue (name=mof-13228203)
+[2025-03-29 23:09:55.078] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8cb63d03)
+[2025-03-29 23:09:57.757] INFO     (Optimizer) Added mof to optimizer queue (name=mof-45e56a3c)
+[2025-03-29 23:10:01.404] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f56911d4)
+[2025-03-29 23:10:10.180] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cee37e75)
+[2025-03-29 23:10:11.026] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fe6e38ac)
+[2025-03-29 23:10:17.547] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cbc236a6)
+[2025-03-29 23:10:24.489] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4ce96294)
+[2025-03-29 23:10:25.088] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1c5445bf)
+[2025-03-29 23:10:36.343] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8beba309)
+[2025-03-29 23:10:36.823] INFO     (Optimizer) Added mof to optimizer queue (name=mof-15b950e5)
+[2025-03-29 23:10:47.962] INFO     (Optimizer) Added mof to optimizer queue (name=mof-562064bc)
+[2025-03-29 23:11:03.468] INFO     (Optimizer) Added mof to optimizer queue (name=mof-91b308db)
+[2025-03-29 23:11:08.858] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8f434d69)
+[2025-03-29 23:11:12.837] INFO     (Optimizer) Added mof to optimizer queue (name=mof-01711646)
+[2025-03-29 23:11:13.737] INFO     (Optimizer) Added mof to optimizer queue (name=mof-da8d8ddb)
+[2025-03-29 23:11:17.619] INFO     (Optimizer) Added mof to optimizer queue (name=mof-24c3aea2)
+[2025-03-29 23:11:26.631] INFO     (Optimizer) Added mof to optimizer queue (name=mof-50e0fb0c)
+[2025-03-29 23:11:31.824] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cfd66096)
+[2025-03-29 23:11:32.794] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7eb3265a)
+[2025-03-29 23:11:34.894] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f6207d9a)
+[2025-03-29 23:11:35.845] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2a034393)
+[2025-03-29 23:11:36.322] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7a7d4a5a)
+[2025-03-29 23:11:47.821] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5a1f9b89)
+[2025-03-29 23:11:49.966] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9b76f32e)
+[2025-03-29 23:11:55.150] INFO     (Optimizer) Added mof to optimizer queue (name=mof-660336fb)
+[2025-03-29 23:11:55.706] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8ccf8c7f)
+[2025-03-29 23:11:56.152] INFO     (Optimizer) Added mof to optimizer queue (name=mof-aaaade73)
+[2025-03-29 23:12:15.060] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fb05d08b)
+[2025-03-29 23:12:17.482] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7281df19)
+[2025-03-29 23:12:21.560] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d31759b4)
+[2025-03-29 23:12:23.522] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b4b98227)
+[2025-03-29 23:12:28.587] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7b1af545)
+[2025-03-29 23:12:29.028] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3a77c141)
+[2025-03-29 23:12:29.477] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a0b034ed)
+[2025-03-29 23:12:31.897] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4ef3075b)
+[2025-03-29 23:12:33.242] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3e522110)
+[2025-03-29 23:12:33.937] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f554b8f0)
+[2025-03-29 23:12:40.458] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b137d20e)
+[2025-03-29 23:12:50.354] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0ae4c255)
+[2025-03-29 23:12:52.437] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4a519121)
+[2025-03-29 23:13:14.905] INFO     (Optimizer) Added mof to optimizer queue (name=mof-63b55fff)
+[2025-03-29 23:13:16.226] INFO     (Optimizer) Added mof to optimizer queue (name=mof-84e56a15)
+[2025-03-29 23:13:20.625] INFO     (Optimizer) Added mof to optimizer queue (name=mof-77b364d6)
+[2025-03-29 23:13:21.693] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9da07418)
+[2025-03-29 23:13:22.997] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1eda03c3)
+[2025-03-29 23:13:23.512] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4537e499)
+[2025-03-29 23:13:46.415] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2c5b9bfa)
+[2025-03-29 23:13:52.149] INFO     (Optimizer) Added mof to optimizer queue (name=mof-db95f620)
+[2025-03-29 23:13:58.031] INFO     (Optimizer) Added mof to optimizer queue (name=mof-76d47566)
+[2025-03-29 23:14:03.179] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b63efa76)
+[2025-03-29 23:14:06.173] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5b7aac59)
+[2025-03-29 23:14:09.234] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f2f7f440)
+[2025-03-29 23:14:10.554] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a8cbd007)
+[2025-03-29 23:14:11.324] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6bbdc4b6)
+[2025-03-29 23:14:17.041] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f6fd6463)
+[2025-03-29 23:14:19.642] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bf9ad79e)
+[2025-03-29 23:14:20.114] INFO     (Optimizer) Added mof to optimizer queue (name=mof-86a05207)
+[2025-03-29 23:14:20.596] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ef6e48cb)
+[2025-03-29 23:14:21.130] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9da8ed1c)
+[2025-03-29 23:14:27.097] INFO     (Optimizer) Added mof to optimizer queue (name=mof-36bfdf45)
+[2025-03-29 23:14:27.649] INFO     (Optimizer) Added mof to optimizer queue (name=mof-be0b1950)
+[2025-03-29 23:14:35.919] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7451af54)
+[2025-03-29 23:14:43.220] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0dfd0bc3)
+[2025-03-29 23:14:51.817] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e0e866c3)
+[2025-03-29 23:14:52.320] INFO     (Optimizer) Added mof to optimizer queue (name=mof-22a776a1)
+[2025-03-29 23:15:03.712] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e64727b9)
+[2025-03-29 23:15:04.189] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0d504dcc)
+[2025-03-29 23:15:19.376] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7d6e4813)
+[2025-03-29 23:15:20.088] INFO     (Optimizer) Added mof to optimizer queue (name=mof-35be6a72)
+[2025-03-29 23:15:27.741] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4827e4d1)
+[2025-03-29 23:15:33.482] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4b7275b7)
+[2025-03-29 23:15:38.389] INFO     (Optimizer) Added mof to optimizer queue (name=mof-53f7889f)
+[2025-03-29 23:15:38.841] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8f90b344)
+[2025-03-29 23:15:40.347] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6a9d5f4f)
+[2025-03-29 23:15:46.201] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2140f80c)
+[2025-03-29 23:15:48.842] INFO     (Optimizer) Added mof to optimizer queue (name=mof-963fa245)
+[2025-03-29 23:15:49.520] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bd49be34)
+[2025-03-29 23:15:54.669] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c5ca1da5)
+[2025-03-29 23:15:56.847] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4a4053ec)
+[2025-03-29 23:16:01.727] INFO     (Optimizer) Added mof to optimizer queue (name=mof-001e6606)
+[2025-03-29 23:16:02.175] INFO     (Optimizer) Added mof to optimizer queue (name=mof-61612021)
+[2025-03-29 23:16:08.115] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d7e9d14e)
+[2025-03-29 23:16:11.331] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9804e47b)
+[2025-03-29 23:16:20.122] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2166d35a)
+[2025-03-29 23:16:23.685] INFO     (Optimizer) Added mof to optimizer queue (name=mof-463c3991)
+[2025-03-29 23:16:28.095] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6df78b09)
+[2025-03-29 23:16:32.359] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7b857c21)
+[2025-03-29 23:16:35.519] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fd0b8d30)
+[2025-03-29 23:16:39.383] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e0d98fdc)
+[2025-03-29 23:16:42.939] INFO     (Optimizer) Added mof to optimizer queue (name=mof-792ccc72)
+[2025-03-29 23:16:47.140] INFO     (Optimizer) Added mof to optimizer queue (name=mof-84935c29)
+[2025-03-29 23:17:02.944] INFO     (Optimizer) Added mof to optimizer queue (name=mof-937b1052)
+[2025-03-29 23:17:05.174] INFO     (Optimizer) Added mof to optimizer queue (name=mof-92e504a0)
+[2025-03-29 23:17:11.678] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ea1e5fcb)
+[2025-03-29 23:17:16.571] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6e3d66c7)
+[2025-03-29 23:17:17.097] INFO     (Optimizer) Added mof to optimizer queue (name=mof-55f91011)
+[2025-03-29 23:17:23.491] INFO     (Optimizer) Added mof to optimizer queue (name=mof-bb5182cd)
+[2025-03-29 23:17:26.128] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ece7749a)
+[2025-03-29 23:17:38.368] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a09158d0)
+[2025-03-29 23:17:41.763] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4c7dae7b)
+[2025-03-29 23:17:46.455] INFO     (Optimizer) Added mof to optimizer queue (name=mof-26b1931a)
+[2025-03-29 23:17:49.987] INFO     (Optimizer) Added mof to optimizer queue (name=mof-789f6a97)
+[2025-03-29 23:17:58.360] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a44f0795)
+[2025-03-29 23:18:00.359] INFO     (Optimizer) Added mof to optimizer queue (name=mof-86ce394a)
+[2025-03-29 23:18:02.309] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e81b097a)
+[2025-03-29 23:18:05.777] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6a22142d)
+[2025-03-29 23:18:08.781] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fe8c556a)
+[2025-03-29 23:18:10.055] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f0d3498e)
+[2025-03-29 23:18:16.951] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f368d02f)
+[2025-03-29 23:18:20.678] INFO     (Optimizer) Added mof to optimizer queue (name=mof-63ce7864)
+[2025-03-29 23:18:23.451] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b9b09dda)
+[2025-03-29 23:18:31.389] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c8314ecb)
+[2025-03-29 23:18:34.865] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d5872a6d)
+[2025-03-29 23:18:52.032] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ac4e3397)
+[2025-03-29 23:18:53.124] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a08c8190)
+[2025-03-29 23:18:56.003] INFO     (Optimizer) Added mof to optimizer queue (name=mof-7a8166e2)
+[2025-03-29 23:19:09.391] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b53418c2)
+[2025-03-29 23:19:24.024] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0112ca94)
+[2025-03-29 23:19:27.326] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e814abe3)
+[2025-03-29 23:19:29.883] INFO     (Optimizer) Added mof to optimizer queue (name=mof-39356357)
+[2025-03-29 23:19:32.351] INFO     (Optimizer) Added mof to optimizer queue (name=mof-63ee7ba2)
+[2025-03-29 23:19:34.013] INFO     (Optimizer) Added mof to optimizer queue (name=mof-af2da459)
+[2025-03-29 23:19:36.215] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9f86ceaa)
+[2025-03-29 23:19:38.459] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9ea949b4)
+[2025-03-29 23:19:40.907] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ccc48a9c)
+[2025-03-29 23:19:57.091] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e197993c)
+[2025-03-29 23:19:57.568] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5c5adc9a)
+[2025-03-29 23:19:58.019] INFO     (Optimizer) Added mof to optimizer queue (name=mof-88ab4415)
+[2025-03-29 23:19:59.472] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4daeaeee)
+[2025-03-29 23:20:02.138] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c8f778d6)
+[2025-03-29 23:20:03.488] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cd5055b6)
+[2025-03-29 23:20:06.271] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6028b981)
+[2025-03-29 23:20:08.575] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0669fe07)
+[2025-03-29 23:20:17.061] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3231bf59)
+[2025-03-29 23:20:20.251] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eabba9e5)
+[2025-03-29 23:20:32.234] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3f31d281)
+[2025-03-29 23:20:42.018] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f2af41b1)
+[2025-03-29 23:20:42.903] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ff58eec1)
+[2025-03-29 23:20:45.543] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d581d0e4)
+[2025-03-29 23:20:51.001] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1e5359e3)
+[2025-03-29 23:20:55.173] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9dd5acfa)
+[2025-03-29 23:20:55.732] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e0128cf0)
+[2025-03-29 23:21:06.803] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8df769e9)
+[2025-03-29 23:21:07.387] INFO     (Optimizer) Added mof to optimizer queue (name=mof-85758007)
+[2025-03-29 23:21:09.471] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6f1b4d4a)
+[2025-03-29 23:21:10.621] INFO     (parsl.dataflow.dflow) Task 9 completed (launched -> exec_done)
+[2025-03-29 23:21:10.621] INFO     (Optimizer) END optimize-cells 855cd27b-e788-4b9a-9a5c-98db88b417f6
+[2025-03-29 23:21:10.621] INFO     (Optimizer) Completed optimize-cells task (name=mof-05ee0dc5)
+[2025-03-29 23:21:10.622] INFO     (parsl.dataflow.dflow) Task 10 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:21:10.623] INFO     (Optimizer) START optimize-cells 2efece5c-019d-4c46-aae6-ed2876eaa417
+[2025-03-29 23:21:10.625] INFO     (Optimizer) Submitted optimize-cells task (name=mof-b137d20e)
+[2025-03-29 23:21:10.625] INFO     (parsl.dataflow.dflow) Parsl task 10 try 0 launched on executor polaris-htex with executor id 12
+[2025-03-29 23:21:10.626] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2025-03-29 23:21:10.626] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2025-03-29 23:21:10.948] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 23:21:10.948] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-03-29 23:21:10.948] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-03-29 23:21:16.706] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8069054e)
+[2025-03-29 23:21:19.320] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e0a348e9)
+[2025-03-29 23:21:23.863] INFO     (Optimizer) Added mof to optimizer queue (name=mof-91959ca3)
+[2025-03-29 23:21:28.887] INFO     (parsl.dataflow.dflow) Task 8 completed (launched -> exec_done)
+[2025-03-29 23:21:28.887] INFO     (Optimizer) END optimize-cells cb4d94a3-f1aa-4201-a1d2-24c975a4390d
+[2025-03-29 23:21:28.887] INFO     (Optimizer) Completed optimize-cells task (name=mof-0cbf8b44)
+[2025-03-29 23:21:28.888] INFO     (parsl.dataflow.dflow) Task 11 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:21:28.888] INFO     (Optimizer) START optimize-cells 7ee3f227-6e76-409e-b40f-e0710cb81d75
+[2025-03-29 23:21:28.890] INFO     (Optimizer) Submitted optimize-cells task (name=mof-4537e499)
+[2025-03-29 23:21:28.891] INFO     (parsl.dataflow.dflow) Parsl task 11 try 0 launched on executor polaris-htex with executor id 13
+[2025-03-29 23:21:28.891] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2025-03-29 23:21:28.891] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2025-03-29 23:21:29.206] INFO     (Optimizer) Added mof to optimizer queue (name=mof-43fe3a7a)
+[2025-03-29 23:21:29.313] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 23:21:29.313] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-03-29 23:21:29.313] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-03-29 23:21:37.643] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c23ca004)
+[2025-03-29 23:21:46.875] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8a43a968)
+[2025-03-29 23:21:49.638] INFO     (Optimizer) Added mof to optimizer queue (name=mof-959e105e)
+[2025-03-29 23:21:58.187] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e6ac4ce4)
+[2025-03-29 23:22:02.634] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c4c4007b)
+[2025-03-29 23:22:03.413] INFO     (Optimizer) Added mof to optimizer queue (name=mof-adb9c192)
+[2025-03-29 23:22:07.152] INFO     (Optimizer) Added mof to optimizer queue (name=mof-426346c9)
+[2025-03-29 23:22:08.601] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d184c097)
+[2025-03-29 23:22:15.778] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ea99660a)
+[2025-03-29 23:22:23.045] INFO     (Optimizer) Added mof to optimizer queue (name=mof-47c4d5d1)
+[2025-03-29 23:22:32.186] INFO     (Optimizer) Added mof to optimizer queue (name=mof-409d94dd)
+[2025-03-29 23:22:33.308] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3a970d8e)
+[2025-03-29 23:22:37.676] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a8e43eed)
+[2025-03-29 23:22:46.862] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eefc4dec)
+[2025-03-29 23:22:49.202] INFO     (parsl.dataflow.dflow) Task 5 completed (launched -> exec_done)
+[2025-03-29 23:22:49.202] INFO     (Optimizer) END optimize-cells 2f8dc61a-86a9-46bc-a40b-38d187e5629d
+[2025-03-29 23:22:49.202] INFO     (Optimizer) Completed optimize-cells task (name=mof-9f382cfe)
+[2025-03-29 23:22:49.203] INFO     (parsl.dataflow.dflow) Task 12 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:22:49.204] INFO     (Optimizer) START optimize-cells c79725dc-2798-4318-9b1d-2a4c12263df3
+[2025-03-29 23:22:49.206] INFO     (Optimizer) Submitted optimize-cells task (name=mof-9ea949b4)
+[2025-03-29 23:22:49.206] INFO     (parsl.dataflow.dflow) Parsl task 12 try 0 launched on executor polaris-htex with executor id 14
+[2025-03-29 23:22:49.206] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2025-03-29 23:22:49.207] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2025-03-29 23:22:49.532] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-03-29 23:22:49.532] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-03-29 23:22:49.532] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-03-29 23:22:49.821] INFO     (Optimizer) Added mof to optimizer queue (name=mof-234d1ff3)
+[2025-03-29 23:22:52.479] INFO     (Optimizer) Added mof to optimizer queue (name=mof-dbe0ebf7)
+[2025-03-29 23:22:53.616] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8b7c81de)
+[2025-03-29 23:23:10.231] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b4298d81)
+[2025-03-29 23:23:13.590] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a946209c)
+[2025-03-29 23:23:18.985] INFO     (Optimizer) Added mof to optimizer queue (name=mof-60613217)
+[2025-03-29 23:23:28.672] INFO     (Optimizer) Added mof to optimizer queue (name=mof-40405509)
+[2025-03-29 23:23:33.269] INFO     (Optimizer) Added mof to optimizer queue (name=mof-28a8d3a2)
+[2025-03-29 23:23:37.936] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d047b86f)
+[2025-03-29 23:23:41.460] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5d969af1)
+[2025-03-29 23:23:42.015] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3c2f3367)
+[2025-03-29 23:23:49.854] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ed4aa362)
+[2025-03-29 23:23:54.050] INFO     (Optimizer) Added mof to optimizer queue (name=mof-508a8ed2)
+[2025-03-29 23:23:54.941] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0ba0f8e8)
+[2025-03-29 23:23:55.456] INFO     (Optimizer) Added mof to optimizer queue (name=mof-9c674efb)
+[2025-03-29 23:23:55.925] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3043356e)
+[2025-03-29 23:23:57.235] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4aa4bf17)
+[2025-03-29 23:24:00.502] INFO     (Optimizer) Added mof to optimizer queue (name=mof-525be4eb)
+[2025-03-29 23:24:22.016] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b7258c58)
+[2025-03-29 23:24:25.145] INFO     (Optimizer) Added mof to optimizer queue (name=mof-127085ed)
+[2025-03-29 23:24:34.577] INFO     (Optimizer) Added mof to optimizer queue (name=mof-11dcaffc)
+[2025-03-29 23:25:16.582] INFO     (parsl.dataflow.dflow) Task 3 completed (launched -> exec_done)
+[2025-03-29 23:25:16.582] INFO     (Optimizer) END optimize-cells a51e05ea-78d8-4573-98f4-dcd910ef9702
+[2025-03-29 23:25:16.582] INFO     (Optimizer) Completed optimize-cells task (name=mof-5e92fbd1)
+[2025-03-29 23:25:16.583] INFO     (parsl.dataflow.dflow) Task 13 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-03-29 23:25:16.584] INFO     (Optimizer) START optimize-cells 0f3261df-277b-4fd0-84bc-da38bd531826
+[2025-03-29 23:25:16.586] INFO     (Optimizer) Submitted optimize-cells task (name=mof-11dcaffc)
+[2025-03-29 23:25:16.586] INFO     (parsl.dataflow.dflow) Parsl task 13 try 0 launched on executor polaris-htex with executor id 15
+[2025-03-29 23:25:16.586] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2025-03-29 23:25:16.586] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2025-03-29 23:27:13.750] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-03-29 23:27:13.750] INFO     (parsl.executors.status_handling) Allocated block ID 1
+[2025-03-29 23:27:16.916] ERROR    (Optimizer) Error in submit-atoms action.
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 831, in _optimize_cells_task_callback
+    action_future.result(timeout=ACTION_TIMEOUT)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 460, in result
+    raise TimeoutError()
+concurrent.futures._base.TimeoutError
+[2025-03-29 23:27:16.917] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-03-29 23:27:16.917] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
