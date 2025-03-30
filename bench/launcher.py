@@ -158,6 +158,7 @@ class DaskConfig:
             scheduler = None
             kwargs = {
                 'dashboard_address': None,
+                'include_dashboard': False,
                 'worker_dashboard_address': None,
                 'n_workers': self.workers,
             }
@@ -219,6 +220,8 @@ class RayConfig:
             address=self.address,
             # configure_logging=False,
             # log_to_driver=False,
+            object_store_memory=100_000_000 if self.address is None else None,
+            include_dashboard=False if self.address is None else None,
             num_cpus=self.workers if self.address is None else None,
             num_gpus=0 if self.address is None else None,
             _temp_dir='/tmp/ray' if self.address is None else None,

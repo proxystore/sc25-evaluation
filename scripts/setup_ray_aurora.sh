@@ -46,7 +46,7 @@ stop_ray() {
 # Start Ray head node
 start_ray_head() {
     echo "[$(hostname)] Starting Ray head..."
-    ray start --num-gpus=$RAY_GPU_PER_NODE --num-cpus=$RAY_CPU_PER_NODE --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ray start --num-gpus=$RAY_GPU_PER_NODE --num-cpus=$RAY_CPU_PER_NODE --head --node-ip-address="$HSN_IP_ADDRESS" --include-dashboard=False --temp-dir=/tmp
 
     # Wait until Ray reports that the head node is up
     echo "[$(hostname)] Waiting for Ray head to be up..."
