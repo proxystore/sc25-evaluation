@@ -14,10 +14,10 @@ ytick.labelsize: 6
 # Figure parameters
 axes.linewidth: 0.5
 axes.grid: True
-axes.grid.axes: both
+axes.grid.axis: both
 grid.linewidth: 0.5
-grid.alpha: 0.5
-grid.color: '#6D6B71'
+grid.alpha: 1.0
+grid.color: "#DFDFDF"
 grid.linestyle: :
 lines.markersize: 6
 lines.linewidth: 1.0
@@ -39,7 +39,6 @@ figure.subplot.wspace: 0.2
 figure.subplot.hspace: 0.2
 
 # Rendering
-figure.figsize: 4, 3
 figure.dpi: 400
 savefig.dpi: 400
 savefig.format: pdf
