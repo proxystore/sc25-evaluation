@@ -1,0 +1,575 @@
+[2025-04-01 14:47:18.085] INFO     (root) Configured logger (level=INFO, file=/eagle/MOFA/jgpaul/scratch/mofa-runs/01Apr25144707/optimizer/log.txt)
+[2025-04-01 14:47:18.197] INFO     (parsl.dataflow.dflow) Starting DataFlowKernel with config
+Config(
+    app_cache=False, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=['0', '1', '2', '3'], 
+        block_error_handler=<function simple_error_handler at 0x7f1d5a140160>, 
+        cores_per_worker=1.0, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=15, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='polaris-htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_port={task_port} --result_port={result_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7f1d5a13a8c0>, 
+        max_workers_per_node=4, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=PBSProProvider(
+            account='proxystore', 
+            cmd_timeout=120, 
+            cpus_per_node=32, 
+            init_blocks=0, 
+            launcher=SimpleLauncher(debug=True), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=2, 
+            parallelism=1, 
+            queue='debug', 
+            scheduler_options='#PBS -l filesystems=home:eagle', 
+            select_options='ngpus=4', 
+            walltime='1:00:00', 
+            worker_init='module use /soft/modulefiles; module load conda; conda activate /eagle/MOFA/jgpaul/agentic-mof-workflow/env; cd /eagle/MOFA/jgpaul/agentic-mof-workflow/'
+        ), 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port_range=(54000, 55000), 
+        worker_ports=None, 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=False, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=1, 
+    retry_handler=None, 
+    run_dir='/eagle/MOFA/jgpaul/scratch/mofa-runs/01Apr25144707/optimizer', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+[2025-04-01 14:47:18.198] INFO     (parsl.dataflow.dflow) Parsl version: 2025.02.17
+[2025-04-01 14:47:18.198] INFO     (parsl.dataflow.dflow) Run id is: 6215ef47-4c56-4174-8e58-3de0e379c430
+[2025-04-01 14:47:18.488] INFO     (parsl.dataflow.memoization) App caching disabled for all apps
+[2025-04-01 14:47:19.495] INFO     (aeris.agent) Running agent (AgentID<8837a010>; Behavior<Optimizer>)
+[2025-04-01 14:47:23.490] INFO     (parsl.executors.status_handling) Scaling out by 0 blocks
+[2025-04-01 15:33:09.322] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2ae74250)
+[2025-04-01 15:33:09.323] INFO     (parsl.dataflow.dflow) Task 0 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:33:09.410] INFO     (Optimizer) START optimize-cells b61f6a9b-0cd1-437f-8732-196f261868fe
+[2025-04-01 15:33:09.416] INFO     (Optimizer) Submitted optimize-cells task (name=mof-2ae74250)
+[2025-04-01 15:33:09.447] INFO     (parsl.dataflow.dflow) Parsl task 0 try 0 launched on executor polaris-htex with executor id 1
+[2025-04-01 15:33:09.447] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-04-01 15:33:09.448] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-04-01 15:33:14.131] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-04-01 15:33:14.132] INFO     (parsl.executors.status_handling) Allocated block ID 0
+[2025-04-01 15:33:14.132] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2025-04-01 15:41:26.672] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e846569c)
+[2025-04-01 15:41:26.673] INFO     (parsl.dataflow.dflow) Task 1 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:41:26.674] INFO     (Optimizer) START optimize-cells 005127a2-5747-4097-8a04-7328114a706d
+[2025-04-01 15:41:26.677] INFO     (Optimizer) Submitted optimize-cells task (name=mof-e846569c)
+[2025-04-01 15:41:26.677] INFO     (parsl.dataflow.dflow) Parsl task 1 try 0 launched on executor polaris-htex with executor id 2
+[2025-04-01 15:41:26.678] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-04-01 15:41:26.678] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-04-01 15:41:58.041] INFO     (Optimizer) Added mof to optimizer queue (name=mof-23b36f8a)
+[2025-04-01 15:41:58.045] INFO     (parsl.dataflow.dflow) Task 2 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:41:58.045] INFO     (Optimizer) START optimize-cells a5ae3084-6629-4660-b751-8a0a44903c2d
+[2025-04-01 15:41:58.048] INFO     (Optimizer) Submitted optimize-cells task (name=mof-23b36f8a)
+[2025-04-01 15:41:58.049] INFO     (parsl.dataflow.dflow) Parsl task 2 try 0 launched on executor polaris-htex with executor id 3
+[2025-04-01 15:41:58.049] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-04-01 15:41:58.049] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-04-01 15:44:57.194] INFO     (Optimizer) Added mof to optimizer queue (name=mof-daddd14e)
+[2025-04-01 15:44:57.195] INFO     (parsl.dataflow.dflow) Task 3 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:44:57.196] INFO     (Optimizer) START optimize-cells 9b7371ca-b663-4d54-b719-865384d43b7e
+[2025-04-01 15:44:57.199] INFO     (Optimizer) Submitted optimize-cells task (name=mof-daddd14e)
+[2025-04-01 15:44:57.199] INFO     (parsl.dataflow.dflow) Parsl task 3 try 0 launched on executor polaris-htex with executor id 4
+[2025-04-01 15:44:57.200] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-04-01 15:44:57.200] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2025-04-01 15:47:47.087] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4756762d)
+[2025-04-01 15:47:47.088] INFO     (parsl.dataflow.dflow) Task 4 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:47:47.089] INFO     (Optimizer) START optimize-cells 2d416799-917a-4b10-9bed-8a74a45d1832
+[2025-04-01 15:47:47.091] INFO     (Optimizer) Submitted optimize-cells task (name=mof-4756762d)
+[2025-04-01 15:47:47.091] INFO     (parsl.dataflow.dflow) Parsl task 4 try 0 launched on executor polaris-htex with executor id 5
+[2025-04-01 15:47:47.091] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-04-01 15:47:47.092] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-04-01 15:50:26.136] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b04a9a24)
+[2025-04-01 15:50:26.137] INFO     (parsl.dataflow.dflow) Task 5 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:50:26.139] INFO     (Optimizer) START optimize-cells ad57f249-ed39-4e78-a010-0721e49b4292
+[2025-04-01 15:50:26.142] INFO     (Optimizer) Submitted optimize-cells task (name=mof-b04a9a24)
+[2025-04-01 15:50:26.142] INFO     (parsl.dataflow.dflow) Parsl task 5 try 0 launched on executor polaris-htex with executor id 6
+[2025-04-01 15:50:26.144] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-04-01 15:50:26.144] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-04-01 15:53:41.189] INFO     (Optimizer) Added mof to optimizer queue (name=mof-25844b82)
+[2025-04-01 15:53:41.224] INFO     (parsl.dataflow.dflow) Task 6 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:53:41.224] INFO     (Optimizer) START optimize-cells da6488e4-5b96-4714-a95b-c405e30669d1
+[2025-04-01 15:53:41.247] INFO     (Optimizer) Submitted optimize-cells task (name=mof-25844b82)
+[2025-04-01 15:53:41.250] INFO     (parsl.dataflow.dflow) Parsl task 6 try 0 launched on executor polaris-htex with executor id 7
+[2025-04-01 15:53:41.251] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-04-01 15:53:41.251] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-04-01 15:55:08.663] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4279f8fa)
+[2025-04-01 15:55:08.664] INFO     (parsl.dataflow.dflow) Task 7 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:55:08.665] INFO     (Optimizer) START optimize-cells e8512a30-de70-475f-abf0-0db795e517f1
+[2025-04-01 15:55:08.667] INFO     (Optimizer) Submitted optimize-cells task (name=mof-4279f8fa)
+[2025-04-01 15:55:08.668] INFO     (parsl.dataflow.dflow) Parsl task 7 try 0 launched on executor polaris-htex with executor id 8
+[2025-04-01 15:55:08.668] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-04-01 15:55:08.668] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-04-01 15:55:10.365] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1b2c6599)
+[2025-04-01 15:55:21.732] INFO     (Optimizer) Added mof to optimizer queue (name=mof-58cb2c85)
+[2025-04-01 15:55:22.455] INFO     (parsl.dataflow.dflow) Task 3 completed (launched -> exec_done)
+[2025-04-01 15:55:22.456] INFO     (Optimizer) END optimize-cells 9b7371ca-b663-4d54-b719-865384d43b7e
+[2025-04-01 15:55:22.456] INFO     (Optimizer) Completed optimize-cells task (name=mof-daddd14e)
+[2025-04-01 15:55:22.456] INFO     (parsl.dataflow.dflow) Task 8 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:55:22.473] INFO     (Optimizer) START optimize-cells 45511e98-3664-4baf-9666-802632f299bf
+[2025-04-01 15:55:22.475] INFO     (parsl.dataflow.dflow) Parsl task 8 try 0 launched on executor polaris-htex with executor id 9
+[2025-04-01 15:55:22.475] INFO     (Optimizer) Submitted optimize-cells task (name=mof-58cb2c85)
+[2025-04-01 15:55:22.475] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-04-01 15:55:22.475] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-04-01 15:55:22.809] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 15:55:22.809] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2025-04-01 15:55:22.809] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2025-04-01 15:56:11.633] INFO     (parsl.dataflow.dflow) Task 1 completed (launched -> exec_done)
+[2025-04-01 15:56:11.633] INFO     (Optimizer) END optimize-cells 005127a2-5747-4097-8a04-7328114a706d
+[2025-04-01 15:56:11.634] INFO     (Optimizer) Completed optimize-cells task (name=mof-e846569c)
+[2025-04-01 15:56:11.634] INFO     (parsl.dataflow.dflow) Task 9 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 15:56:11.635] INFO     (Optimizer) START optimize-cells a8683d7c-1843-4fc8-b7c8-63099b750462
+[2025-04-01 15:56:11.637] INFO     (parsl.dataflow.dflow) Parsl task 9 try 0 launched on executor polaris-htex with executor id 10
+[2025-04-01 15:56:11.637] INFO     (Optimizer) Submitted optimize-cells task (name=mof-1b2c6599)
+[2025-04-01 15:56:11.637] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-04-01 15:56:11.638] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-04-01 15:56:11.919] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 15:56:11.919] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2025-04-01 15:56:11.919] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2025-04-01 15:56:58.335] INFO     (Optimizer) Added mof to optimizer queue (name=mof-56762c8f)
+[2025-04-01 15:59:14.275] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8a32fadb)
+[2025-04-01 16:01:47.983] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ce959274)
+[2025-04-01 16:02:21.288] INFO     (Optimizer) Added mof to optimizer queue (name=mof-394764d8)
+[2025-04-01 16:05:03.911] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ad7c5a75)
+[2025-04-01 16:05:15.735] INFO     (Optimizer) Added mof to optimizer queue (name=mof-abbb456e)
+[2025-04-01 16:05:22.911] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a2bed7bc)
+[2025-04-01 16:07:39.232] INFO     (parsl.dataflow.dflow) Task 4 completed (launched -> exec_done)
+[2025-04-01 16:07:39.233] INFO     (Optimizer) END optimize-cells 2d416799-917a-4b10-9bed-8a74a45d1832
+[2025-04-01 16:07:39.233] INFO     (Optimizer) Completed optimize-cells task (name=mof-4756762d)
+[2025-04-01 16:07:39.233] INFO     (parsl.dataflow.dflow) Task 10 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 16:07:39.234] INFO     (Optimizer) START optimize-cells 0373f540-e96a-4a4e-9640-b8ab27c8f35e
+[2025-04-01 16:07:39.237] INFO     (Optimizer) Submitted optimize-cells task (name=mof-ad7c5a75)
+[2025-04-01 16:07:39.237] INFO     (parsl.dataflow.dflow) Parsl task 10 try 0 launched on executor polaris-htex with executor id 11
+[2025-04-01 16:07:39.237] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2025-04-01 16:07:39.237] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2025-04-01 16:07:39.520] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 16:07:39.521] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2025-04-01 16:07:39.521] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2025-04-01 16:09:13.036] INFO     (Optimizer) Added mof to optimizer queue (name=mof-177668eb)
+[2025-04-01 16:09:45.267] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d6aa8e1d)
+[2025-04-01 16:10:01.374] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c4547e90)
+[2025-04-01 16:10:06.370] INFO     (Optimizer) Added mof to optimizer queue (name=mof-11da70a4)
+[2025-04-01 16:11:32.185] INFO     (parsl.dataflow.dflow) Task 5 completed (launched -> exec_done)
+[2025-04-01 16:11:32.186] INFO     (Optimizer) END optimize-cells ad57f249-ed39-4e78-a010-0721e49b4292
+[2025-04-01 16:11:32.186] INFO     (Optimizer) Completed optimize-cells task (name=mof-b04a9a24)
+[2025-04-01 16:11:32.186] INFO     (parsl.dataflow.dflow) Task 11 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 16:11:32.187] INFO     (Optimizer) START optimize-cells 2ed42b91-64af-4a33-9cb1-8e1c985b6cf5
+[2025-04-01 16:11:32.190] INFO     (Optimizer) Submitted optimize-cells task (name=mof-abbb456e)
+[2025-04-01 16:11:32.190] INFO     (parsl.dataflow.dflow) Parsl task 11 try 0 launched on executor polaris-htex with executor id 12
+[2025-04-01 16:11:32.190] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2025-04-01 16:11:32.190] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2025-04-01 16:11:32.473] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 16:11:32.473] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2025-04-01 16:11:32.473] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2025-04-01 16:25:30.771] INFO     (parsl.dataflow.dflow) Task 0 completed (launched -> exec_done)
+[2025-04-01 16:25:30.771] INFO     (Optimizer) END optimize-cells b61f6a9b-0cd1-437f-8732-196f261868fe
+[2025-04-01 16:25:30.771] INFO     (Optimizer) Completed optimize-cells task (name=mof-2ae74250)
+[2025-04-01 16:25:30.789] INFO     (parsl.dataflow.dflow) Task 12 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 16:25:30.790] INFO     (Optimizer) START optimize-cells d592dc1a-f68c-4f85-b0c0-d0fd6f3f04ea
+[2025-04-01 16:25:30.812] INFO     (Optimizer) Submitted optimize-cells task (name=mof-11da70a4)
+[2025-04-01 16:25:30.821] INFO     (parsl.dataflow.dflow) Parsl task 12 try 0 launched on executor polaris-htex with executor id 13
+[2025-04-01 16:25:30.822] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2025-04-01 16:25:30.822] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2025-04-01 16:25:31.153] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 16:25:31.154] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2025-04-01 16:25:31.154] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2025-04-01 16:28:05.004] INFO     (parsl.dataflow.dflow) Task 2 completed (launched -> exec_done)
+[2025-04-01 16:28:05.004] INFO     (Optimizer) END optimize-cells a5ae3084-6629-4660-b751-8a0a44903c2d
+[2025-04-01 16:28:05.005] INFO     (Optimizer) Completed optimize-cells task (name=mof-23b36f8a)
+[2025-04-01 16:28:05.005] INFO     (parsl.dataflow.dflow) Task 13 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 16:28:05.006] INFO     (Optimizer) START optimize-cells 302d25d6-978d-4f64-9c77-5e817ff34851
+[2025-04-01 16:28:05.008] INFO     (Optimizer) Submitted optimize-cells task (name=mof-177668eb)
+[2025-04-01 16:28:05.008] INFO     (parsl.dataflow.dflow) Parsl task 13 try 0 launched on executor polaris-htex with executor id 14
+[2025-04-01 16:28:05.009] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2025-04-01 16:28:05.009] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2025-04-01 16:28:05.373] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 16:28:05.373] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2025-04-01 16:28:05.373] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2025-04-01 16:31:28.433] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a4ea4725)
+[2025-04-01 16:32:10.281] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8b9a8c16)
+[2025-04-01 16:32:17.237] INFO     (Optimizer) Added mof to optimizer queue (name=mof-76611e22)
+[2025-04-01 16:32:46.220] INFO     (Optimizer) Added mof to optimizer queue (name=mof-daa4cc6c)
+[2025-04-01 16:32:48.323] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f7b2ca34)
+[2025-04-01 16:32:59.000] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2d011d63)
+[2025-04-01 16:33:15.197] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f23e8aa7)
+[2025-04-01 16:33:15.683] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8fb22d8a)
+[2025-04-01 16:33:16.127] INFO     (Optimizer) Added mof to optimizer queue (name=mof-72a76ece)
+[2025-04-01 16:34:27.780] INFO     (Optimizer) Added mof to optimizer queue (name=mof-43e7ccfc)
+[2025-04-01 16:35:24.586] INFO     (Optimizer) Added mof to optimizer queue (name=mof-6fdf4774)
+[2025-04-01 16:35:41.147] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-04-01 16:35:41.147] INFO     (parsl.executors.status_handling) Allocated block ID 1
+[2025-04-01 16:35:41.161] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2025-04-01 16:36:48.409] INFO     (parsl.dataflow.dflow) Task 6 try 0 failed with exception of type ManagerLost
+[2025-04-01 16:36:48.409] INFO     (parsl.dataflow.dflow) Task 6 marked for retry
+[2025-04-01 16:36:48.410] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-04-01 16:36:48.410] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-04-01 16:36:48.410] INFO     (parsl.dataflow.dflow) Task 7 try 0 failed with exception of type ManagerLost
+[2025-04-01 16:36:48.430] INFO     (parsl.dataflow.dflow) Task 7 marked for retry
+[2025-04-01 16:36:48.430] INFO     (parsl.dataflow.dflow) Parsl task 6 try 1 launched on executor polaris-htex with executor id 15
+[2025-04-01 16:36:48.431] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-04-01 16:36:48.431] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-04-01 16:36:48.431] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-04-01 16:36:48.431] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-04-01 16:36:48.432] INFO     (parsl.dataflow.dflow) Task 8 try 0 failed with exception of type ManagerLost
+[2025-04-01 16:36:48.433] INFO     (parsl.dataflow.dflow) Task 8 marked for retry
+[2025-04-01 16:36:48.433] INFO     (parsl.dataflow.dflow) Parsl task 7 try 1 launched on executor polaris-htex with executor id 16
+[2025-04-01 16:36:48.433] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-04-01 16:36:48.433] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-04-01 16:36:48.433] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-04-01 16:36:48.434] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-04-01 16:36:48.434] INFO     (parsl.dataflow.dflow) Task 9 try 0 failed with exception of type ManagerLost
+[2025-04-01 16:36:48.435] INFO     (parsl.dataflow.dflow) Parsl task 8 try 1 launched on executor polaris-htex with executor id 17
+[2025-04-01 16:36:48.435] INFO     (parsl.dataflow.dflow) Task 9 marked for retry
+[2025-04-01 16:36:48.435] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-04-01 16:36:48.435] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-04-01 16:36:48.435] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-04-01 16:36:48.436] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-04-01 16:36:48.437] INFO     (parsl.dataflow.dflow) Parsl task 9 try 1 launched on executor polaris-htex with executor id 18
+[2025-04-01 16:36:48.437] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-04-01 16:36:48.437] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-04-01 16:37:43.602] INFO     (Optimizer) Added mof to optimizer queue (name=mof-19c58a24)
+[2025-04-01 16:38:07.211] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b61242b2)
+[2025-04-01 16:39:09.670] INFO     (Optimizer) Added mof to optimizer queue (name=mof-72195fcb)
+[2025-04-01 16:40:11.343] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2a171488)
+[2025-04-01 16:46:20.603] INFO     (Optimizer) Added mof to optimizer queue (name=mof-32ae0b17)
+[2025-04-01 16:47:24.427] INFO     (Optimizer) Added mof to optimizer queue (name=mof-aded42fe)
+[2025-04-01 16:47:27.001] INFO     (Optimizer) Added mof to optimizer queue (name=mof-35092256)
+[2025-04-01 16:48:26.871] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3e6c59df)
+[2025-04-01 16:49:22.982] INFO     (Optimizer) Added mof to optimizer queue (name=mof-eac11dd7)
+[2025-04-01 16:49:56.482] INFO     (Optimizer) Added mof to optimizer queue (name=mof-05da8b46)
+[2025-04-01 16:50:22.991] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b3805ca6)
+[2025-04-01 16:52:22.173] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ff940a85)
+[2025-04-01 16:54:40.785] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ca17a3bd)
+[2025-04-01 17:02:52.786] INFO     (Optimizer) Added mof to optimizer queue (name=mof-52f53a53)
+[2025-04-01 17:03:29.601] INFO     (Optimizer) Added mof to optimizer queue (name=mof-49952483)
+[2025-04-01 17:04:38.283] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1bbb87b2)
+[2025-04-01 17:05:24.118] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ca6a3879)
+[2025-04-01 17:06:01.176] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ec0ce0ad)
+[2025-04-01 17:06:49.258] INFO     (Optimizer) Added mof to optimizer queue (name=mof-29555bd7)
+[2025-04-01 17:08:25.594] INFO     (Optimizer) Added mof to optimizer queue (name=mof-f18ad541)
+[2025-04-01 17:08:28.013] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5a84fcc9)
+[2025-04-01 17:09:30.058] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8b21d0cd)
+[2025-04-01 17:10:54.847] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4fd14b64)
+[2025-04-01 17:11:25.497] INFO     (Optimizer) Added mof to optimizer queue (name=mof-84bf4147)
+[2025-04-01 17:11:30.733] INFO     (parsl.dataflow.dflow) Task 10 completed (launched -> exec_done)
+[2025-04-01 17:11:30.733] INFO     (Optimizer) END optimize-cells 0373f540-e96a-4a4e-9640-b8ab27c8f35e
+[2025-04-01 17:11:30.733] INFO     (Optimizer) Completed optimize-cells task (name=mof-ad7c5a75)
+[2025-04-01 17:11:30.761] INFO     (parsl.dataflow.dflow) Task 14 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:11:30.774] INFO     (Optimizer) START optimize-cells 826abef6-fd8f-4113-b22c-499a3d15d7b5
+[2025-04-01 17:11:30.807] INFO     (Optimizer) Submitted optimize-cells task (name=mof-f23e8aa7)
+[2025-04-01 17:11:30.840] INFO     (parsl.dataflow.dflow) Parsl task 14 try 0 launched on executor polaris-htex with executor id 19
+[2025-04-01 17:11:30.841] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2025-04-01 17:11:30.841] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2025-04-01 17:11:31.127] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 17:11:31.128] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2025-04-01 17:11:31.128] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2025-04-01 17:12:56.679] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e254b258)
+[2025-04-01 17:15:06.592] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d9acce63)
+[2025-04-01 17:18:14.315] INFO     (parsl.dataflow.dflow) Task 12 completed (launched -> exec_done)
+[2025-04-01 17:18:14.316] INFO     (Optimizer) END optimize-cells d592dc1a-f68c-4f85-b0c0-d0fd6f3f04ea
+[2025-04-01 17:18:14.316] INFO     (Optimizer) Completed optimize-cells task (name=mof-11da70a4)
+[2025-04-01 17:18:14.317] INFO     (parsl.dataflow.dflow) Task 15 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:18:14.318] INFO     (Optimizer) START optimize-cells 23387f0d-d82d-4d36-bf33-e6652aaa230e
+[2025-04-01 17:18:14.320] INFO     (Optimizer) Submitted optimize-cells task (name=mof-eac11dd7)
+[2025-04-01 17:18:14.321] INFO     (parsl.dataflow.dflow) Parsl task 15 try 0 launched on executor polaris-htex with executor id 20
+[2025-04-01 17:18:14.321] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2025-04-01 17:18:14.321] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2025-04-01 17:18:14.721] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 17:18:14.721] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2025-04-01 17:18:14.721] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2025-04-01 17:26:27.630] INFO     (parsl.dataflow.dflow) Task 11 completed (launched -> exec_done)
+[2025-04-01 17:26:27.631] INFO     (Optimizer) END optimize-cells 2ed42b91-64af-4a33-9cb1-8e1c985b6cf5
+[2025-04-01 17:26:27.631] INFO     (Optimizer) Completed optimize-cells task (name=mof-abbb456e)
+[2025-04-01 17:26:27.632] INFO     (parsl.dataflow.dflow) Task 16 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:26:27.633] INFO     (Optimizer) START optimize-cells 089e2323-dc47-4b72-8a1e-0ee351dd2335
+[2025-04-01 17:26:27.635] INFO     (Optimizer) Submitted optimize-cells task (name=mof-72a76ece)
+[2025-04-01 17:26:27.635] INFO     (parsl.dataflow.dflow) Parsl task 16 try 0 launched on executor polaris-htex with executor id 21
+[2025-04-01 17:26:27.636] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2025-04-01 17:26:27.636] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2025-04-01 17:26:27.953] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 17:26:27.954] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2025-04-01 17:26:27.954] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2025-04-01 17:27:17.727] INFO     (parsl.dataflow.dflow) Task 13 completed (launched -> exec_done)
+[2025-04-01 17:27:17.727] INFO     (Optimizer) END optimize-cells 302d25d6-978d-4f64-9c77-5e817ff34851
+[2025-04-01 17:27:17.728] INFO     (Optimizer) Completed optimize-cells task (name=mof-177668eb)
+[2025-04-01 17:27:17.728] INFO     (parsl.dataflow.dflow) Task 17 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:27:17.729] INFO     (Optimizer) START optimize-cells 1c097e41-4f7b-41ca-b6e3-712822dde8b1
+[2025-04-01 17:27:17.731] INFO     (Optimizer) Submitted optimize-cells task (name=mof-ca17a3bd)
+[2025-04-01 17:27:17.732] INFO     (parsl.dataflow.dflow) Parsl task 17 try 0 launched on executor polaris-htex with executor id 22
+[2025-04-01 17:27:17.732] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2025-04-01 17:27:17.732] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2025-04-01 17:27:18.094] INFO     (Optimizer) Submitted mofs to estimator.
+[2025-04-01 17:27:18.094] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2025-04-01 17:27:18.094] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2025-04-01 17:34:52.508] INFO     (Optimizer) Added mof to optimizer queue (name=mof-cdca9442)
+[2025-04-01 17:35:37.034] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c2511267)
+[2025-04-01 17:35:54.238] INFO     (Optimizer) Added mof to optimizer queue (name=mof-0ec0178e)
+[2025-04-01 17:36:07.361] INFO     (Optimizer) Added mof to optimizer queue (name=mof-04257ae8)
+[2025-04-01 17:36:59.021] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-04-01 17:36:59.021] INFO     (parsl.executors.status_handling) Allocated block ID 2
+[2025-04-01 17:36:59.038] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2025-04-01 17:37:51.842] INFO     (Optimizer) Added mof to optimizer queue (name=mof-adef93dc)
+[2025-04-01 17:38:11.723] INFO     (parsl.dataflow.dflow) Task 6 try 1 failed with exception of type ManagerLost
+[2025-04-01 17:38:11.743] ERROR    (parsl.dataflow.dflow) Task 6 failed after 1 retry attempts
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.837] INFO     (Optimizer) END optimize-cells da6488e4-5b96-4714-a95b-c405e30669d1
+[2025-04-01 17:38:11.838] ERROR    (Optimizer) Failure in optimize-cells task
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 813, in _optimize_cells_task_callback
+    record, atoms = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.838] INFO     (parsl.dataflow.dflow) Task 18 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:38:11.839] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2025-04-01 17:38:11.840] INFO     (Optimizer) START optimize-cells d4579f55-edba-455d-b44b-018db4259974
+[2025-04-01 17:38:11.842] INFO     (parsl.dataflow.dflow) Parsl task 18 try 0 launched on executor polaris-htex with executor id 23
+[2025-04-01 17:38:11.843] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2025-04-01 17:38:11.844] INFO     (Optimizer) Submitted optimize-cells task (name=mof-6fdf4774)
+[2025-04-01 17:38:11.844] INFO     (parsl.dataflow.dflow) Standard out for task 18 will not be redirected.
+[2025-04-01 17:38:11.845] INFO     (parsl.dataflow.dflow) Task 7 try 1 failed with exception of type ManagerLost
+[2025-04-01 17:38:11.845] INFO     (parsl.dataflow.dflow) Standard error for task 18 will not be redirected.
+[2025-04-01 17:38:11.846] ERROR    (parsl.dataflow.dflow) Task 7 failed after 1 retry attempts
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.847] INFO     (Optimizer) END optimize-cells e8512a30-de70-475f-abf0-0db795e517f1
+[2025-04-01 17:38:11.847] ERROR    (Optimizer) Failure in optimize-cells task
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 813, in _optimize_cells_task_callback
+    record, atoms = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.847] INFO     (parsl.dataflow.dflow) Task 19 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:38:11.848] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2025-04-01 17:38:11.848] INFO     (Optimizer) START optimize-cells ad62de59-266c-4c7f-9686-2a7d289f24c0
+[2025-04-01 17:38:11.849] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2025-04-01 17:38:11.849] INFO     (Optimizer) Submitted optimize-cells task (name=mof-b3805ca6)
+[2025-04-01 17:38:11.849] INFO     (parsl.dataflow.dflow) Parsl task 19 try 0 launched on executor polaris-htex with executor id 24
+[2025-04-01 17:38:11.850] INFO     (parsl.dataflow.dflow) Task 8 try 1 failed with exception of type ManagerLost
+[2025-04-01 17:38:11.850] INFO     (parsl.dataflow.dflow) Standard out for task 19 will not be redirected.
+[2025-04-01 17:38:11.850] ERROR    (parsl.dataflow.dflow) Task 8 failed after 1 retry attempts
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.850] INFO     (parsl.dataflow.dflow) Standard error for task 19 will not be redirected.
+[2025-04-01 17:38:11.851] INFO     (Optimizer) END optimize-cells 45511e98-3664-4baf-9666-802632f299bf
+[2025-04-01 17:38:11.851] ERROR    (Optimizer) Failure in optimize-cells task
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 813, in _optimize_cells_task_callback
+    record, atoms = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.851] INFO     (parsl.dataflow.dflow) Task 20 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:38:11.852] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2025-04-01 17:38:11.852] INFO     (Optimizer) START optimize-cells 294c4ca7-5c84-4eb5-a4a8-559bad37dfb5
+[2025-04-01 17:38:11.853] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2025-04-01 17:38:11.853] INFO     (Optimizer) Submitted optimize-cells task (name=mof-76611e22)
+[2025-04-01 17:38:11.853] INFO     (parsl.dataflow.dflow) Task 9 try 1 failed with exception of type ManagerLost
+[2025-04-01 17:38:11.854] INFO     (parsl.dataflow.dflow) Parsl task 20 try 0 launched on executor polaris-htex with executor id 25
+[2025-04-01 17:38:11.854] ERROR    (parsl.dataflow.dflow) Task 9 failed after 1 retry attempts
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.854] INFO     (parsl.dataflow.dflow) Standard out for task 20 will not be redirected.
+[2025-04-01 17:38:11.854] INFO     (Optimizer) END optimize-cells a8683d7c-1843-4fc8-b7c8-63099b750462
+[2025-04-01 17:38:11.855] INFO     (parsl.dataflow.dflow) Standard error for task 20 will not be redirected.
+[2025-04-01 17:38:11.855] ERROR    (Optimizer) Failure in optimize-cells task
+Traceback (most recent call last):
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/mofa/agentic/steering.py", line 813, in _optimize_cells_task_callback
+    record, atoms = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 339, in handle_exec_update
+    res = self._unwrap_remote_exception_wrapper(future)
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/dataflow/dflow.py", line 601, in _unwrap_remote_exception_wrapper
+    result = future.result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/executors/high_throughput/executor.py", line 503, in _result_queue_worker
+    s.reraise()
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/lib/python3.10/site-packages/parsl/app/errors.py", line 114, in reraise
+    raise v
+  File "/lus/eagle/projects/MOFA/jgpaul/agentic-mof-workflow/env/bin/interchange.py", line 580, in expire_bad_managers
+    raise ManagerLost(manager_id, m['hostname'])
+parsl.executors.high_throughput.errors.ManagerLost: Task failure due to loss of manager a9d4d961f524 on host x3110c0s13b1n0
+[2025-04-01 17:38:11.855] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2025-04-01 17:38:11.856] INFO     (parsl.dataflow.dflow) Task 21 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2025-04-01 17:38:11.856] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2025-04-01 17:38:11.856] INFO     (Optimizer) START optimize-cells 302b80cd-7185-4835-8d95-b39a38be828e
+[2025-04-01 17:38:11.857] INFO     (Optimizer) Submitted optimize-cells task (name=mof-72195fcb)
+[2025-04-01 17:38:11.857] INFO     (parsl.dataflow.dflow) Parsl task 21 try 0 launched on executor polaris-htex with executor id 26
+[2025-04-01 17:38:11.857] INFO     (parsl.dataflow.dflow) Standard out for task 21 will not be redirected.
+[2025-04-01 17:38:11.858] INFO     (parsl.dataflow.dflow) Standard error for task 21 will not be redirected.
+[2025-04-01 17:38:17.148] INFO     (Optimizer) Added mof to optimizer queue (name=mof-00c25eff)
+[2025-04-01 17:39:45.783] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5c44a059)
+[2025-04-01 17:39:47.602] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4b77b2a0)
+[2025-04-01 17:42:36.854] INFO     (Optimizer) Added mof to optimizer queue (name=mof-daa23ca7)
+[2025-04-01 17:46:01.652] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2025-04-01 17:46:01.653] INFO     (parsl.executors.status_handling) Allocated block ID 3
+[2025-04-01 17:46:01.653] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2025-04-01 17:47:13.944] INFO     (parsl.dataflow.dflow) Task 14 try 0 failed with exception of type ManagerLost
+[2025-04-01 17:47:13.944] INFO     (parsl.dataflow.dflow) Task 14 marked for retry
+[2025-04-01 17:47:13.945] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2025-04-01 17:47:13.945] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2025-04-01 17:47:13.947] INFO     (parsl.dataflow.dflow) Task 15 try 0 failed with exception of type ManagerLost
+[2025-04-01 17:47:13.947] INFO     (parsl.dataflow.dflow) Parsl task 14 try 1 launched on executor polaris-htex with executor id 27
+[2025-04-01 17:47:13.947] INFO     (parsl.dataflow.dflow) Task 15 marked for retry
+[2025-04-01 17:47:13.947] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2025-04-01 17:47:13.948] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2025-04-01 17:47:13.948] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2025-04-01 17:47:13.948] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2025-04-01 17:47:13.949] INFO     (parsl.dataflow.dflow) Task 16 try 0 failed with exception of type ManagerLost
+[2025-04-01 17:47:13.949] INFO     (parsl.dataflow.dflow) Parsl task 15 try 1 launched on executor polaris-htex with executor id 28
+[2025-04-01 17:47:13.949] INFO     (parsl.dataflow.dflow) Task 16 marked for retry
+[2025-04-01 17:47:13.949] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2025-04-01 17:47:13.949] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2025-04-01 17:47:13.950] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2025-04-01 17:47:13.950] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2025-04-01 17:47:13.951] INFO     (parsl.dataflow.dflow) Task 17 try 0 failed with exception of type ManagerLost
+[2025-04-01 17:47:13.951] INFO     (parsl.dataflow.dflow) Parsl task 16 try 1 launched on executor polaris-htex with executor id 29
+[2025-04-01 17:47:13.951] INFO     (parsl.dataflow.dflow) Task 17 marked for retry
+[2025-04-01 17:47:13.951] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2025-04-01 17:47:13.951] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2025-04-01 17:47:13.952] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2025-04-01 17:47:13.952] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2025-04-01 17:47:13.952] INFO     (parsl.dataflow.dflow) Parsl task 17 try 1 launched on executor polaris-htex with executor id 30
+[2025-04-01 17:47:13.953] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2025-04-01 17:47:13.953] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
