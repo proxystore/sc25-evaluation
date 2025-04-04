@@ -28,7 +28,7 @@ dependencies = [
     "jupyterlab",
     "parsl==2025.03.03",
     "polars",
-    "proxystore==0.8.0",
+    "proxystore[endpoints]==0.8.0",
     "pydantic>=2",
     "ray[default]==2.43.0",
     "seaborn",

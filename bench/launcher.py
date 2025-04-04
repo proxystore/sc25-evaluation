@@ -27,8 +27,12 @@ else:
 import ray
 from dask.distributed import Client as DaskClient
 from parsl.concurrent import ParslPoolExecutor
+from proxystore.connectors.endpoint import EndpointConnector
+from proxystore.store import Store
+from proxystore.store.executor import ProxyAlways
 
 from aeris.exchange.hybrid import HybridExchange
+from aeris.exchange.proxystore import ProxyStoreExchange
 from aeris.exchange.redis import RedisExchange
 from aeris.launcher.executor import ExecutorLauncher
 from aeris.manager import Manager
@@ -60,6 +64,7 @@ class AerisConfig:
         redis_port: int,
         run_dir: str,
         workers_per_node: int,
+        ps_endpoint: str | None,
     ) -> None:
         self.name = 'aeris'
         self.exchange = exchange
@@ -68,6 +73,7 @@ class AerisConfig:
         self.redis_host = redis_host
         self.redis_port = redis_port
         self.workers_per_node = workers_per_node
+        self.ps_endpoint = ps_endpoint
 
     @classmethod
     def from_args(
@@ -82,6 +88,7 @@ class AerisConfig:
             redis_port=args['redis_port'],
             run_dir=run_dir,
             workers_per_node=args['workers_per_node'],
+            ps_endpoint=args['ps_endpoint'],
         )
 
     @contextlib.contextmanager
@@ -110,6 +117,21 @@ class AerisConfig:
             exchange = HybridExchange(self.redis_host, self.redis_port)
         else:
             raise ValueError(f'Unsupported exchange type "{self.exchange}".')
+
+        if self.ps_endpoint is not None:
+            store = Store(
+                'exchange',
+                EndpointConnector([self.ps_endpoint]),
+                cache_size=0,
+                register=True,
+            )
+            exchange = ProxyStoreExchange(
+                exchange,
+                store,
+                should_proxy=ProxyAlways(),
+                resolve_async=False,
+            )
+
         with Manager(
             exchange=exchange,
             launcher=ExecutorLauncher(executor, close_exchange=True),

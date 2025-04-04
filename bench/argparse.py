@@ -89,6 +89,11 @@ def add_aeris_parser_group(
         required=required,
         help='redis port',
     )
+    group.add_argument(
+        '--ps-endpoint',
+        default=None,
+        help='use proxystore endpoint for data transfer',
+    )
 
 
 def add_dask_parser_group(
