@@ -74,7 +74,12 @@ def add_aeris_parser_group(
     )
     group.add_argument(
         '--executor',
-        choices=['process-pool', *PARSL_CONFIGS.keys()],
+        choices=[
+            'globus-compute',
+            'thread-pool',
+            'process-pool',
+            *PARSL_CONFIGS.keys(),
+        ],
         required=required,
     )
     group.add_argument(
@@ -90,9 +95,20 @@ def add_aeris_parser_group(
         help='redis port',
     )
     group.add_argument(
-        '--ps-endpoint',
+        '--interface',
         default=None,
-        help='use proxystore endpoint for data transfer',
+        help='interface to use with hybrid exchange',
+    )
+    group.add_argument(
+        '--gc-endpoint',
+        default=None,
+        help='globus compute endpoint uuid',
+    )
+    group.add_argument(
+        '--ps-endpoints',
+        nargs='+',
+        default=None,
+        help='use proxystore endpoints for data transfer',
     )
 
 

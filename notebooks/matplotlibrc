@@ -13,6 +13,7 @@ ytick.labelsize: 6
 
 # Figure parameters
 axes.linewidth: 0.5
+axes.titlepad: 2.0
 axes.grid: True
 axes.grid.axis: both
 grid.linewidth: 0.5

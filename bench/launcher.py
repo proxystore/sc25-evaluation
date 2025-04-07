@@ -8,6 +8,7 @@ import multiprocessing
 import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 from typing import Generator
 from typing import Protocol
@@ -26,6 +27,7 @@ else:
 
 import ray
 from dask.distributed import Client as DaskClient
+from globus_compute_sdk import Executor as GCExecutor
 from parsl.concurrent import ParslPoolExecutor
 from proxystore.connectors.endpoint import EndpointConnector
 from proxystore.store import Store
@@ -64,7 +66,9 @@ class AerisConfig:
         redis_port: int,
         run_dir: str,
         workers_per_node: int,
-        ps_endpoint: str | None,
+        interface: str | None = None,
+        gc_endpoint: str | None = None,
+        ps_endpoints: list[str] | None = None,
     ) -> None:
         self.name = 'aeris'
         self.exchange = exchange
@@ -73,7 +77,9 @@ class AerisConfig:
         self.redis_host = redis_host
         self.redis_port = redis_port
         self.workers_per_node = workers_per_node
-        self.ps_endpoint = ps_endpoint
+        self.interface = interface
+        self.gc_endpoint = gc_endpoint
+        self.ps_endpoints = ps_endpoints
 
     @classmethod
     def from_args(
@@ -88,7 +94,9 @@ class AerisConfig:
             redis_port=args['redis_port'],
             run_dir=run_dir,
             workers_per_node=args['workers_per_node'],
-            ps_endpoint=args['ps_endpoint'],
+            interface=args['interface'],
+            gc_endpoint=args['gc_endpoint'],
+            ps_endpoints=args['ps_endpoints'],
         )
 
     @contextlib.contextmanager
@@ -99,6 +107,11 @@ class AerisConfig:
                 self.workers_per_node,
                 mp_context=mp_context,
             )
+        elif self.executor == 'thread-pool':
+            executor = ThreadPoolExecutor(self.workers_per_node)
+        elif self.executor == 'globus-compute':
+            assert self.gc_endpoint is not None
+            executor = GCExecutor(self.gc_endpoint, batch_size=1)
         else:
             try:
                 config = PARSL_CONFIGS[self.executor](
@@ -114,14 +127,21 @@ class AerisConfig:
         if self.exchange == 'redis':
             exchange = RedisExchange(self.redis_host, self.redis_port)
         elif self.exchange == 'hybrid':
-            exchange = HybridExchange(self.redis_host, self.redis_port)
+            exchange = HybridExchange(
+                self.redis_host,
+                self.redis_port,
+                interface=self.interface,
+            )
         else:
             raise ValueError(f'Unsupported exchange type "{self.exchange}".')
 
-        if self.ps_endpoint is not None:
+        if self.ps_endpoints is not None:
+            # from proxystore_ex.connectors.dim.zmq import ZeroMQConnector
+            # connector = ZeroMQConnector(25780, interface='hsn0', timeout=1)
+            connector = EndpointConnector(self.ps_endpoints)
             store = Store(
                 'exchange',
-                EndpointConnector([self.ps_endpoint]),
+                connector,
                 cache_size=0,
                 register=True,
             )
@@ -134,7 +154,10 @@ class AerisConfig:
 
         with Manager(
             exchange=exchange,
-            launcher=ExecutorLauncher(executor, close_exchange=True),
+            launcher=ExecutorLauncher(
+                executor,
+                close_exchange=self.exchange != 'thread-pool',
+            ),
         ) as manager:
             yield manager
 

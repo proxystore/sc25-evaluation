@@ -14,10 +14,10 @@ from proxystore.utils.timer import Timer
 from aeris.exchange.proxystore import ProxyStoreExchange
 from aeris.logging import init_logging
 from aeris.manager import Manager
+from bench.action_chain.agent import Data
+from bench.action_chain.agent import Node
 from bench.argparse import add_aeris_parser_group
 from bench.argparse import add_general_options
-from bench.exchange_perf.agent import Data
-from bench.exchange_perf.agent import ReplyAgent
 from bench.launcher import AerisConfig
 from bench.results import CSVResultLogger
 
@@ -27,34 +27,51 @@ logger = logging.getLogger(__name__)
 class Result(NamedTuple):
     exchange: str
     proxystore: bool
+    chain_length: int
     data_size_bytes: int
-    latency_s: float
+    time_s: float
 
 
 def run_benchmark(
     manager: Manager,
-    data_sizes: list[int],
+    chain_lengths: list[int],
+    data_size_bytes: int,
     repeat: int,
     result_logger: CSVResultLogger,
 ) -> None:
-    logger.info('Launching remote agent...')
-    remote = manager.launch(ReplyAgent())
-    remote.action('noop').result(timeout=60)
-    logger.info('Remote agent is ready!')
+    for chain_length in chain_lengths:
+        logger.info('Launching remote agents...')
 
-    for data_size in data_sizes:
+        agent_ids = [
+            manager.exchange.create_agent() for _ in range(chain_length)
+        ]
+
+        behaviors = []
+        for i in range(len(agent_ids)):
+            if i + 1 == len(agent_ids):
+                behaviors.append(Node(None))
+            else:
+                handle = manager.exchange.create_handle(agent_ids[i + 1])
+                behaviors.append(Node(handle))
+        handles = [
+            manager.launch(behavior, agent_id=agent_id)
+            for behavior, agent_id in zip(behaviors, agent_ids, strict=False)
+        ]
+
+        data = Data.new(data_size_bytes)
+        logger.info('Running warm up...')
+        handles[0].action('process', data).result(timeout=60)
+
         logger.info(
-            'Running with %d bytes for %d trials...',
-            data_size,
+            'Running with %d agents for %d trials...',
+            chain_length,
             repeat,
         )
         timer = Timer().start()
-        data = Data.new(data_size)
-
         for _ in range(repeat):
             with Timer() as action_timer:
-                future = remote.action('process', data)
-                result = future.result(timeout=300)
+                future = handles[0].action('process', data)
+                result = future.result(timeout=60)
                 assert result.len() == data.len()
 
             result = Result(
@@ -64,24 +81,28 @@ def run_benchmark(
                     else type(manager.exchange).__name__
                 ),
                 proxystore=isinstance(manager.exchange, ProxyStoreExchange),
-                data_size_bytes=data_size,
-                latency_s=action_timer.elapsed_s,
+                chain_length=chain_length,
+                data_size_bytes=data_size_bytes,
+                time_s=action_timer.elapsed_s,
             )
             result_logger.log(result)
 
         timer.stop()
         logger.info('Completed trials in %fs', timer.elapsed_s)
 
-    logger.info('Shutting down remote agent...')
-    remote.shutdown()
-    manager.wait(remote.agent_id)
-    logger.info('Remote agent shutdown!')
+        logger.info('Shutting down remote agents...')
+        for handle in handles:
+            handle.shutdown()
+        for handle in handles:
+            manager.wait(handle.agent_id)
+        logger.info('Remote agents shutdown!')
 
 
 def run(
     *,
     config: AerisConfig,
-    data_sizes: list[int],
+    chain_lengths: list[int],
+    data_size: int,
     repeat: int,
     run_dir: str,
 ) -> None:
@@ -93,7 +114,13 @@ def run(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            run_benchmark(launcher, data_sizes, repeat, result_logger)
+            run_benchmark(
+                launcher,
+                chain_lengths,
+                data_size,
+                repeat,
+                result_logger,
+            )
         logger.info('Saved results to %s', result_logger.filepath)
 
     timer.stop()
@@ -106,20 +133,25 @@ def main(argv: Sequence[str] | None = None) -> int:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        '--data-sizes',
-        type=str,
+        '--chain-lengths',
+        type=int,
         nargs='+',
-        help='data sizes to test',
+        help='chain lengths to test',
     )
+    parser.add_argument(
+        '--data-size',
+        required=True,
+        help='data size to test',
+    )
+    parser.add_argument('--workers-per-node', type=int, required=True)
     add_general_options(parser)
     add_aeris_parser_group(parser, required=True)
     args = parser.parse_args(argv)
     args.num_nodes = 1
-    args.workers_per_node = 1
 
     run_dir = os.path.join(
         args.run_dir,
-        'exchange-perf',
+        'action-chain',
         datetime.now().strftime('%Y-%m-%d-%H-%M-%S'),
     )
     init_logging(
@@ -134,7 +166,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     run(
         config=config,
-        data_sizes=[readable_to_bytes(x) for x in args.data_sizes],
+        chain_lengths=args.chain_lengths,
+        data_size=readable_to_bytes(args.data_size),
         repeat=args.repeat,
         run_dir=run_dir,
     )
