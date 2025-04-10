@@ -6,18 +6,21 @@
 #PBS -j oe
 
 NUM_NODES=`wc -l < $PBS_NODEFILE`
-NUM_RANKS=52
+NUM_RANKS=1
 NUM_WORKERS=$(( NUM_NODES * NUM_RANKS ))
 echo "NODES: $NUM_NODES; RANKS: $NUM_RANKS; WORKERS: $NUM_WORKERS"
 
 DEFAULT_ARGS=" --num-nodes $NUM_NODES --workers-per-node $NUM_RANKS "
-DEFAULT_ARGS+=" --repeat 1 --actions-per-actor 100 "
-DEFAULT_ARGS+=" --run-dir /flare/proxystore/jgpaul/agents/sc25-evaluation/runs-prod "
+DEFAULT_ARGS+=" --repeat 3 --actions-per-actor 30 --action-sleep 1 "
+DEFAULT_ARGS+=" --run-dir /flare/proxystore/jgpaul/agents/sc25-evaluation/runs-prod/weak "
  
 module load python/3.10.13
 cd /flare/proxystore/jgpaul/agents/sc25-evaluation
 . ../venv/bin/activate
 echo $PWD
+
+export OMP_NUM_THREADS=1
+ulimit -c unlimited
 
 HEAD_NODE_IP=$(getent hosts "$(hostname).hsn.cm.aurora.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
 

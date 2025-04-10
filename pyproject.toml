@@ -38,6 +38,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+autogen = ["autogen-ext[grpc]"]
 dev = [
     "mypy",
     "pre-commit",

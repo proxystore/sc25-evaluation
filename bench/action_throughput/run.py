@@ -40,6 +40,7 @@ logger = logging.getLogger(__name__)
 class Result(NamedTuple):
     framework: str
     actions_per_actor: int
+    action_sleep: int
     num_nodes: int
     num_workers_per_node: int
     num_actors: int
@@ -49,34 +50,39 @@ class Result(NamedTuple):
 def run_benchmark_aeris(
     num_actors: int,
     actions_per_actor: int,
+    action_sleep: int,
+    repeat: int,
     manager: Manager,
-) -> float:
+) -> list[float]:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
         handles = [manager.launch(AerisActor()) for _ in range(num_actors)]
     logger.info('Submitted actors in %.3fs', submit_timer.elapsed_s)
 
-    logger.warning('Waiting 120 seconds...')
-    time.sleep(120)
+    logger.warning('Waiting 12 seconds...')
+    time.sleep(10)
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
         ops = [handle.action('noop') for handle in handles]
         for op in ops:
-            op.result(timeout=30)
+            op.result(timeout=60)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
-    logger.info('Submitting bag of tasks...')
-    futures: Future[None] = []
-    with Timer() as bag_timer:
-        for _ in range(actions_per_actor):
-            for handle in handles:
-                futures.append(handle.action('noop'))
-        wait(futures, return_when=FIRST_EXCEPTION)
-    for future in futures:
-        if future.exception() is not None:
-            raise future.exception()
-    logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+    runtimes: list[float] = []
+    for i in range(repeat):
+        logger.info('Submitting bag of tasks %d/%d...', i + 1, repeat)
+        futures: Future[None] = []
+        with Timer() as bag_timer:
+            for _ in range(actions_per_actor):
+                for handle in handles:
+                    futures.append(handle.action('noop', action_sleep))
+            wait(futures, return_when=FIRST_EXCEPTION)
+            for future in futures:
+                if future.exception() is not None:
+                    raise future.exception()
+        logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+        runtimes.append(bag_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
@@ -86,14 +92,16 @@ def run_benchmark_aeris(
             manager.wait(handle.agent_id)
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
-    return bag_timer.elapsed_s
+    return runtimes
 
 
 def run_benchmark_dask(
     num_actors: int,
     actions_per_actor: int,
+    action_sleep: int,
+    repeat: int,
     client: DaskClient,
-) -> float:
+) -> list[float]:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
         handles = [
@@ -108,16 +116,19 @@ def run_benchmark_dask(
             op.result(timeout=30)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
-    logger.info('Submitting bag of tasks...')
-    futures = []
-    with Timer() as bag_timer:
-        for _ in range(actions_per_actor):
-            for handle in handles:
-                futures.append(handle.result().noop())
-        dask_wait(futures)
-    for future in futures:
-        future.result()
-    logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+    runtimes: list[float] = []
+    for i in range(repeat):
+        logger.info('Submitting bag of tasks %d/%d...', i + 1, repeat)
+        futures = []
+        with Timer() as bag_timer:
+            for _ in range(actions_per_actor):
+                for handle in handles:
+                    futures.append(handle.result().noop(action_sleep))
+            dask_wait(futures)
+            for future in futures:
+                future.result()
+        logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+        runtimes.append(bag_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
@@ -127,18 +138,20 @@ def run_benchmark_dask(
             handle.exception()
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
-    return bag_timer.elapsed_s
+    return runtimes
 
 
 def run_benchmark_ray(
     num_actors: int,
     actions_per_actor: int,
+    action_sleep: int,
+    repeat: int,
     client: RayClient,
-) -> float:
+) -> list[float]:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
         handles = [
-            RayActor.remote()
+            RayActor.options(max_concurrency=1).remote()
             for _ in range(num_actors)  # type: ignore[attr-defined]
         ]
     logger.info('Submitted actors in %.3fs', submit_timer.elapsed_s)
@@ -150,16 +163,19 @@ def run_benchmark_ray(
             client.get(op, timeout=30)
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
-    logger.info('Submitting bag of tasks...')
-    ops = []
-    with Timer() as bag_timer:
-        for _ in range(actions_per_actor):
-            for handle in handles:
-                ops.append(handle.noop.remote())
-        ray.wait(ops)
-    for op in ops:
-        client.get(op)
-    logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+    runtimes: list[float] = []
+    for i in range(repeat):
+        logger.info('Submitting bag of tasks %d/%d...', i + 1, repeat)
+        ops = []
+        with Timer() as bag_timer:
+            for _ in range(actions_per_actor):
+                for handle in handles:
+                    ops.append(handle.noop.remote(action_sleep))
+            ray.wait(ops)
+            for op in ops:
+                client.get(op)
+        logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
+        runtimes.append(bag_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
@@ -169,20 +185,40 @@ def run_benchmark_ray(
                 client.get(ref)
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
-    return bag_timer.elapsed_s
+    return runtimes
 
 
 def run_benchmark(
     num_actors: int,
     actions_per_actor: int,
+    action_sleep: int,
+    repeat: int,
     launcher: Any,
-) -> float:
+) -> list[float]:
     if is_aeris_launcher(launcher):
-        return run_benchmark_aeris(num_actors, actions_per_actor, launcher)
+        return run_benchmark_aeris(
+            num_actors,
+            actions_per_actor,
+            action_sleep,
+            repeat,
+            launcher,
+        )
     elif is_dask_launcher(launcher):
-        return run_benchmark_dask(num_actors, actions_per_actor, launcher)
+        return run_benchmark_dask(
+            num_actors,
+            actions_per_actor,
+            action_sleep,
+            repeat,
+            launcher,
+        )
     elif is_ray_launcher(launcher):
-        return run_benchmark_ray(num_actors, actions_per_actor, launcher)
+        return run_benchmark_ray(
+            num_actors,
+            actions_per_actor,
+            action_sleep,
+            repeat,
+            launcher,
+        )
     else:
         raise TypeError(f'Unsupported launcher type: {type(launcher)}.')
 
@@ -191,6 +227,7 @@ def run(
     *,
     launcher_config: LauncherConfig[Any],
     actions_per_actor: int,
+    action_sleep: float,
     num_nodes: int,
     num_workers_per_node: int,
     repeat: int,
@@ -218,22 +255,24 @@ def run(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            for i in range(repeat):
-                runtime = run_benchmark(
-                    num_actors,
-                    actions_per_actor,
-                    launcher,
-                )
+            runtimes = run_benchmark(
+                num_actors,
+                actions_per_actor,
+                action_sleep,
+                repeat,
+                launcher,
+            )
+            for runtime in runtimes:
                 result = Result(
                     framework=launcher_config.name,
                     actions_per_actor=actions_per_actor,
+                    action_sleep=action_sleep,
                     num_nodes=num_nodes,
                     num_workers_per_node=num_workers_per_node,
                     num_actors=num_actors,
                     runtime=runtime,
                 )
                 result_logger.log(result)
-                logger.info('Result %d/%d: %s', i + 1, repeat, result)
         logger.info('Saved results to %s', result_logger.filepath)
 
     timer.stop()
@@ -250,6 +289,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         type=int,
         required=True,
         help='number of actions per worker',
+    )
+    parser.add_argument(
+        '--action-sleep',
+        default=0,
+        type=float,
+        help='action sleep',
     )
     add_general_options(parser)
     add_launcher_groups(parser, argv, required=True)
@@ -273,6 +318,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     run(
         launcher_config=launcher_config,
         actions_per_actor=args.actions_per_actor,
+        action_sleep=args.action_sleep,
         num_nodes=args.num_nodes,
         num_workers_per_node=args.workers_per_node,
         repeat=args.repeat,

@@ -28,8 +28,10 @@ sleep 10
 
 mpiexec -n $NUM_NODES --ppn 1 \
     dask worker $DASK_SCHEDULER_ADDRESS \
-        --nworkers ${NUM_WORKERS_PER_NODE} --nthreads ${NTHREADS} \
+        --nworkers ${NUM_WORKERS_PER_NODE} \
+        --nthreads 1 \
         --memory-limit ${MEMORY_PER_WORKER} --no-dashboard \
         --local-directory /tmp/dask-workers \
     &> ${DASK_LOG_DIRECTORY}/workers.log &
+# --nthreads ${NTHREADS} \
 echo "Started Dask workers on $NUM_NODES nodes"

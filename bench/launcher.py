@@ -203,9 +203,9 @@ class DaskConfig:
             scheduler = None
             kwargs = {
                 'dashboard_address': None,
-                'include_dashboard': False,
                 'worker_dashboard_address': None,
                 'n_workers': self.workers,
+                'threads_per_worker': 1,
             }
 
         client = DaskClient(address=scheduler, **kwargs)
