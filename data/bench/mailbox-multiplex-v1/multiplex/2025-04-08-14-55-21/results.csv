@@ -1,0 +1,6 @@
+framework,actions_per_actor,num_nodes,num_workers_per_node,num_actors,runtime
+aeris,100,1,1,1,0.031813823
+aeris,100,1,1,1,0.042007624
+aeris,100,1,1,1,0.031670822
+aeris,100,1,1,1,0.035582886
+aeris,100,1,1,1,0.034955233

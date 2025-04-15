@@ -1,0 +1,7 @@
+framework,num_nodes,num_workers_per_node,num_actors,startup_time,shutdown_time
+aeris,1,8,8,0.962070994,0.006439712
+aeris,1,8,8,0.019837024,0.00538599
+aeris,1,8,8,0.019450037,0.005079367
+aeris,1,8,8,0.01909673,0.005052551
+aeris,1,8,8,0.019330749,0.005074618
+aeris,1,8,8,0.019171371,0.006036614
