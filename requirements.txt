@@ -1,0 +1,6 @@
+jupyterlab
+matplotlib
+numpy
+seaborn
+polars[pyarrow]
+ruff
