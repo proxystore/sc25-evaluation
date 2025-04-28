@@ -23,7 +23,7 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "aeris@git+https://github.com/proxystore/aeris#egg=main",
+    "academy-py==0.1.0",
     "dask[distributed]==2025.2.0",
     "globus-compute-sdk==3.5.0",
     "globus-compute-endpoint==3.5.0",
