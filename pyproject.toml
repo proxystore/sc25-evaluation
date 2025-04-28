@@ -41,6 +41,7 @@ dependencies = [
 autogen = ["autogen-ext[grpc]"]
 dev = [
     "mypy",
+    "nb-clean>=2.0.0",
     "pre-commit",
     "ruff>=0.2.0",
 ]
@@ -53,6 +54,8 @@ __pycache__,
 build,
 dist,
 .*egg-info
+data/*
+notebooks/*.ipynb
 """
 
 [tool.mypy]
