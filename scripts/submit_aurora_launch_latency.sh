@@ -13,7 +13,7 @@ echo "NODES: $NUM_NODES; RANKS: $NUM_RANKS; WORKERS: $NUM_WORKERS"
 
 DEFAULT_ARGS=" --repeat 6 --num-nodes $NUM_NODES --workers-per-node $NUM_RANKS "
 DEFAULT_ARGS+=" --run-dir /flare/proxystore/jgpaul/agents/sc25-evaluation/runs-prod "
- 
+
 module load python/3.10.13
 cd /flare/proxystore/jgpaul/agents/sc25-evaluation
 . ../venv/bin/activate

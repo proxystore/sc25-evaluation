@@ -4,9 +4,6 @@ import dataclasses
 import logging
 from concurrent.futures import ProcessPoolExecutor
 
-from proxystore.utils.data import readable_to_bytes
-from proxystore.utils.timer import Timer
-
 from academy.behavior import action
 from academy.behavior import Behavior
 from academy.exchange.redis import RedisExchange
@@ -14,6 +11,8 @@ from academy.handle import Handle
 from academy.launcher.executor import ExecutorLauncher
 from academy.logging import init_logging
 from academy.manager import Manager
+from proxystore.utils.data import readable_to_bytes
+from proxystore.utils.timer import Timer
 
 
 @dataclasses.dataclass
@@ -45,7 +44,8 @@ class Leader(Behavior):
         with Timer() as timer:
             for _ in range(message.count):
                 content_message = self.follower.action(
-                    'reply', content_message,
+                    'reply',
+                    content_message,
                 ).result()
 
         return ResultMessage(timer.elapsed_s)
@@ -66,7 +66,8 @@ def main(logger: logging.Logger) -> None:
     executor = ProcessPoolExecutor(2)
 
     with Manager(
-        exchange=exchange, launcher=ExecutorLauncher(executor),
+        exchange=exchange,
+        launcher=ExecutorLauncher(executor),
     ) as manager:
         follower = manager.launch(Follower())
         leader = manager.launch(Leader(follower))

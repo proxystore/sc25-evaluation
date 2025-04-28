@@ -40,7 +40,9 @@ class Leader(RoutedAgent):
 
     @message_handler(strict=False)
     async def on_run(
-        self, message: RunMessage, ctx: MessageContext,
+        self,
+        message: RunMessage,
+        ctx: MessageContext,
     ) -> ResultMessage:
         content = 'x' * readable_to_bytes(message.size)
         # self.logger.info("Size of message: %d", sys.getsizeof(content))
@@ -49,7 +51,8 @@ class Leader(RoutedAgent):
         with Timer() as timer:
             for _ in range(message.count):
                 content_message = await self.send_message(
-                    content_message, self.follower,
+                    content_message,
+                    self.follower,
                 )
 
         return ResultMessage(timer.elapsed_s)
@@ -69,7 +72,9 @@ class Leader(RoutedAgent):
 
     @message_handler
     async def on_content(
-        self, message: ContentMessage, ctx: MessageContext,
+        self,
+        message: ContentMessage,
+        ctx: MessageContext,
     ) -> ContentMessage:
         # raise AssertionError
         return message
@@ -82,7 +87,9 @@ class Follower(RoutedAgent):
 
     @message_handler
     async def on_run(
-        self, message: RunMessage, ctx: MessageContext,
+        self,
+        message: RunMessage,
+        ctx: MessageContext,
     ) -> ResultMessage:
         raise AssertionError
 

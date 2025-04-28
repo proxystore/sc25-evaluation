@@ -183,7 +183,10 @@ def run_benchmark(
 ) -> None:
     if is_academy_launcher(launcher):
         return run_benchmark_academy(
-            launcher, data_sizes, repeat, result_logger,
+            launcher,
+            data_sizes,
+            repeat,
+            result_logger,
         )
     elif is_dask_launcher(launcher):
         return run_benchmark_dask(launcher, data_sizes, repeat, result_logger)

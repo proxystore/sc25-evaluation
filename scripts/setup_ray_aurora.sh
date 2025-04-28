@@ -13,10 +13,10 @@ setup_environment() {
     export http_proxy="http://proxy.alcf.anl.gov:3128"
     export https_proxy="http://proxy.alcf.anl.gov:3128"
     export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-    
+
     # Define the common setup script path (make sure this file is accessible on all nodes)
     export COMMON_SETUP_SCRIPT="/flare/proxystore/jgpaul/agents/sc25-evaluation/scripts/setup_ray_aurora.sh"
-    
+
     # Load modules and activate your conda environment
     module load python
     . /flare/proxystore/jgpaul/agents/venv/bin/activate
