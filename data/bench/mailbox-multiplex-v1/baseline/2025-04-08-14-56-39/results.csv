@@ -1,6 +1,6 @@
 framework,actions_per_actor,num_nodes,num_workers_per_node,num_actors,runtime
-aeris,100,1,1,1,0.036640735
-aeris,100,1,1,1,0.031104871
-aeris,100,1,1,1,0.039872139
-aeris,100,1,1,1,0.039681075
-aeris,100,1,1,1,0.030439217
+academy,100,1,1,1,0.036640735
+academy,100,1,1,1,0.031104871
+academy,100,1,1,1,0.039872139
+academy,100,1,1,1,0.039681075
+academy,100,1,1,1,0.030439217

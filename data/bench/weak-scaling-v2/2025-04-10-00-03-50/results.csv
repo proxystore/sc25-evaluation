@@ -1,4 +1,4 @@
 framework,actions_per_actor,action_sleep,num_nodes,num_workers_per_node,num_actors,runtime
-aeris,30,1.0,4,52,208,30.090633605
-aeris,30,1.0,4,52,208,30.090716217
-aeris,30,1.0,4,52,208,30.083690705
+academy,30,1.0,4,52,208,30.090633605
+academy,30,1.0,4,52,208,30.090716217
+academy,30,1.0,4,52,208,30.083690705
