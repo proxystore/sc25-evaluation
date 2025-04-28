@@ -11,16 +11,16 @@ from typing import Any
 from typing import NamedTuple
 
 import psutil
+from academy.logging import init_logging
+from academy.manager import Manager
 from proxystore.utils.timer import Timer
 
-from aeris.logging import init_logging
-from aeris.manager import Manager
 from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
 from bench.launcher import DaskClient
 from bench.launcher import DaskConfig
 from bench.launcher import get_launcher_config_from_args
-from bench.launcher import is_aeris_launcher
+from bench.launcher import is_academy_launcher
 from bench.launcher import is_dask_launcher
 from bench.launcher import is_ray_launcher
 from bench.launcher import LauncherConfig
@@ -55,7 +55,7 @@ def get_user_memory() -> float:
     return total_memory
 
 
-def run_benchmark_aeris(
+def run_benchmark_academy(
     manager: Manager,
     num_actors: int,
     result_logger: CSVResultLogger,
@@ -75,7 +75,7 @@ def run_benchmark_aeris(
     results: list[Result] = []
     for _ in range(SAMPLE_COUNT):
         result = Result(
-            framework=f'AERIS+{type(manager.launcher._executor).__name__}',
+            framework=f'Academy+{type(manager.launcher._executor).__name__}',
             timestamp=time.time(),
             active_actors=num_actors,
             memory_used=get_user_memory(),
@@ -178,8 +178,8 @@ def run_benchmark(
     num_actors: int,
     result_logger: CSVResultLogger,
 ) -> list[Result]:
-    if is_aeris_launcher(launcher):
-        return run_benchmark_aeris(launcher, num_actors, result_logger)
+    if is_academy_launcher(launcher):
+        return run_benchmark_academy(launcher, num_actors, result_logger)
     elif is_dask_launcher(launcher):
         return run_benchmark_dask(launcher, num_actors, result_logger)
     elif is_ray_launcher(launcher):

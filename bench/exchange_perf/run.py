@@ -8,13 +8,13 @@ from collections.abc import Sequence
 from datetime import datetime
 from typing import NamedTuple
 
+from academy.exchange.proxystore import ProxyStoreExchange
+from academy.logging import init_logging
+from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from aeris.exchange.proxystore import ProxyStoreExchange
-from aeris.logging import init_logging
-from aeris.manager import Manager
-from bench.argparse import add_aeris_parser_group
+from bench.argparse import add_academy_parser_group
 from bench.argparse import add_general_options
 from bench.exchange_perf.agent import Data
 from bench.exchange_perf.agent import ReplyAgent
@@ -112,7 +112,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         help='data sizes to test',
     )
     add_general_options(parser)
-    add_aeris_parser_group(parser, required=True)
+    add_academy_parser_group(parser, required=True)
     args = parser.parse_args(argv)
     args.num_nodes = 1
     args.workers_per_node = 1

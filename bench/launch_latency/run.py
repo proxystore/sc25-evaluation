@@ -11,10 +11,10 @@ from typing import Any
 from typing import NamedTuple
 
 import ray
+from academy.logging import init_logging
+from academy.manager import Manager
 from proxystore.utils.timer import Timer
 
-from aeris.logging import init_logging
-from aeris.manager import Manager
 from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
 from bench.launch_latency.actor import AerisActor
@@ -22,7 +22,7 @@ from bench.launch_latency.actor import DaskActor
 from bench.launch_latency.actor import RayActor
 from bench.launcher import DaskClient
 from bench.launcher import get_launcher_config_from_args
-from bench.launcher import is_aeris_launcher
+from bench.launcher import is_academy_launcher
 from bench.launcher import is_dask_launcher
 from bench.launcher import is_ray_launcher
 from bench.launcher import LauncherConfig
@@ -46,7 +46,7 @@ class Times(NamedTuple):
     shutdown: float
 
 
-def run_benchmark_aeris(num_actors: int, manager: Manager) -> Times:
+def run_benchmark_academy(num_actors: int, manager: Manager) -> Times:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
         handles = [manager.launch(AerisActor()) for _ in range(num_actors)]
@@ -136,8 +136,8 @@ def run_benchmark_ray(num_actors: int, client: RayClient) -> Times:
 
 
 def run_benchmark(num_actors: int, launcher: Any) -> Times:
-    if is_aeris_launcher(launcher):
-        return run_benchmark_aeris(num_actors, launcher)
+    if is_academy_launcher(launcher):
+        return run_benchmark_academy(num_actors, launcher)
     elif is_dask_launcher(launcher):
         return run_benchmark_dask(num_actors, launcher)
     elif is_ray_launcher(launcher):
@@ -161,7 +161,7 @@ def run(
 
     with launcher_config.get_launcher() as launcher:
         logger.info('Running warmup task on launcher...')
-        if is_aeris_launcher(launcher):
+        if is_academy_launcher(launcher):
             launcher.launcher._executor.submit(sum, [1, 2, 3]).result()
         elif is_dask_launcher(launcher):
             launcher.submit(sum, [1, 2, 3]).result()

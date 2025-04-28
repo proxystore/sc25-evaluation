@@ -15,11 +15,11 @@ from typing import Any
 from typing import NamedTuple
 
 import ray
+from academy.logging import init_logging
+from academy.manager import Manager
 from dask.distributed import wait as dask_wait
 from proxystore.utils.timer import Timer
 
-from aeris.logging import init_logging
-from aeris.manager import Manager
 from bench.action_throughput.actor import AerisActor
 from bench.action_throughput.actor import DaskActor
 from bench.action_throughput.actor import RayActor
@@ -27,7 +27,7 @@ from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
 from bench.launcher import DaskClient
 from bench.launcher import get_launcher_config_from_args
-from bench.launcher import is_aeris_launcher
+from bench.launcher import is_academy_launcher
 from bench.launcher import is_dask_launcher
 from bench.launcher import is_ray_launcher
 from bench.launcher import LauncherConfig
@@ -47,7 +47,7 @@ class Result(NamedTuple):
     runtime: float
 
 
-def run_benchmark_aeris(
+def run_benchmark_academy(
     num_actors: int,
     actions_per_actor: int,
     action_sleep: int,
@@ -195,8 +195,8 @@ def run_benchmark(
     repeat: int,
     launcher: Any,
 ) -> list[float]:
-    if is_aeris_launcher(launcher):
-        return run_benchmark_aeris(
+    if is_academy_launcher(launcher):
+        return run_benchmark_academy(
             num_actors,
             actions_per_actor,
             action_sleep,
@@ -240,7 +240,7 @@ def run(
 
     with launcher_config.get_launcher() as launcher:
         logger.info('Running warmup task on launcher...')
-        if is_aeris_launcher(launcher):
+        if is_academy_launcher(launcher):
             launcher.launcher._executor.submit(sum, [1, 2, 3]).result()
         elif is_dask_launcher(launcher):
             launcher.submit(sum, [1, 2, 3]).result()

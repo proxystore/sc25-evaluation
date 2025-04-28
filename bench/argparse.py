@@ -29,7 +29,7 @@ def add_launcher_groups(
 ) -> None:
     parser.add_argument(
         '--launcher',
-        choices=['aeris', 'dask', 'ray'],
+        choices=['academy', 'dask', 'ray'],
         required=True,
         help='launcher framework to use',
     )
@@ -46,9 +46,9 @@ def add_launcher_groups(
         help='number of workers per node in cluster',
     )
     arg_str = ''.join(argv)
-    add_aeris_parser_group(
+    add_academy_parser_group(
         parser,
-        required='--launcher aeris' in arg_str,
+        required='--launcher academy' in arg_str,
     )
     add_dask_parser_group(
         parser,
@@ -60,11 +60,11 @@ def add_launcher_groups(
     )
 
 
-def add_aeris_parser_group(
+def add_academy_parser_group(
     parser: argparse.ArgumentParser,
     required: bool = True,
 ) -> None:
-    group = parser.add_argument_group(title='AERIS Configuration')
+    group = parser.add_argument_group(title='Academy Configuration')
 
     group.add_argument(
         '--exchange',

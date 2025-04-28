@@ -7,13 +7,13 @@ from concurrent.futures import ProcessPoolExecutor
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from aeris.behavior import action
-from aeris.behavior import Behavior
-from aeris.exchange.redis import RedisExchange
-from aeris.handle import Handle
-from aeris.launcher.executor import ExecutorLauncher
-from aeris.logging import init_logging
-from aeris.manager import Manager
+from academy.behavior import action
+from academy.behavior import Behavior
+from academy.exchange.redis import RedisExchange
+from academy.handle import Handle
+from academy.launcher.executor import ExecutorLauncher
+from academy.logging import init_logging
+from academy.manager import Manager
 
 
 @dataclasses.dataclass

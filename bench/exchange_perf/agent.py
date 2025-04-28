@@ -4,8 +4,8 @@ import os
 import random
 from typing import NamedTuple
 
-from aeris.behavior import action
-from aeris.behavior import Behavior
+from academy.behavior import action
+from academy.behavior import Behavior
 
 
 def randbytes(size: int) -> bytes:

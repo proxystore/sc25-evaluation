@@ -8,15 +8,15 @@ from collections.abc import Sequence
 from datetime import datetime
 from typing import NamedTuple
 
+from academy.exchange.proxystore import ProxyStoreExchange
+from academy.logging import init_logging
+from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from aeris.exchange.proxystore import ProxyStoreExchange
-from aeris.logging import init_logging
-from aeris.manager import Manager
 from bench.action_chain.agent import Data
 from bench.action_chain.agent import Node
-from bench.argparse import add_aeris_parser_group
+from bench.argparse import add_academy_parser_group
 from bench.argparse import add_general_options
 from bench.launcher import AerisConfig
 from bench.results import CSVResultLogger
@@ -145,7 +145,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument('--workers-per-node', type=int, required=True)
     add_general_options(parser)
-    add_aeris_parser_group(parser, required=True)
+    add_academy_parser_group(parser, required=True)
     args = parser.parse_args(argv)
     args.num_nodes = 1
 

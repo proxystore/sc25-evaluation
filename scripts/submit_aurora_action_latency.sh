@@ -25,7 +25,7 @@ echo $PWD
 HEAD_NODE_IP=$(getent hosts "$(hostname).hsn.cm.aurora.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
 
 #############
-# RUN AERIS #
+# RUN ACADEMY #
 #############
 
 REDIS_PORT=6389
@@ -34,10 +34,10 @@ REDIS=$!
 echo "Redis server started"
 
 python -m bench.action_latency $DEFAULT_ARGS \
-    --launcher aeris --exchange redis --executor htex-aurora-cpu \
+    --launcher academy --exchange redis --executor htex-aurora-cpu \
     --redis-host $HEAD_NODE_IP --redis-port $REDIS_PORT
 # python -m bench.action_latency $DEFAULT_ARGS \
-#     --launcher aeris --exchange hybrid --executor htex-aurora-cpu \
+#     --launcher academy --exchange hybrid --executor htex-aurora-cpu \
 #     --redis-host $HEAD_NODE_IP --redis-port $REDIS_PORT
 
 kill $REDIS

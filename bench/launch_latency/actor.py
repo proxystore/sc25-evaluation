@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import ray
-
-from aeris.behavior import action
-from aeris.behavior import Behavior
+from academy.behavior import action
+from academy.behavior import Behavior
 
 
 class AerisActor(Behavior):

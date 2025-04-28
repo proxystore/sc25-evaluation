@@ -26,6 +26,11 @@ else:
     from typing_extensions import TypeIs
 
 import ray
+from academy.exchange.hybrid import HybridExchange
+from academy.exchange.proxystore import ProxyStoreExchange
+from academy.exchange.redis import RedisExchange
+from academy.launcher.executor import ExecutorLauncher
+from academy.manager import Manager
 from dask.distributed import Client as DaskClient
 from globus_compute_sdk import Executor as GCExecutor
 from parsl.concurrent import ParslPoolExecutor
@@ -33,11 +38,6 @@ from proxystore.connectors.endpoint import EndpointConnector
 from proxystore.store import Store
 from proxystore.store.executor import ProxyAlways
 
-from aeris.exchange.hybrid import HybridExchange
-from aeris.exchange.proxystore import ProxyStoreExchange
-from aeris.exchange.redis import RedisExchange
-from aeris.launcher.executor import ExecutorLauncher
-from aeris.manager import Manager
 from bench.parsl import PARSL_CONFIGS
 
 logger = logging.getLogger(__name__)
@@ -70,7 +70,7 @@ class AerisConfig:
         gc_endpoint: str | None = None,
         ps_endpoints: list[str] | None = None,
     ) -> None:
-        self.name = 'aeris'
+        self.name = 'academy'
         self.exchange = exchange
         self.executor = executor
         self.run_dir = run_dir
@@ -224,7 +224,7 @@ class DaskConfig:
 
 
 class RayClient:
-    # We lose typing on these methods but we the AERIS and Dask configs
+    # We lose typing on these methods but we the Academy and Dask configs
     # yield objects that can be used to submit code, whereas ray uses
     # functions defined on the ray module so we wrap them here for
     # consistency.
@@ -283,7 +283,7 @@ def get_launcher_config_from_args(
 ) -> LauncherConfig[Any]:
     options = vars(args)
     name = options['launcher']
-    if name == 'aeris':
+    if name == 'academy':
         return AerisConfig.from_args(options, run_dir)
     elif name == 'dask':
         return DaskConfig.from_args(options, run_dir)
@@ -293,7 +293,7 @@ def get_launcher_config_from_args(
         raise TypeError(f'Launcher type "{name}" is not supported.')
 
 
-def is_aeris_launcher(launcher: Any) -> TypeIs[Manager]:
+def is_academy_launcher(launcher: Any) -> TypeIs[Manager]:
     return isinstance(launcher, Manager)
 
 

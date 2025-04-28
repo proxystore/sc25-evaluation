@@ -6,11 +6,10 @@ import statistics
 from typing import NamedTuple
 
 import ray
+from academy.behavior import action
+from academy.behavior import Behavior
+from academy.handle import Handle
 from proxystore.utils.timer import Timer
-
-from aeris.behavior import action
-from aeris.behavior import Behavior
-from aeris.handle import Handle
 
 
 def randbytes(size: int) -> bytes:

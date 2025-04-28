@@ -11,11 +11,11 @@ from typing import Any
 from typing import NamedTuple
 
 import ray
+from academy.logging import init_logging
+from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from aeris.logging import init_logging
-from aeris.manager import Manager
 from bench.action_latency.actor import AerisReplyActor
 from bench.action_latency.actor import AerisRequestActor
 from bench.action_latency.actor import DaskReplyActor
@@ -26,7 +26,7 @@ from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
 from bench.launcher import DaskClient
 from bench.launcher import get_launcher_config_from_args
-from bench.launcher import is_aeris_launcher
+from bench.launcher import is_academy_launcher
 from bench.launcher import is_dask_launcher
 from bench.launcher import is_ray_launcher
 from bench.launcher import LauncherConfig
@@ -44,7 +44,7 @@ class Result(NamedTuple):
     stdev_latency_s: float
 
 
-def run_benchmark_aeris(
+def run_benchmark_academy(
     manager: Manager,
     data_sizes: list[int],
     repeat: int,
@@ -77,7 +77,7 @@ def run_benchmark_aeris(
             )
             mean, std = future.result()
         result = Result(
-            framework=f'AERIS[{type(manager.exchange).__name__}]',
+            framework=f'Academy[{type(manager.exchange).__name__}]',
             trials=repeat,
             data_size_bytes=data_size,
             mean_latency_s=mean,
@@ -181,8 +181,10 @@ def run_benchmark(
     repeat: int,
     result_logger: CSVResultLogger,
 ) -> None:
-    if is_aeris_launcher(launcher):
-        return run_benchmark_aeris(launcher, data_sizes, repeat, result_logger)
+    if is_academy_launcher(launcher):
+        return run_benchmark_academy(
+            launcher, data_sizes, repeat, result_logger,
+        )
     elif is_dask_launcher(launcher):
         return run_benchmark_dask(launcher, data_sizes, repeat, result_logger)
     elif is_ray_launcher(launcher):
