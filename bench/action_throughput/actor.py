@@ -1,16 +1,18 @@
 from __future__ import annotations
 
+import asyncio
 import time
 
 import ray
-from academy.behavior import action
-from academy.behavior import Behavior
+
+from academy.agent import action
+from academy.agent import Agent
 
 
-class AerisActor(Behavior):
+class AcademyActor(Agent):
     @action
-    def noop(self, sleep: float = 0) -> None:
-        time.sleep(sleep)
+    async def noop(self, sleep: float = 0) -> None:
+        await asyncio.sleep(sleep)
 
 
 class DaskActor:

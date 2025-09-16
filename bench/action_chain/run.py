@@ -6,19 +6,20 @@ import os
 import sys
 from collections.abc import Sequence
 from datetime import datetime
+from typing import Any
 from typing import NamedTuple
 
-from academy.exchange.proxystore import ProxyStoreExchange
-from academy.logging import init_logging
-from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
+from academy.exchange import ProxyStoreExchangeFactory
+from academy.logging import init_logging
+from academy.manager import Manager
 from bench.action_chain.agent import Data
 from bench.action_chain.agent import Node
 from bench.argparse import add_academy_parser_group
 from bench.argparse import add_general_options
-from bench.launcher import AerisConfig
+from bench.launcher import AcademyConfig
 from bench.results import CSVResultLogger
 
 logger = logging.getLogger(__name__)
@@ -32,18 +33,18 @@ class Result(NamedTuple):
     time_s: float
 
 
-def run_benchmark(
-    manager: Manager,
+async def run_benchmark(
+    manager: Manager[Any],
     chain_lengths: list[int],
     data_size_bytes: int,
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
     for chain_length in chain_lengths:
         logger.info('Launching remote agents...')
 
         agent_ids = [
-            manager.exchange.create_agent() for _ in range(chain_length)
+            await manager.register_agent(Node) for _ in range(chain_length)
         ]
 
         behaviors = []
@@ -51,16 +52,16 @@ def run_benchmark(
             if i + 1 == len(agent_ids):
                 behaviors.append(Node(None))
             else:
-                handle = manager.exchange.create_handle(agent_ids[i + 1])
+                handle = manager.get_handle(agent_ids[i + 1])
                 behaviors.append(Node(handle))
         handles = [
-            manager.launch(behavior, agent_id=agent_id)
+            await manager.launch(behavior, registration=agent_id)
             for behavior, agent_id in zip(behaviors, agent_ids, strict=False)
         ]
 
         data = Data.new(data_size_bytes)
         logger.info('Running warm up...')
-        handles[0].action('process', data).result(timeout=60)
+        await handles[0].process(data)
 
         logger.info(
             'Running with %d agents for %d trials...',
@@ -70,17 +71,22 @@ def run_benchmark(
         timer = Timer().start()
         for _ in range(repeat):
             with Timer() as action_timer:
-                future = handles[0].action('process', data)
-                result = future.result(timeout=60)
+                result = await handles[0].process(data)
                 assert result.len() == data.len()
 
             result = Result(
                 exchange=(
-                    type(manager.exchange.exchange).__name__
-                    if isinstance(manager.exchange, ProxyStoreExchange)
-                    else type(manager.exchange).__name__
+                    type(manager.exchange_factory.base).__name__
+                    if isinstance(
+                        manager.exchange_factory,
+                        ProxyStoreExchangeFactory,
+                    )
+                    else type(manager.exchange_factory).__name__
                 ),
-                proxystore=isinstance(manager.exchange, ProxyStoreExchange),
+                proxystore=isinstance(
+                    manager.exchange_factory,
+                    ProxyStoreExchangeFactory,
+                ),
                 chain_length=chain_length,
                 data_size_bytes=data_size_bytes,
                 time_s=action_timer.elapsed_s,
@@ -92,15 +98,14 @@ def run_benchmark(
 
         logger.info('Shutting down remote agents...')
         for handle in handles:
-            handle.shutdown()
-        for handle in handles:
-            manager.wait(handle.agent_id)
+            await handle.shutdown()
+        await manager.wait(handles)
         logger.info('Remote agents shutdown!')
 
 
-def run(
+async def run(
     *,
-    config: AerisConfig,
+    config: AcademyConfig,
     chain_lengths: list[int],
     data_size: int,
     repeat: int,
@@ -109,12 +114,12 @@ def run(
     timer = Timer().start()
     logger.info('Starting benchmark...')
 
-    with config.get_launcher() as launcher:
+    async with config.get_launcher() as launcher:
         with CSVResultLogger(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            run_benchmark(
+            await run_benchmark(
                 launcher,
                 chain_lengths,
                 data_size,
@@ -127,7 +132,7 @@ def run(
     logger.info('Completed benchmark in %.3fs', timer.elapsed_s)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+async def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -162,9 +167,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
 
     logger.info('Args: %s', vars(args))
-    config = AerisConfig.from_args(vars(args), run_dir)
+    config = AcademyConfig.from_args(vars(args), run_dir)
 
-    run(
+    await run(
         config=config,
         chain_lengths=args.chain_lengths,
         data_size=readable_to_bytes(args.data_size),

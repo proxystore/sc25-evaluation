@@ -12,7 +12,7 @@ from autogen_ext.runtimes.grpc import GrpcWorkerAgentRuntime
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from aeris.logging import init_logging
+from academy.logging import init_logging
 
 
 @dataclasses.dataclass

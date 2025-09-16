@@ -4,8 +4,8 @@ import os
 import random
 from typing import NamedTuple
 
-from academy.behavior import action
-from academy.behavior import Behavior
+from academy.agent import action
+from academy.agent import Agent
 
 
 def randbytes(size: int) -> bytes:
@@ -16,7 +16,7 @@ def randbytes(size: int) -> bytes:
 
 
 class Data(NamedTuple):
-    index: int
+    msg_index: int
     raw: list[bytes]
 
     @classmethod
@@ -26,17 +26,17 @@ class Data(NamedTuple):
         for _ in range(size // chunk_size):
             raw.append(randbytes(chunk_size))
         raw.append(randbytes(size % chunk_size))
-        return cls(index=0, raw=raw)
+        return cls(msg_index=0, raw=raw)
 
     def len(self) -> int:
         return sum(len(r) for r in self.raw)
 
 
-class ReplyAgent(Behavior):
+class ReplyAgent(Agent):
     @action
-    def noop(self) -> None:
+    async def noop(self) -> None:
         return None
 
     @action
-    def process(self, payload: Data) -> Data:
-        return Data(payload.index + 1, payload.raw)
+    async def process(self, payload: Data) -> Data:
+        return Data(payload.msg_index + 1, payload.raw)

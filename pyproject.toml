@@ -23,16 +23,16 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "academy-py==0.1.0",
+    "academy-py",
     "dask[distributed]==2025.2.0",
     "globus-compute-sdk==3.5.0",
     "globus-compute-endpoint==3.5.0",
     "jupyterlab",
-    "parsl==2025.03.03",
+    "parsl",
     "polars",
     "proxystore[endpoints]==0.8.0",
     "pydantic>=2",
-    "ray[default]==2.43.0",
+    "ray[default]",
     "seaborn",
     "typing-extensions",
 ]
@@ -138,7 +138,7 @@ multiline-quotes = "double"
 
 [tool.ruff.lint.isort]
 force-single-line = true
-known-first-party = ["aeris", "test", "testing"]
+known-first-party = ["academy", "test", "testing"]
 order-by-type = false
 required-imports = ["from __future__ import annotations"]
 
