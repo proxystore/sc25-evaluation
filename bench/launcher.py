@@ -7,6 +7,7 @@ import logging
 import multiprocessing
 import os
 import sys
+import uuid
 from concurrent.futures import Executor
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import ThreadPoolExecutor
@@ -35,6 +36,8 @@ from proxystore.store import Store
 from proxystore.store.executor import ProxyAlways
 
 from academy.exchange import ExchangeFactory
+from academy.exchange import GlobusExchangeFactory
+from academy.exchange import HttpExchangeFactory
 from academy.exchange import HybridExchangeFactory
 from academy.exchange import ProxyStoreExchangeFactory
 from academy.exchange import RedisExchangeFactory
@@ -71,6 +74,8 @@ class AcademyConfig:
         redis_port: int,
         run_dir: str,
         workers_per_node: int,
+        url: str | None = None,
+        project_id: uuid.UUID | None = None,
         interface: str | None = None,
         gc_endpoint: str | None = None,
         ps_endpoints: list[str] | None = None,
@@ -83,6 +88,8 @@ class AcademyConfig:
         self.redis_port = redis_port
         self.workers_per_node = workers_per_node
         self.interface = interface
+        self.url = url
+        self.project_id = project_id
         self.gc_endpoint = gc_endpoint
         self.ps_endpoints = ps_endpoints
 
@@ -99,6 +106,8 @@ class AcademyConfig:
             redis_port=args['redis_port'],
             run_dir=run_dir,
             workers_per_node=args['workers_per_node'],
+            url=args['url'],
+            project_id=args['project_id'],
             interface=args['interface'],
             gc_endpoint=args['gc_endpoint'],
             ps_endpoints=args['ps_endpoints'],
@@ -139,6 +148,12 @@ class AcademyConfig:
                 self.redis_port,
                 interface=self.interface,
             )
+        elif self.exchange == 'cloud':
+            assert self.url is not None
+            exchange = HttpExchangeFactory(self.url, auth_method='globus')
+        elif self.exchange == 'globus':
+            assert self.project_id is not None
+            exchange = GlobusExchangeFactory(project_id=self.project_id)
         else:
             raise ValueError(f'Unsupported exchange type "{self.exchange}".')
 

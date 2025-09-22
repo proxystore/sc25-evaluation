@@ -6,13 +6,14 @@ build-backend = "setuptools.build_meta"
 name = "bench"
 version = "0.1.0"
 authors = [
-    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+    {name = "Greg Pauloski"},
+    {name = "Alok Kamatar", email = "alokvk2@uchicago.edu"},
     {name = "Globus Labs"},
 ]
 maintainers = [
-    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+    {name = "Alok Kamatar", email = "alokvk2@uchicago.edu"},
 ]
-description = "SC25 agents paper benchmarks."
+description = "IPDPS26 agents paper benchmarks."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}

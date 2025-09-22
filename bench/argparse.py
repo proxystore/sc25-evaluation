@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import uuid
 from typing import Sequence
 
 from bench.parsl import PARSL_CONFIGS
@@ -48,6 +49,7 @@ def add_launcher_groups(
     arg_str = ''.join(argv)
     add_academy_parser_group(
         parser,
+        argv,
         required='--launcher academy' in arg_str,
     )
     add_dask_parser_group(
@@ -62,13 +64,14 @@ def add_launcher_groups(
 
 def add_academy_parser_group(
     parser: argparse.ArgumentParser,
+    argv: Sequence[str] = (),
     required: bool = True,
 ) -> None:
     group = parser.add_argument_group(title='Academy Configuration')
 
     group.add_argument(
         '--exchange',
-        choices=['hybrid', 'redis'],
+        choices=['hybrid', 'redis', 'cloud', 'globus'],
         default='redis',
         help='exchange type',
     )
@@ -82,22 +85,42 @@ def add_academy_parser_group(
         ],
         required=required,
     )
+
+    arg_str = ''.join(argv)
+    redis_required = required and (
+        '--exchange redis' in arg_str or '--exchange hybrid' in arg_str
+    )
     group.add_argument(
         '--redis-host',
         type=str,
-        required=required,
+        required=redis_required,
         help='redis host',
     )
     group.add_argument(
         '--redis-port',
         type=int,
-        required=required,
+        required=redis_required,
         help='redis port',
     )
     group.add_argument(
         '--interface',
         default=None,
         help='interface to use with hybrid exchange',
+    )
+
+    group.add_argument(
+        '--url',
+        type=str,
+        default='https://exchange.proxystore.dev',
+        help='URL of cloud exchange',
+    )
+
+    project_required = required and '--exchange globus' in arg_str
+    group.add_argument(
+        '--project_id',
+        type=uuid.UUID,
+        required=project_required,
+        help='Globus project id to launch agents.',
     )
     group.add_argument(
         '--gc-endpoint',
