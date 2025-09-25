@@ -30,7 +30,7 @@ def add_launcher_groups(
 ) -> None:
     parser.add_argument(
         '--launcher',
-        choices=['academy', 'dask', 'ray'],
+        choices=['academy', 'dask', 'ray', 'gc'],
         required=True,
         help='launcher framework to use',
     )
@@ -59,6 +59,10 @@ def add_launcher_groups(
     add_ray_parser_group(
         parser,
         required='--launcher ray' in arg_str,
+    )
+    add_globus_compute_parser_group(
+        parser,
+        required='--launcher gc' in arg_str,
     )
 
 
@@ -165,4 +169,17 @@ def add_ray_parser_group(
         default=None,
         metavar='ADDR',
         help='ray cluster address (default creates local cluster)',
+    )
+
+
+def add_globus_compute_parser_group(
+    parser: argparse.ArgumentParser,
+    required: bool = True,
+) -> None:
+    group = parser.add_argument_group(title='Globus Compute Configuration')
+
+    group.add_argument(
+        '--endpoint-id',
+        default=None,
+        help='globus compute endpoint uuid',
     )

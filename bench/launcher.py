@@ -296,6 +296,29 @@ class RayConfig:
             ray.shutdown()
 
 
+class GlobusComputeConfig:
+    def __init__(
+        self,
+        *,
+        endpoint_id: str,
+    ) -> None:
+        self.name = 'globus_compute'
+        self.endpoint_id = endpoint_id
+
+    @classmethod
+    def from_args(cls, args: dict[str, Any], run_dir: str) -> Self:
+        endpoint_id = args['endpoint_id']
+        return cls(endpoint_id=endpoint_id)
+
+    @contextlib.asynccontextmanager
+    async def get_launcher(self) -> AsyncGenerator[GCExecutor]:
+        executor = GCExecutor(self.endpoint_id)
+        try:
+            yield executor
+        finally:
+            executor.shutdown()
+
+
 def get_launcher_config_from_args(
     args: argparse.Namespace,
     run_dir: str,
@@ -308,6 +331,8 @@ def get_launcher_config_from_args(
         return DaskConfig.from_args(options, run_dir)
     elif name == 'ray':
         return RayConfig.from_args(options, run_dir)
+    elif name == 'gc':
+        return GlobusComputeConfig.from_args(options, run_dir)
     else:
         raise TypeError(f'Launcher type "{name}" is not supported.')
 
@@ -322,3 +347,7 @@ def is_dask_launcher(launcher: Any) -> TypeIs[DaskClient]:
 
 def is_ray_launcher(launcher: Any) -> TypeIs[RayClient]:
     return isinstance(launcher, RayClient)
+
+
+def is_gc_launcher(launcher: Any) -> TypeIs[GCExecutor]:
+    return isinstance(launcher, GCExecutor)
