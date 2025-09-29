@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Any
 from typing import NamedTuple
 
-from globus_compute import Executor
+from globus_compute_sdk import Executor
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
@@ -52,7 +52,10 @@ async def run_benchmark_academy(
 
     for state_size in state_sizes:
         logger.info('Starting actors...')
-        state_handle = await manager.launch(AcademyStateActor, args=())
+        state_handle = await manager.launch(
+            AcademyStateActor,
+            args=(state_size,),
+        )
         await state_handle.action('noop')
         logger.info('Started actors')
 
@@ -81,7 +84,7 @@ async def run_benchmark_academy(
 
         logger.info('Shutting down all actors...')
         await state_handle.shutdown()
-        await manager.wait((state_handle))
+        await manager.wait((state_handle,))
         logger.info('Shutdown all actors')
 
 
@@ -167,7 +170,7 @@ async def run(
     *,
     launcher_config: LauncherConfig[Any],
     state_path: str | None,
-    data_sizes: list[int],
+    state_sizes: list[int],
     repeat: int,
     run_dir: str,
 ) -> None:
@@ -182,7 +185,7 @@ async def run(
             await run_benchmark(
                 launcher,
                 state_path,
-                data_sizes,
+                state_sizes,
                 repeat,
                 result_logger,
             )
@@ -230,7 +233,7 @@ async def main(argv: Sequence[str] | None = None) -> int:
     await run(
         launcher_config=launcher_config,
         state_path=args.state_path,
-        data_sizes=[readable_to_bytes(x) for x in args.data_sizes],
+        state_sizes=[readable_to_bytes(x) for x in args.state_sizes],
         repeat=args.repeat,
         run_dir=run_dir,
     )

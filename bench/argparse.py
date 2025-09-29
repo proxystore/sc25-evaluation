@@ -115,7 +115,7 @@ def add_academy_parser_group(
     group.add_argument(
         '--url',
         type=str,
-        default='https://exchange.proxystore.dev',
+        default='https://exchange.academy-agents.org',
         help='URL of cloud exchange',
     )
 
