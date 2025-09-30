@@ -30,6 +30,7 @@ else:
 import ray
 from dask.distributed import Client as DaskClient
 from globus_compute_sdk import Executor as GCExecutor
+from globus_compute_sdk.sdk.executor import _ResultWatcher
 from parsl.concurrent import ParslPoolExecutor
 from proxystore.connectors.endpoint import EndpointConnector
 from proxystore.store import Store
@@ -312,7 +313,17 @@ class GlobusComputeConfig:
 
     @contextlib.asynccontextmanager
     async def get_launcher(self) -> AsyncGenerator[GCExecutor]:
-        executor = GCExecutor(self.endpoint_id)
+        executor = GCExecutor(
+            self.endpoint_id,
+            batch_size=1,
+            api_burst_limit=8,  # Max value allowed
+            api_burst_window_s=1,
+        )
+        _ResultWatcher(
+            task_group_id=executor.task_group_id,
+            client=executor.client,
+            poll_period_s=0.05,
+        )
         try:
             yield executor
         finally:

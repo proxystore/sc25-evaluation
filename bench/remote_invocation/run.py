@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import logging
 import os
 import statistics
 import sys
+import time
 from collections.abc import Sequence
 from datetime import datetime
 from typing import Any
@@ -87,6 +89,9 @@ async def run_benchmark_academy(
         await manager.wait((state_handle,))
         logger.info('Shutdown all actors')
 
+        logger.info('Waiting to avoid globus compute rate limits.')
+        await asyncio.sleep(5)  # Avoid globus compute rate limits
+
 
 def run_benchmark_globus_compute(
     executor: Executor,
@@ -120,6 +125,7 @@ def run_benchmark_globus_compute(
                 future = executor.submit(globus_compute_read, state_path)
                 future.result()
             results.append(timer.elapsed_s)
+            time.sleep(5)  # Avoid Globus Compute rate limits
         mean = sum(results) / len(results)
         std = statistics.stdev(results)
         result = Result(
@@ -136,6 +142,7 @@ def run_benchmark_globus_compute(
         future = executor.submit(globus_compute_clean_state, state_path)
         future.result()
         logger.info('Shutdown all actors')
+        time.sleep(5)  # Avoid Globus Compute rate limits
 
 
 async def run_benchmark(
@@ -217,7 +224,7 @@ async def main(argv: Sequence[str] | None = None) -> int:
 
     run_dir = os.path.join(
         args.run_dir,
-        'action-latency',
+        'remote-invocation',
         datetime.now().strftime('%Y-%m-%d-%H-%M-%S'),
     )
     init_logging(

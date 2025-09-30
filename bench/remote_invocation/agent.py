@@ -40,6 +40,8 @@ class AcademyStateActor(Agent):
 
 
 def globus_compute_init_state(state_size: int, path: str) -> None:
+    basedir, _ = os.path.split(path)
+    os.makedirs(basedir, exist_ok=True)
     state = Data.new(state_size)
     with open(path, 'wb') as fp:
         fp.write(state.raw)

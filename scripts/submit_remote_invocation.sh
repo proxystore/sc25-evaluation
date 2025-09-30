@@ -1,6 +1,6 @@
-DEFAULT_ARGS=" --repeat 10 --num-nodes 1 --workers-per-node 1 "
-DEFAULT_ARGS+=" --run-dir /home/alokvk2/research/agents/sc25-evaluation/runs-test "
-DEFAULT_ARGS+=" --state-sizes 1kb 10kb 100kb 1mb 10mb 100mb "
+DEFAULT_ARGS=" --repeat 30 --num-nodes 1 --workers-per-node 1 "
+DEFAULT_ARGS+=" --run-dir /home/alokvk2/research/agents/sc25-evaluation/runs-prod "
+DEFAULT_ARGS+=" --state-sizes 1gb 2gb 4gb 8gb 16gb "
 
 ENDPOINT_ID="73e00b24-25b5-44e5-adc5-8ad17705e5da"
 
@@ -14,13 +14,13 @@ ENDPOINT_ID="73e00b24-25b5-44e5-adc5-8ad17705e5da"
 #############
 
 python -m bench.remote_invocation $DEFAULT_ARGS \
-    --launcher academy --exchange cloud --executor process-pool
-
+    --launcher academy --exchange cloud --executor globus-compute \
+    --gc-endpoint $ENDPOINT_ID
 
 ############
 # RUN Globus Compute #
 ############
 
-# python -m bench.remote_invocation $DEFAULT_ARGS \
-#     --launcher academy --exchange cloud --executor globus-compute \
-#     --gc-endpoint $ENDPOINT_ID
+STATE_STORE="/flare/workflow_scaling/alokvk2/agents/sc25-evaluation/data/state.bytes"
+python -m bench.remote_invocation $DEFAULT_ARGS \
+    --launcher gc --endpoint-id $ENDPOINT_ID --state-path $STATE_STORE
