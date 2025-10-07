@@ -32,14 +32,32 @@ class Result(NamedTuple):
     latency_s: float
 
 
+def test_proxystore() -> tuple[str, ...]:
+    from proxystore.endpoint.config import get_configs
+    from proxystore.utils.environment import home_dir
+
+    available_endpoints = get_configs(home_dir())
+    return tuple(endpoint.uuid for endpoint in available_endpoints)
+
+
 async def run_benchmark(
     manager: Manager[Any],
     data_sizes: list[int],
     repeat: int,
     result_logger: CSVResultLogger[Result],
 ) -> None:
+    logger.info('Running warmup task...')
+    assert manager._default_executor is not None
+    executor = manager._executors[manager._default_executor]
+    available_endpoints = executor.submit(test_proxystore).result()
+    logger.info(f'Available endpoints: {available_endpoints}')
+
     logger.info('Launching remote agent...')
-    remote = await manager.launch(ReplyAgent)
+    remote = await manager.launch(
+        ReplyAgent, 
+        init_logging=True, 
+        logfile="/flare/workflow_scaling/alokvk2/agents/sc25-evaluation/runs-test/{agent_id}-log.txt"
+    )
     await remote.action('noop')
     logger.info('Remote agent is ready!')
 

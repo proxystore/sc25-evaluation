@@ -34,8 +34,8 @@ class Data(NamedTuple):
 
 class ReplyAgent(Agent):
     @action
-    async def noop(self) -> None:
-        return None
+    async def noop(self) -> str:
+        return 'None'
 
     @action
     async def process(self, payload: Data) -> Data:
