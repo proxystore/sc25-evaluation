@@ -10,7 +10,7 @@ REMOTE_PS_ENPOINT="348cd67c-fa7c-4e4e-9325-095204f05fee"
 #############
 
 python -m bench.exchange_perf $DEFAULT_ARGS \
-    --data-sizes 1kb 10kb 100kb \
+    --data-sizes 1kb 10kb 100kb 1mb 10mb 100mb \
     --exchange cloud --executor globus-compute --gc-endpoint $ENDPOINT_ID
 
 ############
