@@ -28,7 +28,7 @@ dependencies = [
     "globus-compute-sdk==3.5.0",
     "globus-compute-endpoint==3.5.0",
     "jupyterlab",
-    "parsl==2025.03.03",
+    "parsl==2026.1.5",
     "polars",
     "proxystore[endpoints]==0.8.0",
     "pydantic>=2",
