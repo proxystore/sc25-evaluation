@@ -1,0 +1,512 @@
+[2026-01-17 02:47:00.265] INFO     (root) Configured logger (stdout-level=INFO, logfile=/grand/SuperBERT/alok/mofa-runs/17Jan26024501/optimizer/log.txt, logfile-level=INFO)
+[2026-01-17 02:47:00.319] INFO     (parsl.dataflow.dflow) Starting DataFlowKernel with config
+Config(
+    app_cache=False, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(HighThroughputExecutor(
+        address=None, 
+        address_probe_timeout=None, 
+        available_accelerators=['0', '1', '2', '3'], 
+        block_error_handler=<function simple_error_handler at 0x7f66ccf791b0>, 
+        cores_per_worker=1.0, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=15, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='polaris-htex', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --port={worker_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7f66ccf9a200>, 
+        max_workers_per_node=2, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=PBSProProvider(
+            account='APSDataAnalysis', 
+            cmd_timeout=120, 
+            cpus_per_node=32, 
+            init_blocks=0, 
+            launcher=SimpleLauncher(debug=True), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=2, 
+            parallelism=1, 
+            queue='debug', 
+            scheduler_options='#PBS -l filesystems=home:eagle:grand', 
+            select_options='ngpus=4', 
+            walltime='1:00:00', 
+            worker_init='module use /soft/modulefiles; module load conda; conda activate /eagle/Diaspora/alok/sc25-agentic-mof-workflow/env; cd /grand/SuperBERT/alok/sc25-agentic-mof-workflow/ ; rm -rd cp2k-hosts; mkdir cp2k-hosts ; split --lines=1 -d --suffix-length=2 $PBS_NODEFILE cp2k-hosts/local_hostfile. ; export TMPDIR=/tmp'
+        ), 
+        remote_monitoring_radio=HTEXRadio(), 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port=None, 
+        worker_port_range=(54000, 55000), 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=False, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=1, 
+    retry_handler=None, 
+    run_dir='/grand/SuperBERT/alok/mofa-runs/17Jan26024501/optimizer', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+[2026-01-17 02:47:00.321] INFO     (parsl.dataflow.dflow) Parsl version: 2025.12.01
+[2026-01-17 02:47:00.322] INFO     (parsl.dataflow.dflow) Run id is: d9a2d54b-7bd2-457b-afb8-47f8c46a9317
+[2026-01-17 02:47:00.358] INFO     (parsl.dataflow.memoization) App caching disabled for all apps
+[2026-01-17 02:47:01.793] INFO     (academy.agent) Running agent (AgentID<7c61535f>; Behavior<Optimizer>)
+[2026-01-17 02:47:05.360] INFO     (parsl.executors.status_handling) Scaling out by 0 blocks
+[2026-01-17 03:01:55.595] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5130eaa8)
+[2026-01-17 03:01:55.596] INFO     (parsl.dataflow.dflow) Task 0 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 03:01:55.646] INFO     (Optimizer) START optimize-cells 304fb819-da48-41dc-be39-4deccb22f9c7
+[2026-01-17 03:01:55.647] INFO     (parsl.dataflow.dflow) Parsl task 0 try 0 launched on executor polaris-htex with executor id 1
+[2026-01-17 03:01:55.648] INFO     (Optimizer) Submitted optimize-cells task (name=mof-5130eaa8)
+[2026-01-17 03:01:55.649] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2026-01-17 03:01:55.651] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2026-01-17 03:02:00.419] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2026-01-17 03:02:00.421] INFO     (parsl.executors.status_handling) Allocated block ID 0
+[2026-01-17 03:02:00.422] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2026-01-17 03:02:01.074] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a8fffec2)
+[2026-01-17 03:02:01.074] INFO     (parsl.dataflow.dflow) Task 1 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 03:02:01.076] INFO     (Optimizer) START optimize-cells 99e59501-d822-42df-8bcf-88fe4315d58a
+[2026-01-17 03:02:01.079] INFO     (Optimizer) Submitted optimize-cells task (name=mof-a8fffec2)
+[2026-01-17 03:02:01.079] INFO     (parsl.dataflow.dflow) Parsl task 1 try 0 launched on executor polaris-htex with executor id 2
+[2026-01-17 03:02:01.081] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2026-01-17 03:02:01.082] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2026-01-17 03:02:02.781] INFO     (Optimizer) Added mof to optimizer queue (name=mof-641f97d9)
+[2026-01-17 03:02:06.545] INFO     (Optimizer) Added mof to optimizer queue (name=mof-aebe6cb6)
+[2026-01-17 03:02:07.903] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2f19af17)
+[2026-01-17 03:02:09.179] INFO     (Optimizer) Added mof to optimizer queue (name=mof-22497080)
+[2026-01-17 03:02:11.384] INFO     (Optimizer) Added mof to optimizer queue (name=mof-e270898e)
+[2026-01-17 03:02:11.732] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5e25a17c)
+[2026-01-17 03:02:14.051] INFO     (Optimizer) Added mof to optimizer queue (name=mof-5360e0f1)
+[2026-01-17 03:02:16.475] INFO     (Optimizer) Added mof to optimizer queue (name=mof-3b7fd284)
+[2026-01-17 03:02:53.275] INFO     (Optimizer) Added mof to optimizer queue (name=mof-d2bee92e)
+[2026-01-17 03:02:55.581] INFO     (Optimizer) Added mof to optimizer queue (name=mof-1bc2433d)
+[2026-01-17 03:03:03.725] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c1c162ae)
+[2026-01-17 03:03:05.027] INFO     (Optimizer) Added mof to optimizer queue (name=mof-56ad827b)
+[2026-01-17 03:03:07.605] INFO     (Optimizer) Added mof to optimizer queue (name=mof-05490379)
+[2026-01-17 03:03:08.627] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c1c26e47)
+[2026-01-17 03:03:14.225] INFO     (Optimizer) Added mof to optimizer queue (name=mof-fc052b41)
+[2026-01-17 03:03:15.700] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a63c76f0)
+[2026-01-17 03:03:16.224] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b6ae2941)
+[2026-01-17 03:03:16.568] INFO     (Optimizer) Added mof to optimizer queue (name=mof-ba4599b7)
+[2026-01-17 03:03:19.268] INFO     (Optimizer) Added mof to optimizer queue (name=mof-8aed42c9)
+[2026-01-17 03:03:19.788] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2ae6e083)
+[2026-01-17 03:03:51.694] INFO     (Optimizer) Added mof to optimizer queue (name=mof-476b55af)
+[2026-01-17 03:03:57.728] INFO     (Optimizer) Added mof to optimizer queue (name=mof-518c9042)
+[2026-01-17 03:04:06.951] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c1c162ae)
+[2026-01-17 03:04:09.118] INFO     (Optimizer) Added mof to optimizer queue (name=mof-2770798e)
+[2026-01-17 03:04:09.837] INFO     (Optimizer) Added mof to optimizer queue (name=mof-c3fe6d54)
+[2026-01-17 03:04:12.850] INFO     (Optimizer) Added mof to optimizer queue (name=mof-b150223b)
+[2026-01-17 03:04:13.790] INFO     (Optimizer) Added mof to optimizer queue (name=mof-69049e1c)
+[2026-01-17 03:04:17.672] INFO     (Optimizer) Added mof to optimizer queue (name=mof-a8fffec2)
+[2026-01-17 03:04:18.018] INFO     (Optimizer) Added mof to optimizer queue (name=mof-4342a18d)
+[2026-01-17 03:06:18.550] INFO     (academy.agent) Ping request received by AgentID<7c61535f>
+[2026-01-17 03:06:18.694] INFO     (Optimizer) Optimizer shutting down when current work is finished
+[2026-01-17 04:06:29.344] INFO     (parsl.dataflow.dflow) Task 1 completed (launched -> exec_done)
+[2026-01-17 04:06:29.347] INFO     (Optimizer) END optimize-cells 99e59501-d822-42df-8bcf-88fe4315d58a
+[2026-01-17 04:06:29.348] INFO     (Optimizer) Completed optimize-cells task (name=mof-a8fffec2)
+[2026-01-17 04:06:29.350] INFO     (parsl.dataflow.dflow) Task 2 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:06:29.354] INFO     (Optimizer) START optimize-cells 7b8dd22a-a49e-452b-897d-93623e8967f7
+[2026-01-17 04:06:29.359] INFO     (Optimizer) Submitted optimize-cells task (name=mof-1bc2433d)
+[2026-01-17 04:06:29.359] INFO     (parsl.dataflow.dflow) Parsl task 2 try 0 launched on executor polaris-htex with executor id 3
+[2026-01-17 04:06:29.361] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2026-01-17 04:06:29.362] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2026-01-17 04:06:29.607] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:06:29.609] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2026-01-17 04:06:29.610] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2026-01-17 04:07:34.376] INFO     (parsl.dataflow.dflow) Task 0 completed (launched -> exec_done)
+[2026-01-17 04:07:34.378] INFO     (Optimizer) END optimize-cells 304fb819-da48-41dc-be39-4deccb22f9c7
+[2026-01-17 04:07:34.379] INFO     (Optimizer) Completed optimize-cells task (name=mof-5130eaa8)
+[2026-01-17 04:07:34.379] INFO     (parsl.dataflow.dflow) Task 3 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:07:34.381] INFO     (Optimizer) START optimize-cells 4f041de3-4532-46af-8c4e-9b4ae899dbaf
+[2026-01-17 04:07:34.383] INFO     (Optimizer) Submitted optimize-cells task (name=mof-ba4599b7)
+[2026-01-17 04:07:34.383] INFO     (parsl.dataflow.dflow) Parsl task 3 try 0 launched on executor polaris-htex with executor id 4
+[2026-01-17 04:07:34.385] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2026-01-17 04:07:34.386] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2026-01-17 04:07:34.611] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:07:34.612] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2026-01-17 04:07:34.613] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2026-01-17 04:09:31.326] INFO     (parsl.dataflow.dflow) Task 2 completed (launched -> exec_done)
+[2026-01-17 04:09:31.329] INFO     (Optimizer) END optimize-cells 7b8dd22a-a49e-452b-897d-93623e8967f7
+[2026-01-17 04:09:31.330] INFO     (Optimizer) Completed optimize-cells task (name=mof-1bc2433d)
+[2026-01-17 04:09:31.332] INFO     (parsl.dataflow.dflow) Task 4 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:09:31.335] INFO     (Optimizer) START optimize-cells 8d0e59a9-ce1f-4e68-b9ff-3ee2720140e6
+[2026-01-17 04:09:31.339] INFO     (Optimizer) Submitted optimize-cells task (name=mof-d2bee92e)
+[2026-01-17 04:09:31.338] INFO     (parsl.dataflow.dflow) Parsl task 4 try 0 launched on executor polaris-htex with executor id 5
+[2026-01-17 04:09:31.341] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2026-01-17 04:09:31.342] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2026-01-17 04:09:31.564] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:09:31.565] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2026-01-17 04:09:31.566] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2026-01-17 04:11:30.857] INFO     (parsl.dataflow.dflow) Task 3 completed (launched -> exec_done)
+[2026-01-17 04:11:30.860] INFO     (Optimizer) END optimize-cells 4f041de3-4532-46af-8c4e-9b4ae899dbaf
+[2026-01-17 04:11:30.861] INFO     (Optimizer) Completed optimize-cells task (name=mof-ba4599b7)
+[2026-01-17 04:11:30.958] INFO     (parsl.dataflow.dflow) Task 5 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:11:30.990] INFO     (Optimizer) START optimize-cells ba490a83-9ce4-4190-be05-3a9fafab3bb5
+[2026-01-17 04:11:30.997] INFO     (Optimizer) Submitted optimize-cells task (name=mof-476b55af)
+[2026-01-17 04:11:30.997] INFO     (parsl.dataflow.dflow) Parsl task 5 try 0 launched on executor polaris-htex with executor id 6
+[2026-01-17 04:11:30.999] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2026-01-17 04:11:31.000] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2026-01-17 04:11:31.219] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:11:31.220] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2026-01-17 04:11:31.221] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2026-01-17 04:13:22.483] INFO     (parsl.dataflow.dflow) Task 4 completed (launched -> exec_done)
+[2026-01-17 04:13:22.485] INFO     (Optimizer) END optimize-cells 8d0e59a9-ce1f-4e68-b9ff-3ee2720140e6
+[2026-01-17 04:13:22.487] INFO     (Optimizer) Completed optimize-cells task (name=mof-d2bee92e)
+[2026-01-17 04:13:22.487] INFO     (parsl.dataflow.dflow) Task 6 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:13:22.489] INFO     (Optimizer) START optimize-cells 339e04c0-ba99-4e6f-83ab-0eda0417856a
+[2026-01-17 04:13:22.491] INFO     (Optimizer) Submitted optimize-cells task (name=mof-c1c162ae)
+[2026-01-17 04:13:22.491] INFO     (parsl.dataflow.dflow) Parsl task 6 try 0 launched on executor polaris-htex with executor id 7
+[2026-01-17 04:13:22.493] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2026-01-17 04:13:22.494] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2026-01-17 04:13:22.719] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:13:22.721] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2026-01-17 04:13:22.722] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2026-01-17 04:15:35.919] INFO     (parsl.dataflow.dflow) Task 5 completed (launched -> exec_done)
+[2026-01-17 04:15:35.921] INFO     (Optimizer) END optimize-cells ba490a83-9ce4-4190-be05-3a9fafab3bb5
+[2026-01-17 04:15:35.923] INFO     (Optimizer) Completed optimize-cells task (name=mof-476b55af)
+[2026-01-17 04:15:35.923] INFO     (parsl.dataflow.dflow) Task 7 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:15:35.925] INFO     (Optimizer) START optimize-cells 824a9bbb-ecf6-4057-b5da-d4f00545190b
+[2026-01-17 04:15:35.927] INFO     (Optimizer) Submitted optimize-cells task (name=mof-5360e0f1)
+[2026-01-17 04:15:35.927] INFO     (parsl.dataflow.dflow) Parsl task 7 try 0 launched on executor polaris-htex with executor id 8
+[2026-01-17 04:15:35.929] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2026-01-17 04:15:35.930] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2026-01-17 04:15:36.156] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:15:36.158] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2026-01-17 04:15:36.159] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2026-01-17 04:17:28.793] INFO     (parsl.dataflow.dflow) Task 6 completed (launched -> exec_done)
+[2026-01-17 04:17:28.794] INFO     (Optimizer) END optimize-cells 339e04c0-ba99-4e6f-83ab-0eda0417856a
+[2026-01-17 04:17:28.796] INFO     (Optimizer) Completed optimize-cells task (name=mof-c1c162ae)
+[2026-01-17 04:17:28.796] INFO     (parsl.dataflow.dflow) Task 8 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:17:28.798] INFO     (Optimizer) START optimize-cells 51c074c0-790a-4d15-9cab-6fda454ca94d
+[2026-01-17 04:17:28.800] INFO     (Optimizer) Submitted optimize-cells task (name=mof-e270898e)
+[2026-01-17 04:17:28.800] INFO     (parsl.dataflow.dflow) Parsl task 8 try 0 launched on executor polaris-htex with executor id 9
+[2026-01-17 04:17:28.802] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2026-01-17 04:17:28.803] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2026-01-17 04:17:29.027] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:17:29.028] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2026-01-17 04:17:29.030] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2026-01-17 04:19:42.555] INFO     (parsl.dataflow.dflow) Task 7 completed (launched -> exec_done)
+[2026-01-17 04:19:42.556] INFO     (Optimizer) END optimize-cells 824a9bbb-ecf6-4057-b5da-d4f00545190b
+[2026-01-17 04:19:42.558] INFO     (Optimizer) Completed optimize-cells task (name=mof-5360e0f1)
+[2026-01-17 04:19:42.558] INFO     (parsl.dataflow.dflow) Task 9 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:19:42.561] INFO     (Optimizer) START optimize-cells 642f850a-17b2-4a2a-9806-b0efa5f1896b
+[2026-01-17 04:19:42.563] INFO     (Optimizer) Submitted optimize-cells task (name=mof-a63c76f0)
+[2026-01-17 04:19:42.563] INFO     (parsl.dataflow.dflow) Parsl task 9 try 0 launched on executor polaris-htex with executor id 10
+[2026-01-17 04:19:42.565] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2026-01-17 04:19:42.567] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2026-01-17 04:19:42.791] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:19:42.792] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2026-01-17 04:19:42.793] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2026-01-17 04:21:33.369] INFO     (parsl.dataflow.dflow) Task 8 completed (launched -> exec_done)
+[2026-01-17 04:21:33.371] INFO     (Optimizer) END optimize-cells 51c074c0-790a-4d15-9cab-6fda454ca94d
+[2026-01-17 04:21:33.372] INFO     (Optimizer) Completed optimize-cells task (name=mof-e270898e)
+[2026-01-17 04:21:33.373] INFO     (parsl.dataflow.dflow) Task 10 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:21:33.375] INFO     (Optimizer) START optimize-cells 31b4cc1b-1cab-4258-bf2b-a36c6fe85d23
+[2026-01-17 04:21:33.378] INFO     (Optimizer) Submitted optimize-cells task (name=mof-69049e1c)
+[2026-01-17 04:21:33.378] INFO     (parsl.dataflow.dflow) Parsl task 10 try 0 launched on executor polaris-htex with executor id 11
+[2026-01-17 04:21:33.381] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2026-01-17 04:21:33.382] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2026-01-17 04:21:33.605] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:21:33.606] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2026-01-17 04:21:33.608] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2026-01-17 04:23:50.612] INFO     (parsl.dataflow.dflow) Task 9 completed (launched -> exec_done)
+[2026-01-17 04:23:50.615] INFO     (Optimizer) END optimize-cells 642f850a-17b2-4a2a-9806-b0efa5f1896b
+[2026-01-17 04:23:50.616] INFO     (Optimizer) Completed optimize-cells task (name=mof-a63c76f0)
+[2026-01-17 04:23:50.617] INFO     (parsl.dataflow.dflow) Task 11 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:23:50.619] INFO     (Optimizer) START optimize-cells ff5263a2-a59e-4130-93f7-980d4ed107ea
+[2026-01-17 04:23:50.622] INFO     (Optimizer) Submitted optimize-cells task (name=mof-b150223b)
+[2026-01-17 04:23:50.623] INFO     (parsl.dataflow.dflow) Parsl task 11 try 0 launched on executor polaris-htex with executor id 12
+[2026-01-17 04:23:50.624] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2026-01-17 04:23:50.625] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2026-01-17 04:23:50.847] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:23:50.849] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2026-01-17 04:23:50.851] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2026-01-17 04:25:37.034] INFO     (parsl.dataflow.dflow) Task 10 completed (launched -> exec_done)
+[2026-01-17 04:25:37.037] INFO     (Optimizer) END optimize-cells 31b4cc1b-1cab-4258-bf2b-a36c6fe85d23
+[2026-01-17 04:25:37.038] INFO     (Optimizer) Completed optimize-cells task (name=mof-69049e1c)
+[2026-01-17 04:25:37.038] INFO     (parsl.dataflow.dflow) Task 12 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:25:37.040] INFO     (Optimizer) START optimize-cells f8304d1c-84f0-46d8-8f49-4a844ba9d8c6
+[2026-01-17 04:25:37.043] INFO     (Optimizer) Submitted optimize-cells task (name=mof-c1c26e47)
+[2026-01-17 04:25:37.043] INFO     (parsl.dataflow.dflow) Parsl task 12 try 0 launched on executor polaris-htex with executor id 13
+[2026-01-17 04:25:37.045] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2026-01-17 04:25:37.046] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2026-01-17 04:25:37.266] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:25:37.267] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2026-01-17 04:25:37.268] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2026-01-17 04:28:04.524] INFO     (parsl.dataflow.dflow) Task 11 completed (launched -> exec_done)
+[2026-01-17 04:28:04.526] INFO     (Optimizer) END optimize-cells ff5263a2-a59e-4130-93f7-980d4ed107ea
+[2026-01-17 04:28:04.527] INFO     (Optimizer) Completed optimize-cells task (name=mof-b150223b)
+[2026-01-17 04:28:04.528] INFO     (parsl.dataflow.dflow) Task 13 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:28:04.530] INFO     (Optimizer) START optimize-cells 4675b5ef-e9dd-42cb-819d-39b39bd7e175
+[2026-01-17 04:28:04.532] INFO     (Optimizer) Submitted optimize-cells task (name=mof-4342a18d)
+[2026-01-17 04:28:04.532] INFO     (parsl.dataflow.dflow) Parsl task 13 try 0 launched on executor polaris-htex with executor id 14
+[2026-01-17 04:28:04.534] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2026-01-17 04:28:04.535] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2026-01-17 04:28:04.761] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:28:04.762] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2026-01-17 04:28:04.763] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2026-01-17 04:29:46.600] INFO     (parsl.dataflow.dflow) Task 12 completed (launched -> exec_done)
+[2026-01-17 04:29:46.602] INFO     (Optimizer) END optimize-cells f8304d1c-84f0-46d8-8f49-4a844ba9d8c6
+[2026-01-17 04:29:46.603] INFO     (Optimizer) Completed optimize-cells task (name=mof-c1c26e47)
+[2026-01-17 04:29:46.604] INFO     (parsl.dataflow.dflow) Task 14 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:29:46.606] INFO     (Optimizer) START optimize-cells f1ad979c-018f-4d03-bae8-1807c8159618
+[2026-01-17 04:29:46.607] INFO     (Optimizer) Submitted optimize-cells task (name=mof-2770798e)
+[2026-01-17 04:29:46.607] INFO     (parsl.dataflow.dflow) Parsl task 14 try 0 launched on executor polaris-htex with executor id 15
+[2026-01-17 04:29:46.609] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2026-01-17 04:29:46.610] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2026-01-17 04:29:46.833] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:29:46.834] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2026-01-17 04:29:46.836] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2026-01-17 04:32:10.438] INFO     (parsl.dataflow.dflow) Task 13 completed (launched -> exec_done)
+[2026-01-17 04:32:10.440] INFO     (Optimizer) END optimize-cells 4675b5ef-e9dd-42cb-819d-39b39bd7e175
+[2026-01-17 04:32:10.442] INFO     (Optimizer) Completed optimize-cells task (name=mof-4342a18d)
+[2026-01-17 04:32:10.442] INFO     (parsl.dataflow.dflow) Task 15 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:32:10.445] INFO     (Optimizer) START optimize-cells 3736ca06-aa87-49e8-9885-e661c5cb5e22
+[2026-01-17 04:32:10.447] INFO     (Optimizer) Submitted optimize-cells task (name=mof-8aed42c9)
+[2026-01-17 04:32:10.446] INFO     (parsl.dataflow.dflow) Parsl task 15 try 0 launched on executor polaris-htex with executor id 16
+[2026-01-17 04:32:10.448] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2026-01-17 04:32:10.449] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2026-01-17 04:32:10.669] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:32:10.670] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2026-01-17 04:32:10.671] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2026-01-17 04:33:51.632] INFO     (parsl.dataflow.dflow) Task 14 completed (launched -> exec_done)
+[2026-01-17 04:33:51.634] INFO     (Optimizer) END optimize-cells f1ad979c-018f-4d03-bae8-1807c8159618
+[2026-01-17 04:33:51.635] INFO     (Optimizer) Completed optimize-cells task (name=mof-2770798e)
+[2026-01-17 04:33:51.635] INFO     (parsl.dataflow.dflow) Task 16 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:33:51.637] INFO     (Optimizer) START optimize-cells 96207ed9-43bf-4bfc-bfcc-c06230de5201
+[2026-01-17 04:33:51.639] INFO     (Optimizer) Submitted optimize-cells task (name=mof-aebe6cb6)
+[2026-01-17 04:33:51.639] INFO     (parsl.dataflow.dflow) Parsl task 16 try 0 launched on executor polaris-htex with executor id 17
+[2026-01-17 04:33:51.641] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2026-01-17 04:33:51.642] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2026-01-17 04:33:51.866] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:33:51.867] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2026-01-17 04:33:51.868] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2026-01-17 04:36:16.698] INFO     (parsl.dataflow.dflow) Task 15 completed (launched -> exec_done)
+[2026-01-17 04:36:16.702] INFO     (Optimizer) END optimize-cells 3736ca06-aa87-49e8-9885-e661c5cb5e22
+[2026-01-17 04:36:16.703] INFO     (Optimizer) Completed optimize-cells task (name=mof-8aed42c9)
+[2026-01-17 04:36:16.704] INFO     (parsl.dataflow.dflow) Task 17 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:36:16.706] INFO     (Optimizer) START optimize-cells 069cf7bd-7557-4686-bb03-dcda3975ae62
+[2026-01-17 04:36:16.709] INFO     (Optimizer) Submitted optimize-cells task (name=mof-b6ae2941)
+[2026-01-17 04:36:16.709] INFO     (parsl.dataflow.dflow) Parsl task 17 try 0 launched on executor polaris-htex with executor id 18
+[2026-01-17 04:36:16.711] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2026-01-17 04:36:16.712] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2026-01-17 04:36:16.933] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:36:16.934] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2026-01-17 04:36:16.935] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2026-01-17 04:38:33.703] INFO     (parsl.dataflow.dflow) Task 16 completed (launched -> exec_done)
+[2026-01-17 04:38:33.705] INFO     (Optimizer) END optimize-cells 96207ed9-43bf-4bfc-bfcc-c06230de5201
+[2026-01-17 04:38:33.707] INFO     (Optimizer) Completed optimize-cells task (name=mof-aebe6cb6)
+[2026-01-17 04:38:33.708] INFO     (parsl.dataflow.dflow) Task 18 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:38:33.710] INFO     (Optimizer) START optimize-cells e4248e3a-fb41-4dcf-a886-84f2d240dbd6
+[2026-01-17 04:38:33.713] INFO     (Optimizer) Submitted optimize-cells task (name=mof-641f97d9)
+[2026-01-17 04:38:33.713] INFO     (parsl.dataflow.dflow) Parsl task 18 try 0 launched on executor polaris-htex with executor id 19
+[2026-01-17 04:38:33.715] INFO     (parsl.dataflow.dflow) Standard out for task 18 will not be redirected.
+[2026-01-17 04:38:33.716] INFO     (parsl.dataflow.dflow) Standard error for task 18 will not be redirected.
+[2026-01-17 04:38:33.939] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:38:33.940] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2026-01-17 04:38:33.942] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2026-01-17 04:40:25.468] INFO     (parsl.dataflow.dflow) Task 17 completed (launched -> exec_done)
+[2026-01-17 04:40:25.470] INFO     (Optimizer) END optimize-cells 069cf7bd-7557-4686-bb03-dcda3975ae62
+[2026-01-17 04:40:25.472] INFO     (Optimizer) Completed optimize-cells task (name=mof-b6ae2941)
+[2026-01-17 04:40:25.472] INFO     (parsl.dataflow.dflow) Task 19 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:40:25.475] INFO     (Optimizer) START optimize-cells c3399b87-77d3-4501-b442-ce97b7a08de9
+[2026-01-17 04:40:25.478] INFO     (Optimizer) Submitted optimize-cells task (name=mof-22497080)
+[2026-01-17 04:40:25.478] INFO     (parsl.dataflow.dflow) Parsl task 19 try 0 launched on executor polaris-htex with executor id 20
+[2026-01-17 04:40:25.480] INFO     (parsl.dataflow.dflow) Standard out for task 19 will not be redirected.
+[2026-01-17 04:40:25.481] INFO     (parsl.dataflow.dflow) Standard error for task 19 will not be redirected.
+[2026-01-17 04:40:25.704] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:40:25.706] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2026-01-17 04:40:25.707] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2026-01-17 04:42:42.955] INFO     (parsl.dataflow.dflow) Task 18 completed (launched -> exec_done)
+[2026-01-17 04:42:42.958] INFO     (Optimizer) END optimize-cells e4248e3a-fb41-4dcf-a886-84f2d240dbd6
+[2026-01-17 04:42:42.959] INFO     (Optimizer) Completed optimize-cells task (name=mof-641f97d9)
+[2026-01-17 04:42:42.960] INFO     (parsl.dataflow.dflow) Task 20 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:42:42.962] INFO     (Optimizer) START optimize-cells 3418cf37-2312-4083-ad48-da79c83fcf5d
+[2026-01-17 04:42:42.964] INFO     (Optimizer) Submitted optimize-cells task (name=mof-56ad827b)
+[2026-01-17 04:42:42.965] INFO     (parsl.dataflow.dflow) Parsl task 20 try 0 launched on executor polaris-htex with executor id 21
+[2026-01-17 04:42:42.967] INFO     (parsl.dataflow.dflow) Standard out for task 20 will not be redirected.
+[2026-01-17 04:42:42.968] INFO     (parsl.dataflow.dflow) Standard error for task 20 will not be redirected.
+[2026-01-17 04:42:43.193] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:42:43.194] INFO     (parsl.dataflow.dflow) Standard out for task 18 will not be redirected.
+[2026-01-17 04:42:43.195] INFO     (parsl.dataflow.dflow) Standard error for task 18 will not be redirected.
+[2026-01-17 04:44:28.342] INFO     (parsl.dataflow.dflow) Task 19 completed (launched -> exec_done)
+[2026-01-17 04:44:28.344] INFO     (Optimizer) END optimize-cells c3399b87-77d3-4501-b442-ce97b7a08de9
+[2026-01-17 04:44:28.345] INFO     (Optimizer) Completed optimize-cells task (name=mof-22497080)
+[2026-01-17 04:44:28.346] INFO     (parsl.dataflow.dflow) Task 21 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:44:28.348] INFO     (Optimizer) START optimize-cells a3ee928e-4e66-419e-8484-654677fe6758
+[2026-01-17 04:44:28.350] INFO     (Optimizer) Submitted optimize-cells task (name=mof-05490379)
+[2026-01-17 04:44:28.350] INFO     (parsl.dataflow.dflow) Parsl task 21 try 0 launched on executor polaris-htex with executor id 22
+[2026-01-17 04:44:28.352] INFO     (parsl.dataflow.dflow) Standard out for task 21 will not be redirected.
+[2026-01-17 04:44:28.353] INFO     (parsl.dataflow.dflow) Standard error for task 21 will not be redirected.
+[2026-01-17 04:44:28.578] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:44:28.580] INFO     (parsl.dataflow.dflow) Standard out for task 19 will not be redirected.
+[2026-01-17 04:44:28.581] INFO     (parsl.dataflow.dflow) Standard error for task 19 will not be redirected.
+[2026-01-17 04:46:50.354] INFO     (parsl.dataflow.dflow) Task 20 completed (launched -> exec_done)
+[2026-01-17 04:46:50.356] INFO     (Optimizer) END optimize-cells 3418cf37-2312-4083-ad48-da79c83fcf5d
+[2026-01-17 04:46:50.357] INFO     (Optimizer) Completed optimize-cells task (name=mof-56ad827b)
+[2026-01-17 04:46:50.357] INFO     (parsl.dataflow.dflow) Task 22 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:46:50.359] INFO     (Optimizer) START optimize-cells 3dd6e287-e50c-4361-a8bb-f39ce676d157
+[2026-01-17 04:46:50.361] INFO     (Optimizer) Submitted optimize-cells task (name=mof-2f19af17)
+[2026-01-17 04:46:50.362] INFO     (parsl.dataflow.dflow) Parsl task 22 try 0 launched on executor polaris-htex with executor id 23
+[2026-01-17 04:46:50.363] INFO     (parsl.dataflow.dflow) Standard out for task 22 will not be redirected.
+[2026-01-17 04:46:50.364] INFO     (parsl.dataflow.dflow) Standard error for task 22 will not be redirected.
+[2026-01-17 04:46:50.589] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:46:50.590] INFO     (parsl.dataflow.dflow) Standard out for task 20 will not be redirected.
+[2026-01-17 04:46:50.591] INFO     (parsl.dataflow.dflow) Standard error for task 20 will not be redirected.
+[2026-01-17 04:48:41.896] INFO     (parsl.dataflow.dflow) Task 21 completed (launched -> exec_done)
+[2026-01-17 04:48:41.898] INFO     (Optimizer) END optimize-cells a3ee928e-4e66-419e-8484-654677fe6758
+[2026-01-17 04:48:41.899] INFO     (Optimizer) Completed optimize-cells task (name=mof-05490379)
+[2026-01-17 04:48:41.899] INFO     (parsl.dataflow.dflow) Task 23 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:48:41.901] INFO     (Optimizer) START optimize-cells e4e2c254-f5fd-4995-85db-cfa6ddf14641
+[2026-01-17 04:48:41.917] INFO     (Optimizer) Submitted optimize-cells task (name=mof-2ae6e083)
+[2026-01-17 04:48:41.917] INFO     (parsl.dataflow.dflow) Parsl task 23 try 0 launched on executor polaris-htex with executor id 24
+[2026-01-17 04:48:41.918] INFO     (parsl.dataflow.dflow) Standard out for task 23 will not be redirected.
+[2026-01-17 04:48:41.920] INFO     (parsl.dataflow.dflow) Standard error for task 23 will not be redirected.
+[2026-01-17 04:48:42.184] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:48:42.185] INFO     (parsl.dataflow.dflow) Standard out for task 21 will not be redirected.
+[2026-01-17 04:48:42.186] INFO     (parsl.dataflow.dflow) Standard error for task 21 will not be redirected.
+[2026-01-17 04:50:57.269] INFO     (parsl.dataflow.dflow) Task 22 completed (launched -> exec_done)
+[2026-01-17 04:50:57.271] INFO     (Optimizer) END optimize-cells 3dd6e287-e50c-4361-a8bb-f39ce676d157
+[2026-01-17 04:50:57.272] INFO     (Optimizer) Completed optimize-cells task (name=mof-2f19af17)
+[2026-01-17 04:50:57.273] INFO     (parsl.dataflow.dflow) Task 24 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:50:57.274] INFO     (Optimizer) START optimize-cells fd6610c4-08d9-49cc-8337-88bba9c8eed8
+[2026-01-17 04:50:57.276] INFO     (Optimizer) Submitted optimize-cells task (name=mof-3b7fd284)
+[2026-01-17 04:50:57.277] INFO     (parsl.dataflow.dflow) Parsl task 24 try 0 launched on executor polaris-htex with executor id 25
+[2026-01-17 04:50:57.279] INFO     (parsl.dataflow.dflow) Standard out for task 24 will not be redirected.
+[2026-01-17 04:50:57.280] INFO     (parsl.dataflow.dflow) Standard error for task 24 will not be redirected.
+[2026-01-17 04:50:57.503] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:50:57.504] INFO     (parsl.dataflow.dflow) Standard out for task 22 will not be redirected.
+[2026-01-17 04:50:57.505] INFO     (parsl.dataflow.dflow) Standard error for task 22 will not be redirected.
+[2026-01-17 04:52:59.155] INFO     (parsl.dataflow.dflow) Task 23 completed (launched -> exec_done)
+[2026-01-17 04:52:59.158] INFO     (Optimizer) END optimize-cells e4e2c254-f5fd-4995-85db-cfa6ddf14641
+[2026-01-17 04:52:59.159] INFO     (Optimizer) Completed optimize-cells task (name=mof-2ae6e083)
+[2026-01-17 04:52:59.159] INFO     (parsl.dataflow.dflow) Task 25 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:52:59.161] INFO     (Optimizer) START optimize-cells 6936da64-e794-4b62-8508-4a079bb77d5c
+[2026-01-17 04:52:59.163] INFO     (Optimizer) Submitted optimize-cells task (name=mof-518c9042)
+[2026-01-17 04:52:59.163] INFO     (parsl.dataflow.dflow) Parsl task 25 try 0 launched on executor polaris-htex with executor id 26
+[2026-01-17 04:52:59.165] INFO     (parsl.dataflow.dflow) Standard out for task 25 will not be redirected.
+[2026-01-17 04:52:59.166] INFO     (parsl.dataflow.dflow) Standard error for task 25 will not be redirected.
+[2026-01-17 04:52:59.390] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:52:59.391] INFO     (parsl.dataflow.dflow) Standard out for task 23 will not be redirected.
+[2026-01-17 04:52:59.392] INFO     (parsl.dataflow.dflow) Standard error for task 23 will not be redirected.
+[2026-01-17 04:55:02.866] INFO     (parsl.dataflow.dflow) Task 24 completed (launched -> exec_done)
+[2026-01-17 04:55:02.869] INFO     (Optimizer) END optimize-cells fd6610c4-08d9-49cc-8337-88bba9c8eed8
+[2026-01-17 04:55:02.870] INFO     (Optimizer) Completed optimize-cells task (name=mof-3b7fd284)
+[2026-01-17 04:55:02.870] INFO     (parsl.dataflow.dflow) Task 26 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:55:02.872] INFO     (Optimizer) START optimize-cells 4b4923c6-c67d-44d6-8e2f-4286bbb21c7b
+[2026-01-17 04:55:02.874] INFO     (Optimizer) Submitted optimize-cells task (name=mof-fc052b41)
+[2026-01-17 04:55:02.874] INFO     (parsl.dataflow.dflow) Parsl task 26 try 0 launched on executor polaris-htex with executor id 27
+[2026-01-17 04:55:02.876] INFO     (parsl.dataflow.dflow) Standard out for task 26 will not be redirected.
+[2026-01-17 04:55:02.877] INFO     (parsl.dataflow.dflow) Standard error for task 26 will not be redirected.
+[2026-01-17 04:55:03.098] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:55:03.100] INFO     (parsl.dataflow.dflow) Standard out for task 24 will not be redirected.
+[2026-01-17 04:55:03.101] INFO     (parsl.dataflow.dflow) Standard error for task 24 will not be redirected.
+[2026-01-17 04:56:50.698] INFO     (parsl.dataflow.dflow) Task 25 completed (launched -> exec_done)
+[2026-01-17 04:56:50.700] INFO     (Optimizer) END optimize-cells 6936da64-e794-4b62-8508-4a079bb77d5c
+[2026-01-17 04:56:50.701] INFO     (Optimizer) Completed optimize-cells task (name=mof-518c9042)
+[2026-01-17 04:56:50.701] INFO     (parsl.dataflow.dflow) Task 27 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:56:50.703] INFO     (Optimizer) START optimize-cells e8953058-b0ff-4d48-b30f-7be8d43ff767
+[2026-01-17 04:56:50.705] INFO     (Optimizer) Submitted optimize-cells task (name=mof-c3fe6d54)
+[2026-01-17 04:56:50.705] INFO     (parsl.dataflow.dflow) Parsl task 27 try 0 launched on executor polaris-htex with executor id 28
+[2026-01-17 04:56:50.706] INFO     (parsl.dataflow.dflow) Standard out for task 27 will not be redirected.
+[2026-01-17 04:56:50.707] INFO     (parsl.dataflow.dflow) Standard error for task 27 will not be redirected.
+[2026-01-17 04:56:50.929] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:56:50.930] INFO     (parsl.dataflow.dflow) Standard out for task 25 will not be redirected.
+[2026-01-17 04:56:50.932] INFO     (parsl.dataflow.dflow) Standard error for task 25 will not be redirected.
+[2026-01-17 04:59:09.390] INFO     (parsl.dataflow.dflow) Task 26 completed (launched -> exec_done)
+[2026-01-17 04:59:09.392] INFO     (Optimizer) END optimize-cells 4b4923c6-c67d-44d6-8e2f-4286bbb21c7b
+[2026-01-17 04:59:09.393] INFO     (Optimizer) Completed optimize-cells task (name=mof-fc052b41)
+[2026-01-17 04:59:09.393] INFO     (parsl.dataflow.dflow) Task 28 submitted for App optimize_cells_and_compute_charges_task, not waiting on any dependency
+[2026-01-17 04:59:09.395] INFO     (Optimizer) START optimize-cells 55fbbd4b-29a8-4a56-b91c-f0c7ff7d6c06
+[2026-01-17 04:59:09.398] INFO     (Optimizer) Submitted optimize-cells task (name=mof-5e25a17c)
+[2026-01-17 04:59:09.398] INFO     (parsl.dataflow.dflow) Parsl task 28 try 0 launched on executor polaris-htex with executor id 29
+[2026-01-17 04:59:09.400] INFO     (parsl.dataflow.dflow) Standard out for task 28 will not be redirected.
+[2026-01-17 04:59:09.401] INFO     (parsl.dataflow.dflow) Standard error for task 28 will not be redirected.
+[2026-01-17 04:59:09.624] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 04:59:09.626] INFO     (parsl.dataflow.dflow) Standard out for task 26 will not be redirected.
+[2026-01-17 04:59:09.627] INFO     (parsl.dataflow.dflow) Standard error for task 26 will not be redirected.
+[2026-01-17 05:01:12.733] INFO     (parsl.dataflow.dflow) Task 27 completed (launched -> exec_done)
+[2026-01-17 05:01:12.735] INFO     (Optimizer) END optimize-cells e8953058-b0ff-4d48-b30f-7be8d43ff767
+[2026-01-17 05:01:12.736] INFO     (Optimizer) Completed optimize-cells task (name=mof-c3fe6d54)
+[2026-01-17 05:01:12.967] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 05:01:12.968] INFO     (parsl.dataflow.dflow) Standard out for task 27 will not be redirected.
+[2026-01-17 05:01:12.969] INFO     (parsl.dataflow.dflow) Standard error for task 27 will not be redirected.
+[2026-01-17 05:01:13.736] INFO     (Optimizer) Optimizer done submitting, waiting for current work to finish
+[2026-01-17 05:02:23.228] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2026-01-17 05:02:23.230] INFO     (parsl.executors.status_handling) Allocated block ID 1
+[2026-01-17 05:02:23.239] WARNING  (parsl.launchers.launchers) Simple Launcher only supports single node per block. Requested nodes: 2. You may be getting fewer workers than expected
+[2026-01-17 05:03:35.021] INFO     (parsl.dataflow.dflow) Task 28 try 0 failed with exception of type ManagerLost
+[2026-01-17 05:03:35.044] INFO     (parsl.dataflow.dflow) Task 28 marked for retry
+[2026-01-17 05:03:35.045] INFO     (parsl.dataflow.dflow) Standard out for task 28 will not be redirected.
+[2026-01-17 05:03:35.046] INFO     (parsl.dataflow.dflow) Standard error for task 28 will not be redirected.
+[2026-01-17 05:03:35.049] INFO     (parsl.dataflow.dflow) Parsl task 28 try 1 launched on executor polaris-htex with executor id 30
+[2026-01-17 05:03:35.050] INFO     (parsl.dataflow.dflow) Standard out for task 28 will not be redirected.
+[2026-01-17 05:03:35.052] INFO     (parsl.dataflow.dflow) Standard error for task 28 will not be redirected.
+[2026-01-17 05:42:26.304] INFO     (parsl.dataflow.dflow) Task 28 completed (launched -> exec_done)
+[2026-01-17 05:42:26.306] INFO     (Optimizer) END optimize-cells 55fbbd4b-29a8-4a56-b91c-f0c7ff7d6c06
+[2026-01-17 05:42:26.308] INFO     (Optimizer) Completed optimize-cells task (name=mof-5e25a17c)
+[2026-01-17 05:42:26.744] INFO     (Optimizer) Submitted mofs to estimator.
+[2026-01-17 05:42:26.745] INFO     (Optimizer) Done processing all optimize tasks
+[2026-01-17 05:42:26.746] INFO     (Optimizer) Optimizer shutting down.
+[2026-01-17 05:42:26.746] INFO     (parsl.dataflow.dflow) Standard out for task 28 will not be redirected.
+[2026-01-17 05:42:26.748] INFO     (parsl.dataflow.dflow) Standard error for task 28 will not be redirected.
+[2026-01-17 05:42:26.843] WARNING  (Optimizer) There are 0 remaining optimize-cells task(s) after shutdown
+[2026-01-17 05:42:26.846] INFO     (parsl.dataflow.dflow) DFK cleanup initiated
+[2026-01-17 05:42:26.847] INFO     (parsl.dataflow.dflow) Summary of tasks in DFK:
+[2026-01-17 05:42:26.851] INFO     (parsl.dataflow.dflow) Tasks in state States.pending: 0
+[2026-01-17 05:42:26.853] INFO     (parsl.dataflow.dflow) Tasks in state States.running: 0
+[2026-01-17 05:42:26.855] INFO     (parsl.dataflow.dflow) Tasks in state States.exec_done: 29
+[2026-01-17 05:42:26.856] INFO     (parsl.dataflow.dflow) Tasks in state States.failed: 0
+[2026-01-17 05:42:26.857] INFO     (parsl.dataflow.dflow) Tasks in state States.dep_fail: 0
+[2026-01-17 05:42:26.858] INFO     (parsl.dataflow.dflow) Tasks in state States.launched: 0
+[2026-01-17 05:42:26.860] INFO     (parsl.dataflow.dflow) Tasks in state States.fail_retryable: 0
+[2026-01-17 05:42:26.861] INFO     (parsl.dataflow.dflow) Tasks in state States.memo_done: 0
+[2026-01-17 05:42:26.862] INFO     (parsl.dataflow.dflow) Tasks in state States.joining: 0
+[2026-01-17 05:42:26.863] INFO     (parsl.dataflow.dflow) Tasks in state States.running_ended: 0
+[2026-01-17 05:42:26.865] INFO     (parsl.dataflow.dflow) End of summary
+[2026-01-17 05:42:26.866] INFO     (parsl.dataflow.dflow) Closing job status poller
+[2026-01-17 05:42:26.867] INFO     (parsl.jobs.job_status_poller) Scaling in executor polaris-htex
+[2026-01-17 05:42:27.060] WARNING  (parsl.executors.status_handling) Some jobs were not killed successfully: killed jobs: [], not-killed jobs: ['6857516.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov', '6858028.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov']
+[2026-01-17 05:42:27.063] INFO     (parsl.dataflow.dflow) Terminated job status poller
+[2026-01-17 05:42:27.064] INFO     (parsl.dataflow.dflow) Shutting down executors
+[2026-01-17 05:42:27.065] INFO     (parsl.dataflow.dflow) Shutting down executor polaris-htex
+[2026-01-17 05:42:27.066] INFO     (parsl.executors.high_throughput.executor) Attempting HighThroughputExecutor shutdown
+[2026-01-17 05:42:27.067] INFO     (parsl.executors.high_throughput.executor) Terminating interchange and result queue thread
+[2026-01-17 05:42:27.081] INFO     (parsl.executors.high_throughput.executor) Closing result ZMQ pipe
+[2026-01-17 05:42:27.083] INFO     (parsl.executors.high_throughput.executor) Result queue worker finished
+[2026-01-17 05:42:27.097] INFO     (parsl.executors.high_throughput.executor) Closing ZMQ pipes
+[2026-01-17 05:42:27.098] INFO     (parsl.executors.high_throughput.executor) Closing outgoing_q
+[2026-01-17 05:42:27.100] INFO     (parsl.executors.high_throughput.executor) Closing command client
+[2026-01-17 05:42:27.101] INFO     (parsl.executors.high_throughput.executor) Waiting for result queue thread exit
+[2026-01-17 05:42:27.102] INFO     (parsl.executors.high_throughput.executor) Finished HighThroughputExecutor shutdown attempt
+[2026-01-17 05:42:27.103] INFO     (parsl.dataflow.dflow) Shut down executor polaris-htex
+[2026-01-17 05:42:27.104] INFO     (parsl.dataflow.dflow) Shutting down executor _parsl_internal
+[2026-01-17 05:42:27.105] INFO     (parsl.dataflow.dflow) Shut down executor _parsl_internal
+[2026-01-17 05:42:27.106] INFO     (parsl.dataflow.dflow) Terminated executors
+[2026-01-17 05:42:27.107] INFO     (parsl.dataflow.dflow) Terminating task launch pool
+[2026-01-17 05:42:27.108] INFO     (parsl.dataflow.dflow) Terminated task launch pool
+[2026-01-17 05:42:27.109] INFO     (parsl.dataflow.dflow) Unregistering atexit hook
+[2026-01-17 05:42:27.117] INFO     (parsl.dataflow.dflow) Unregistered atexit hook
+[2026-01-17 05:42:27.118] INFO     (parsl.dataflow.dflow) Unregistering default DFK
+[2026-01-17 05:42:27.119] INFO     (parsl.dataflow.dflow) Unregistered default DFK
+[2026-01-17 05:42:27.120] INFO     (parsl.dataflow.dflow) DFK cleanup complete
+[2026-01-17 05:42:27.126] INFO     (academy.agent) Shutdown agent (AgentID<7c61535f>; Behavior<Optimizer>)
+[2026-01-17 05:42:27.157] INFO     (globus_compute_endpoint.engines.helper) c8b4ba9f-ccc0-463d-8236-cbd96026f5ba: Task processing completed in 10609261096432 ns
