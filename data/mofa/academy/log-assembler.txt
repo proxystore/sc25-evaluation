@@ -1,0 +1,361 @@
+[2026-01-17 02:45:19.831] INFO     (root) Configured logger (stdout-level=INFO, logfile=/home/cc/mofa-runs/17Jan26024501/assembler/log.txt, logfile-level=INFO)
+[2026-01-17 02:45:19.843] INFO     (parsl.dataflow.dflow) Starting DataFlowKernel with config
+Config(
+    app_cache=False, 
+    checkpoint_files=None, 
+    checkpoint_mode=None, 
+    checkpoint_period=None, 
+    dependency_resolver=None, 
+    executors=(HighThroughputExecutor(
+        address='10.52.2.211', 
+        address_probe_timeout=None, 
+        available_accelerators=[], 
+        block_error_handler=<function simple_error_handler at 0x7f69a3085a20>, 
+        cores_per_worker=1, 
+        cpu_affinity='none', 
+        drain_period=None, 
+        encrypted=False, 
+        heartbeat_period=30, 
+        heartbeat_threshold=120, 
+        interchange_launch_cmd=['interchange.py'], 
+        interchange_port_range=(55000, 56000), 
+        label='htex-local', 
+        launch_cmd='process_worker_pool.py {debug} {max_workers_per_node} -a {addresses} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --port={worker_port} --cert_dir {cert_dir} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} {address_probe_timeout_string} --hb_threshold={heartbeat_threshold} --drain_period={drain_period} --cpu-affinity {cpu_affinity} {enable_mpi_mode} --mpi-launcher={mpi_launcher} --available-accelerators {accelerators}', 
+        loopback_address='127.0.0.1', 
+        manager_selector=<parsl.executors.high_throughput.manager_selector.RandomManagerSelector object at 0x7f69a30575b0>, 
+        max_workers_per_node=4, 
+        mem_per_worker=None, 
+        poll_period=10, 
+        prefetch_capacity=0, 
+        provider=LocalProvider(
+            cmd_timeout=30, 
+            init_blocks=0, 
+            launcher=SingleNodeLauncher(debug=True, fail_on_any=False), 
+            max_blocks=1, 
+            min_blocks=0, 
+            nodes_per_block=1, 
+            parallelism=1, 
+            worker_init=''
+        ), 
+        remote_monitoring_radio=HTEXRadio(), 
+        storage_access=None, 
+        worker_debug=False, 
+        worker_logdir_root=None, 
+        worker_port=None, 
+        worker_port_range=(54000, 55000), 
+        working_dir=None
+    ),), 
+    exit_mode='cleanup', 
+    garbage_collect=True, 
+    initialize_logging=False, 
+    internal_tasks_max_threads=10, 
+    max_idletime=120.0, 
+    monitoring=None, 
+    project_name=None, 
+    retries=0, 
+    retry_handler=None, 
+    run_dir='/home/cc/mofa-runs/17Jan26024501/assembler', 
+    std_autopath=None, 
+    strategy='simple', 
+    strategy_period=5, 
+    usage_tracking=0
+)
+[2026-01-17 02:45:19.843] INFO     (parsl.dataflow.dflow) Parsl version: 2025.12.01
+[2026-01-17 02:45:19.843] INFO     (parsl.dataflow.dflow) Run id is: 6cc5bacb-a7f1-4bf2-abe5-1885f9cc3a67
+[2026-01-17 02:45:19.890] INFO     (parsl.dataflow.memoization) App caching disabled for all apps
+[2026-01-17 02:45:20.338] INFO     (academy.agent) Running agent (AgentID<62a72428>; Behavior<Assembler>)
+[2026-01-17 02:45:24.905] INFO     (parsl.executors.status_handling) Scaling out by 0 blocks
+[2026-01-17 02:55:01.943] INFO     (Assembler) Added ligands to assembly queue (anchor_type=COO, count=19)
+[2026-01-17 02:57:08.549] INFO     (Assembler) Added ligands to assembly queue (anchor_type=cyano, count=58)
+[2026-01-17 02:57:08.550] INFO     (parsl.dataflow.dflow) Task 0 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:08.556] INFO     (Assembler) START assemble-mofs e5bba0e7-be7e-4eb8-92b5-f267d36a4a28
+[2026-01-17 02:57:08.557] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:08.557] INFO     (parsl.dataflow.dflow) Task 1 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:08.558] INFO     (Assembler) START assemble-mofs eb6e23f3-72f2-4734-973f-5cf4dfa67124
+[2026-01-17 02:57:08.558] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:08.558] INFO     (parsl.dataflow.dflow) Task 2 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:08.558] INFO     (Assembler) START assemble-mofs 743945ab-c1fd-4ab3-9f4c-21853119cfae
+[2026-01-17 02:57:08.558] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:08.559] INFO     (parsl.dataflow.dflow) Task 3 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:08.559] INFO     (Assembler) START assemble-mofs ca12b4fe-0676-452d-a192-c353e76ddebc
+[2026-01-17 02:57:08.559] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:08.559] INFO     (parsl.dataflow.dflow) Parsl task 0 try 0 launched on executor htex-local with executor id 1
+[2026-01-17 02:57:08.559] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2026-01-17 02:57:08.560] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2026-01-17 02:57:08.560] INFO     (parsl.dataflow.dflow) Parsl task 1 try 0 launched on executor htex-local with executor id 2
+[2026-01-17 02:57:08.560] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2026-01-17 02:57:08.560] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2026-01-17 02:57:08.561] INFO     (parsl.dataflow.dflow) Parsl task 2 try 0 launched on executor htex-local with executor id 3
+[2026-01-17 02:57:08.561] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2026-01-17 02:57:08.561] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2026-01-17 02:57:08.562] INFO     (parsl.dataflow.dflow) Parsl task 3 try 0 launched on executor htex-local with executor id 4
+[2026-01-17 02:57:08.562] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2026-01-17 02:57:08.562] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2026-01-17 02:57:11.978] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2026-01-17 02:57:11.979] INFO     (parsl.executors.status_handling) Allocated block ID 0
+[2026-01-17 02:57:19.098] INFO     (parsl.dataflow.dflow) Task 1 completed (launched -> exec_done)
+[2026-01-17 02:57:19.099] INFO     (Assembler) END assemble-mofs eb6e23f3-72f2-4734-973f-5cf4dfa67124
+[2026-01-17 02:57:19.099] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:19.099] INFO     (parsl.dataflow.dflow) Task 4 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:19.101] INFO     (Assembler) START assemble-mofs 59fd4f39-009a-4d31-b85a-07056252597d
+[2026-01-17 02:57:19.102] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:19.104] INFO     (parsl.dataflow.dflow) Parsl task 4 try 0 launched on executor htex-local with executor id 5
+[2026-01-17 02:57:19.104] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2026-01-17 02:57:19.104] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2026-01-17 02:57:19.298] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:19.298] INFO     (parsl.dataflow.dflow) Standard out for task 1 will not be redirected.
+[2026-01-17 02:57:19.298] INFO     (parsl.dataflow.dflow) Standard error for task 1 will not be redirected.
+[2026-01-17 02:57:19.299] INFO     (parsl.dataflow.dflow) Task 0 completed (launched -> exec_done)
+[2026-01-17 02:57:19.299] INFO     (Assembler) END assemble-mofs e5bba0e7-be7e-4eb8-92b5-f267d36a4a28
+[2026-01-17 02:57:19.299] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:19.300] INFO     (parsl.dataflow.dflow) Task 5 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:19.300] INFO     (Assembler) START assemble-mofs 4b0aec9b-2029-4712-a3fd-8a3561bf5811
+[2026-01-17 02:57:19.300] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:19.302] INFO     (parsl.dataflow.dflow) Parsl task 5 try 0 launched on executor htex-local with executor id 6
+[2026-01-17 02:57:19.302] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2026-01-17 02:57:19.302] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2026-01-17 02:57:19.368] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:19.369] INFO     (parsl.dataflow.dflow) Standard out for task 0 will not be redirected.
+[2026-01-17 02:57:19.369] INFO     (parsl.dataflow.dflow) Standard error for task 0 will not be redirected.
+[2026-01-17 02:57:19.369] INFO     (parsl.dataflow.dflow) Task 3 completed (launched -> exec_done)
+[2026-01-17 02:57:19.369] INFO     (Assembler) END assemble-mofs ca12b4fe-0676-452d-a192-c353e76ddebc
+[2026-01-17 02:57:19.370] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:19.370] INFO     (parsl.dataflow.dflow) Task 6 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:19.371] INFO     (Assembler) START assemble-mofs 2288f943-3ac7-45cd-b2e2-616f77809b0d
+[2026-01-17 02:57:19.371] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:19.372] INFO     (parsl.dataflow.dflow) Parsl task 6 try 0 launched on executor htex-local with executor id 7
+[2026-01-17 02:57:19.372] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2026-01-17 02:57:19.372] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2026-01-17 02:57:19.437] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:19.437] INFO     (parsl.dataflow.dflow) Standard out for task 3 will not be redirected.
+[2026-01-17 02:57:19.437] INFO     (parsl.dataflow.dflow) Standard error for task 3 will not be redirected.
+[2026-01-17 02:57:19.666] INFO     (parsl.dataflow.dflow) Task 2 completed (launched -> exec_done)
+[2026-01-17 02:57:19.666] INFO     (Assembler) END assemble-mofs 743945ab-c1fd-4ab3-9f4c-21853119cfae
+[2026-01-17 02:57:19.666] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:19.666] INFO     (parsl.dataflow.dflow) Task 7 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:19.667] INFO     (Assembler) START assemble-mofs 64a7af17-1f59-4b6a-90b0-170cf12389f6
+[2026-01-17 02:57:19.667] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:19.668] INFO     (parsl.dataflow.dflow) Parsl task 7 try 0 launched on executor htex-local with executor id 8
+[2026-01-17 02:57:19.668] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2026-01-17 02:57:19.669] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2026-01-17 02:57:19.735] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:19.735] INFO     (parsl.dataflow.dflow) Standard out for task 2 will not be redirected.
+[2026-01-17 02:57:19.735] INFO     (parsl.dataflow.dflow) Standard error for task 2 will not be redirected.
+[2026-01-17 02:57:21.822] INFO     (parsl.dataflow.dflow) Task 4 completed (launched -> exec_done)
+[2026-01-17 02:57:21.822] INFO     (Assembler) END assemble-mofs 59fd4f39-009a-4d31-b85a-07056252597d
+[2026-01-17 02:57:21.822] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:21.823] INFO     (parsl.dataflow.dflow) Task 8 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:21.823] INFO     (Assembler) START assemble-mofs 19075bab-0450-4881-b900-29686bb80dbe
+[2026-01-17 02:57:21.823] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:21.825] INFO     (parsl.dataflow.dflow) Parsl task 8 try 0 launched on executor htex-local with executor id 9
+[2026-01-17 02:57:21.825] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2026-01-17 02:57:21.825] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2026-01-17 02:57:22.073] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:22.073] INFO     (parsl.dataflow.dflow) Standard out for task 4 will not be redirected.
+[2026-01-17 02:57:22.073] INFO     (parsl.dataflow.dflow) Standard error for task 4 will not be redirected.
+[2026-01-17 02:57:22.099] INFO     (parsl.dataflow.dflow) Task 5 completed (launched -> exec_done)
+[2026-01-17 02:57:22.099] INFO     (Assembler) END assemble-mofs 4b0aec9b-2029-4712-a3fd-8a3561bf5811
+[2026-01-17 02:57:22.099] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:22.100] INFO     (parsl.dataflow.dflow) Task 9 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:22.100] INFO     (Assembler) START assemble-mofs 43bf61f0-2348-4777-8748-1e5bbcde82e0
+[2026-01-17 02:57:22.101] INFO     (parsl.dataflow.dflow) Parsl task 9 try 0 launched on executor htex-local with executor id 10
+[2026-01-17 02:57:22.101] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:22.102] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2026-01-17 02:57:22.102] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2026-01-17 02:57:22.168] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:22.168] INFO     (parsl.dataflow.dflow) Standard out for task 5 will not be redirected.
+[2026-01-17 02:57:22.168] INFO     (parsl.dataflow.dflow) Standard error for task 5 will not be redirected.
+[2026-01-17 02:57:22.249] INFO     (parsl.dataflow.dflow) Task 6 completed (launched -> exec_done)
+[2026-01-17 02:57:22.249] INFO     (Assembler) END assemble-mofs 2288f943-3ac7-45cd-b2e2-616f77809b0d
+[2026-01-17 02:57:22.249] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:22.249] INFO     (parsl.dataflow.dflow) Task 10 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:22.250] INFO     (Assembler) START assemble-mofs 8ad54b6b-4669-4be5-aa78-5ce1e83daabc
+[2026-01-17 02:57:22.250] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:22.251] INFO     (parsl.dataflow.dflow) Parsl task 10 try 0 launched on executor htex-local with executor id 11
+[2026-01-17 02:57:22.251] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2026-01-17 02:57:22.251] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2026-01-17 02:57:22.317] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:22.317] INFO     (parsl.dataflow.dflow) Standard out for task 6 will not be redirected.
+[2026-01-17 02:57:22.317] INFO     (parsl.dataflow.dflow) Standard error for task 6 will not be redirected.
+[2026-01-17 02:57:22.647] INFO     (parsl.dataflow.dflow) Task 7 completed (launched -> exec_done)
+[2026-01-17 02:57:22.647] INFO     (Assembler) END assemble-mofs 64a7af17-1f59-4b6a-90b0-170cf12389f6
+[2026-01-17 02:57:22.647] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:22.647] INFO     (parsl.dataflow.dflow) Task 11 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 02:57:22.648] INFO     (Assembler) START assemble-mofs f110a19f-a244-473f-b4eb-56e5293be911
+[2026-01-17 02:57:22.648] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 02:57:22.649] INFO     (parsl.dataflow.dflow) Parsl task 11 try 0 launched on executor htex-local with executor id 12
+[2026-01-17 02:57:22.649] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2026-01-17 02:57:22.649] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2026-01-17 02:57:22.660] INFO     (Assembler) Disabling MOF assembly
+[2026-01-17 02:57:22.842] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:22.842] INFO     (parsl.dataflow.dflow) Standard out for task 7 will not be redirected.
+[2026-01-17 02:57:22.842] INFO     (parsl.dataflow.dflow) Standard error for task 7 will not be redirected.
+[2026-01-17 02:57:24.673] INFO     (parsl.dataflow.dflow) Task 8 completed (launched -> exec_done)
+[2026-01-17 02:57:24.673] INFO     (Assembler) END assemble-mofs 19075bab-0450-4881-b900-29686bb80dbe
+[2026-01-17 02:57:24.673] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:24.869] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:24.870] INFO     (parsl.dataflow.dflow) Standard out for task 8 will not be redirected.
+[2026-01-17 02:57:24.870] INFO     (parsl.dataflow.dflow) Standard error for task 8 will not be redirected.
+[2026-01-17 02:57:25.264] INFO     (parsl.dataflow.dflow) Task 9 completed (launched -> exec_done)
+[2026-01-17 02:57:25.264] INFO     (Assembler) END assemble-mofs 43bf61f0-2348-4777-8748-1e5bbcde82e0
+[2026-01-17 02:57:25.264] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:25.363] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:25.363] INFO     (parsl.dataflow.dflow) Standard out for task 9 will not be redirected.
+[2026-01-17 02:57:25.364] INFO     (parsl.dataflow.dflow) Standard error for task 9 will not be redirected.
+[2026-01-17 02:57:25.430] INFO     (parsl.dataflow.dflow) Task 10 completed (launched -> exec_done)
+[2026-01-17 02:57:25.430] INFO     (Assembler) END assemble-mofs 8ad54b6b-4669-4be5-aa78-5ce1e83daabc
+[2026-01-17 02:57:25.430] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:25.498] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:25.498] INFO     (parsl.dataflow.dflow) Standard out for task 10 will not be redirected.
+[2026-01-17 02:57:25.498] INFO     (parsl.dataflow.dflow) Standard error for task 10 will not be redirected.
+[2026-01-17 02:57:25.501] INFO     (parsl.dataflow.dflow) Task 11 completed (launched -> exec_done)
+[2026-01-17 02:57:25.501] INFO     (Assembler) END assemble-mofs f110a19f-a244-473f-b4eb-56e5293be911
+[2026-01-17 02:57:25.501] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 02:57:25.568] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 02:57:25.569] INFO     (parsl.dataflow.dflow) Standard out for task 11 will not be redirected.
+[2026-01-17 02:57:25.569] INFO     (parsl.dataflow.dflow) Standard error for task 11 will not be redirected.
+[2026-01-17 03:03:03.364] INFO     (Assembler) Enabling MOF assembly
+[2026-01-17 03:03:03.366] INFO     (parsl.dataflow.dflow) Task 12 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:03.367] INFO     (Assembler) START assemble-mofs 7b3b854f-49db-4c95-86a8-2591cdd97f37
+[2026-01-17 03:03:03.369] INFO     (parsl.dataflow.dflow) Parsl task 12 try 0 launched on executor htex-local with executor id 13
+[2026-01-17 03:03:03.369] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:03.370] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2026-01-17 03:03:03.370] INFO     (parsl.dataflow.dflow) Task 13 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:03.370] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2026-01-17 03:03:03.371] INFO     (Assembler) START assemble-mofs 67cae4f5-140c-4b74-b035-fc571b609f4f
+[2026-01-17 03:03:03.372] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:03.372] INFO     (parsl.dataflow.dflow) Task 14 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:03.373] INFO     (Assembler) START assemble-mofs cbcb1bb7-698e-4ec2-8ddc-9585cd47d79a
+[2026-01-17 03:03:03.373] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:03.373] INFO     (parsl.dataflow.dflow) Task 15 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:03.373] INFO     (Assembler) START assemble-mofs 5735b7a0-f960-413c-810d-885cb9b9d630
+[2026-01-17 03:03:03.373] INFO     (parsl.dataflow.dflow) Parsl task 13 try 0 launched on executor htex-local with executor id 14
+[2026-01-17 03:03:03.373] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:03.374] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2026-01-17 03:03:03.374] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2026-01-17 03:03:03.375] INFO     (parsl.dataflow.dflow) Parsl task 14 try 0 launched on executor htex-local with executor id 15
+[2026-01-17 03:03:03.375] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2026-01-17 03:03:03.375] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2026-01-17 03:03:03.376] INFO     (parsl.dataflow.dflow) Parsl task 15 try 0 launched on executor htex-local with executor id 16
+[2026-01-17 03:03:03.376] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2026-01-17 03:03:03.376] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2026-01-17 03:03:07.289] INFO     (parsl.executors.status_handling) Scaling out by 1 blocks
+[2026-01-17 03:03:07.289] INFO     (parsl.executors.status_handling) Allocated block ID 1
+[2026-01-17 03:03:14.272] INFO     (parsl.dataflow.dflow) Task 12 completed (launched -> exec_done)
+[2026-01-17 03:03:14.272] INFO     (Assembler) END assemble-mofs 7b3b854f-49db-4c95-86a8-2591cdd97f37
+[2026-01-17 03:03:14.272] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:14.273] INFO     (parsl.dataflow.dflow) Task 16 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:14.274] INFO     (Assembler) START assemble-mofs 50550404-4eb5-4bd7-83ae-1afabef99bdd
+[2026-01-17 03:03:14.275] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:14.277] INFO     (parsl.dataflow.dflow) Parsl task 16 try 0 launched on executor htex-local with executor id 17
+[2026-01-17 03:03:14.277] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2026-01-17 03:03:14.277] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2026-01-17 03:03:14.591] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:14.591] INFO     (parsl.dataflow.dflow) Standard out for task 12 will not be redirected.
+[2026-01-17 03:03:14.592] INFO     (parsl.dataflow.dflow) Standard error for task 12 will not be redirected.
+[2026-01-17 03:03:14.593] INFO     (parsl.dataflow.dflow) Task 14 completed (launched -> exec_done)
+[2026-01-17 03:03:14.593] INFO     (Assembler) END assemble-mofs cbcb1bb7-698e-4ec2-8ddc-9585cd47d79a
+[2026-01-17 03:03:14.593] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:14.594] INFO     (parsl.dataflow.dflow) Task 17 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:14.594] INFO     (Assembler) START assemble-mofs 79a3dfd9-ffb5-48b9-99ec-593d60519489
+[2026-01-17 03:03:14.595] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:14.595] INFO     (parsl.dataflow.dflow) Parsl task 17 try 0 launched on executor htex-local with executor id 18
+[2026-01-17 03:03:14.596] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2026-01-17 03:03:14.596] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2026-01-17 03:03:14.720] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:14.720] INFO     (parsl.dataflow.dflow) Standard out for task 14 will not be redirected.
+[2026-01-17 03:03:14.720] INFO     (parsl.dataflow.dflow) Standard error for task 14 will not be redirected.
+[2026-01-17 03:03:14.721] INFO     (parsl.dataflow.dflow) Task 13 completed (launched -> exec_done)
+[2026-01-17 03:03:14.721] INFO     (Assembler) END assemble-mofs 67cae4f5-140c-4b74-b035-fc571b609f4f
+[2026-01-17 03:03:14.721] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:14.722] INFO     (parsl.dataflow.dflow) Task 18 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:14.722] INFO     (Assembler) START assemble-mofs b03efa8c-94a9-43f9-bfe6-17f740f532b8
+[2026-01-17 03:03:14.722] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:14.723] INFO     (parsl.dataflow.dflow) Parsl task 18 try 0 launched on executor htex-local with executor id 19
+[2026-01-17 03:03:14.723] INFO     (parsl.dataflow.dflow) Standard out for task 18 will not be redirected.
+[2026-01-17 03:03:14.723] INFO     (parsl.dataflow.dflow) Standard error for task 18 will not be redirected.
+[2026-01-17 03:03:14.790] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:14.790] INFO     (parsl.dataflow.dflow) Standard out for task 13 will not be redirected.
+[2026-01-17 03:03:14.790] INFO     (parsl.dataflow.dflow) Standard error for task 13 will not be redirected.
+[2026-01-17 03:03:14.791] INFO     (parsl.dataflow.dflow) Task 15 completed (launched -> exec_done)
+[2026-01-17 03:03:14.791] INFO     (Assembler) END assemble-mofs 5735b7a0-f960-413c-810d-885cb9b9d630
+[2026-01-17 03:03:14.791] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:14.791] INFO     (parsl.dataflow.dflow) Task 19 submitted for App assemble_mofs_task, not waiting on any dependency
+[2026-01-17 03:03:14.792] INFO     (Assembler) START assemble-mofs 60beac4b-9773-4536-a7e9-1d6d1543889b
+[2026-01-17 03:03:14.792] INFO     (Assembler) Submitted assemble-mofs task
+[2026-01-17 03:03:14.793] INFO     (parsl.dataflow.dflow) Parsl task 19 try 0 launched on executor htex-local with executor id 20
+[2026-01-17 03:03:14.793] INFO     (parsl.dataflow.dflow) Standard out for task 19 will not be redirected.
+[2026-01-17 03:03:14.793] INFO     (parsl.dataflow.dflow) Standard error for task 19 will not be redirected.
+[2026-01-17 03:03:14.859] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:14.859] INFO     (parsl.dataflow.dflow) Standard out for task 15 will not be redirected.
+[2026-01-17 03:03:14.859] INFO     (parsl.dataflow.dflow) Standard error for task 15 will not be redirected.
+[2026-01-17 03:03:14.869] INFO     (Assembler) Disabling MOF assembly
+[2026-01-17 03:03:17.059] INFO     (parsl.dataflow.dflow) Task 16 completed (launched -> exec_done)
+[2026-01-17 03:03:17.060] INFO     (Assembler) END assemble-mofs 50550404-4eb5-4bd7-83ae-1afabef99bdd
+[2026-01-17 03:03:17.060] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:17.253] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:17.253] INFO     (parsl.dataflow.dflow) Standard out for task 16 will not be redirected.
+[2026-01-17 03:03:17.254] INFO     (parsl.dataflow.dflow) Standard error for task 16 will not be redirected.
+[2026-01-17 03:03:17.469] INFO     (parsl.dataflow.dflow) Task 17 completed (launched -> exec_done)
+[2026-01-17 03:03:17.469] INFO     (Assembler) END assemble-mofs 79a3dfd9-ffb5-48b9-99ec-593d60519489
+[2026-01-17 03:03:17.469] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:17.568] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:17.568] INFO     (parsl.dataflow.dflow) Standard out for task 17 will not be redirected.
+[2026-01-17 03:03:17.568] INFO     (parsl.dataflow.dflow) Standard error for task 17 will not be redirected.
+[2026-01-17 03:03:17.569] INFO     (parsl.dataflow.dflow) Task 18 completed (launched -> exec_done)
+[2026-01-17 03:03:17.569] INFO     (Assembler) END assemble-mofs b03efa8c-94a9-43f9-bfe6-17f740f532b8
+[2026-01-17 03:03:17.569] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:17.637] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:17.637] INFO     (parsl.dataflow.dflow) Standard out for task 18 will not be redirected.
+[2026-01-17 03:03:17.637] INFO     (parsl.dataflow.dflow) Standard error for task 18 will not be redirected.
+[2026-01-17 03:03:17.671] INFO     (parsl.dataflow.dflow) Task 19 completed (launched -> exec_done)
+[2026-01-17 03:03:17.671] INFO     (Assembler) END assemble-mofs 60beac4b-9773-4536-a7e9-1d6d1543889b
+[2026-01-17 03:03:17.671] INFO     (Assembler) Received assemble-mofs batch (count=28)
+[2026-01-17 03:03:17.738] INFO     (Assembler) Submitted mofs to validator
+[2026-01-17 03:03:17.738] INFO     (parsl.dataflow.dflow) Standard out for task 19 will not be redirected.
+[2026-01-17 03:03:17.738] INFO     (parsl.dataflow.dflow) Standard error for task 19 will not be redirected.
+[2026-01-17 03:04:18.051] INFO     (Assembler) Disabling MOF assembly
+[2026-01-17 03:05:27.725] INFO     (Assembler) Added ligands to assembly queue (anchor_type=COO, count=101)
+[2026-01-17 03:06:18.833] WARNING  (Assembler) There are 0 remaining assemble-ligands task(s) after shutdown
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) DFK cleanup initiated
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Summary of tasks in DFK:
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.pending: 0
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.running: 0
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.exec_done: 20
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.failed: 0
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.dep_fail: 0
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.launched: 0
+[2026-01-17 03:06:18.834] INFO     (parsl.dataflow.dflow) Tasks in state States.fail_retryable: 0
+[2026-01-17 03:06:18.835] INFO     (parsl.dataflow.dflow) Tasks in state States.memo_done: 0
+[2026-01-17 03:06:18.835] INFO     (parsl.dataflow.dflow) Tasks in state States.joining: 0
+[2026-01-17 03:06:18.835] INFO     (parsl.dataflow.dflow) Tasks in state States.running_ended: 0
+[2026-01-17 03:06:18.835] INFO     (parsl.dataflow.dflow) End of summary
+[2026-01-17 03:06:18.835] INFO     (parsl.dataflow.dflow) Closing job status poller
+[2026-01-17 03:06:18.835] INFO     (parsl.jobs.job_status_poller) Scaling in executor htex-local
+[2026-01-17 03:06:18.838] INFO     (parsl.dataflow.dflow) Terminated job status poller
+[2026-01-17 03:06:18.838] INFO     (parsl.dataflow.dflow) Shutting down executors
+[2026-01-17 03:06:18.838] INFO     (parsl.dataflow.dflow) Shutting down executor htex-local
+[2026-01-17 03:06:18.838] INFO     (parsl.executors.high_throughput.executor) Attempting HighThroughputExecutor shutdown
+[2026-01-17 03:06:18.838] INFO     (parsl.executors.high_throughput.executor) Terminating interchange and result queue thread
+[2026-01-17 03:06:18.847] INFO     (parsl.executors.high_throughput.executor) Closing result ZMQ pipe
+[2026-01-17 03:06:18.849] INFO     (parsl.executors.high_throughput.executor) Result queue worker finished
+[2026-01-17 03:06:18.854] INFO     (parsl.executors.high_throughput.executor) Closing ZMQ pipes
+[2026-01-17 03:06:18.854] INFO     (parsl.executors.high_throughput.executor) Closing outgoing_q
+[2026-01-17 03:06:18.855] INFO     (parsl.executors.high_throughput.executor) Closing command client
+[2026-01-17 03:06:18.856] INFO     (parsl.executors.high_throughput.executor) Waiting for result queue thread exit
+[2026-01-17 03:06:18.856] INFO     (parsl.executors.high_throughput.executor) Finished HighThroughputExecutor shutdown attempt
+[2026-01-17 03:06:18.856] INFO     (parsl.dataflow.dflow) Shut down executor htex-local
+[2026-01-17 03:06:18.856] INFO     (parsl.dataflow.dflow) Shutting down executor _parsl_internal
+[2026-01-17 03:06:18.856] INFO     (parsl.dataflow.dflow) Shut down executor _parsl_internal
+[2026-01-17 03:06:18.856] INFO     (parsl.dataflow.dflow) Terminated executors
+[2026-01-17 03:06:18.856] INFO     (parsl.dataflow.dflow) Terminating task launch pool
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) Terminated task launch pool
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) Unregistering atexit hook
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) Unregistered atexit hook
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) Unregistering default DFK
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) Unregistered default DFK
+[2026-01-17 03:06:18.857] INFO     (parsl.dataflow.dflow) DFK cleanup complete
+[2026-01-17 03:06:18.859] INFO     (academy.agent) Shutdown agent (AgentID<62a72428>; Behavior<Assembler>)
+[2026-01-17 03:06:18.860] INFO     (globus_compute_endpoint.engines.helper) 02d3494f-6d62-4c94-8019-5117d80fba3d: Task processing completed in 1261332021755 ns
+[2026-01-17 03:06:18.862] INFO     (worker_log) Completed executor task 2
+[2026-01-17 03:06:18.865] INFO     (worker_log) All processing finished for executor task 2
