@@ -11,12 +11,13 @@ from typing import Any
 from typing import NamedTuple
 
 import psutil
-from academy.logging import init_logging
-from academy.manager import Manager
 from proxystore.utils.timer import Timer
 
+from academy.logging import init_logging
+from academy.manager import Manager
 from bench.argparse import add_general_options
 from bench.argparse import add_launcher_groups
+from bench.launcher import AcademyConfig
 from bench.launcher import DaskClient
 from bench.launcher import DaskConfig
 from bench.launcher import get_launcher_config_from_args
@@ -26,7 +27,7 @@ from bench.launcher import is_ray_launcher
 from bench.launcher import LauncherConfig
 from bench.launcher import RayClient
 from bench.launcher import RayConfig
-from bench.memory_overhead.actor import AerisActor
+from bench.memory_overhead.actor import AcademyActor
 from bench.memory_overhead.actor import DaskActor
 from bench.memory_overhead.actor import RayActor
 from bench.results import CSVResultLogger
@@ -55,18 +56,19 @@ def get_user_memory() -> float:
     return total_memory
 
 
-def run_benchmark_academy(
-    manager: Manager,
+async def run_benchmark_academy(
+    manager: Manager[Any],
     num_actors: int,
-    result_logger: CSVResultLogger,
 ) -> list[Result]:
     logger.info('Running warmup task...')
-    manager.launcher._executor.submit(sum, [1, 2, 3]).result(timeout=60)
+    assert manager._default_executor is not None
+    executor = manager._executors[manager._default_executor]
+    executor.submit(sum, [1, 2, 3]).result()
 
     logger.info('Spawning %d actor(s)...', num_actors)
-    handles = [manager.launch(AerisActor()) for _ in range(num_actors)]
+    handles = [await manager.launch(AcademyActor) for _ in range(num_actors)]
     for handle in handles:
-        handle.action('noop').result(timeout=30)
+        await handle.action('noop')
 
     logger.info(
         'Samping memory over %.3f seconds...',
@@ -75,7 +77,7 @@ def run_benchmark_academy(
     results: list[Result] = []
     for _ in range(SAMPLE_COUNT):
         result = Result(
-            framework=f'Academy+{type(manager.launcher._executor).__name__}',
+            framework=f'Academy+{type(executor).__name__}',
             timestamp=time.time(),
             active_actors=num_actors,
             memory_used=get_user_memory(),
@@ -85,9 +87,8 @@ def run_benchmark_academy(
 
     logger.info('Shutting down all actors...')
     for handle in handles:
-        handle.shutdown()
-    for handle in handles:
-        manager.wait(handle.agent_id)
+        await handle.shutdown()
+    await manager.wait(handles)
     logger.info('Shutdown all actors')
     return results
 
@@ -95,7 +96,6 @@ def run_benchmark_academy(
 def run_benchmark_dask(
     client: DaskClient,
     num_actors: int,
-    result_logger: CSVResultLogger,
 ) -> list[Result]:
     logger.info('Spawning %d actor(s)...', num_actors)
     actor_futures = [
@@ -131,11 +131,10 @@ def run_benchmark_dask(
 def run_benchmark_ray(
     client: RayClient,
     num_actors: int,
-    result_logger: CSVResultLogger,
 ) -> list[Result]:
     logger.info('Spawning %d actor(s)...', num_actors)
     actor_refs = [
-        RayActor.options(
+        RayActor.options(  # type: ignore[attr-defined]
             max_concurrency=1,
             num_cpus=1,
             num_gpus=0,
@@ -173,22 +172,21 @@ def run_benchmark_ray(
     return results
 
 
-def run_benchmark(
+async def run_benchmark(
     launcher: Any,
     num_actors: int,
-    result_logger: CSVResultLogger,
 ) -> list[Result]:
     if is_academy_launcher(launcher):
-        return run_benchmark_academy(launcher, num_actors, result_logger)
+        return await run_benchmark_academy(launcher, num_actors)
     elif is_dask_launcher(launcher):
-        return run_benchmark_dask(launcher, num_actors, result_logger)
+        return run_benchmark_dask(launcher, num_actors)
     elif is_ray_launcher(launcher):
-        return run_benchmark_ray(launcher, num_actors, result_logger)
+        return run_benchmark_ray(launcher, num_actors)
     else:
         raise TypeError(f'Unsupported launcher type: {type(launcher)}.')
 
 
-def run(
+async def run(
     *,
     launcher_config: LauncherConfig[Any],
     num_actors: list[int],
@@ -206,10 +204,13 @@ def run(
             for actors in num_actors:
                 if isinstance(launcher_config, (DaskConfig, RayConfig)):
                     launcher_config.workers = actors
-                else:
+                elif isinstance(launcher_config, AcademyConfig):
                     launcher_config.workers_per_node = actors
-                with launcher_config.get_launcher() as launcher:
-                    results = run_benchmark(launcher, actors, result_logger)
+                async with launcher_config.get_launcher() as launcher:
+                    results = await run_benchmark(
+                        launcher,
+                        actors,
+                    )
                     for result in results:
                         result_logger.log(result)
     logger.info('Saved results to %s', result_logger.filepath)
@@ -218,7 +219,7 @@ def run(
     logger.info('Completed benchmark in %.3fs', timer.elapsed_s)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+async def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -248,7 +249,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     logger.info('Args: %s', vars(args))
     launcher_config = get_launcher_config_from_args(args, run_dir)
 
-    run(
+    await run(
         launcher_config=launcher_config,
         num_actors=args.num_actors,
         repeat=args.repeat,

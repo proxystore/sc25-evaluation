@@ -6,19 +6,20 @@ import os
 import sys
 from collections.abc import Sequence
 from datetime import datetime
+from typing import Any
 from typing import NamedTuple
 
-from academy.exchange.proxystore import ProxyStoreExchange
-from academy.logging import init_logging
-from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
+from academy.exchange import ProxyStoreExchangeFactory
+from academy.logging import init_logging
+from academy.manager import Manager
 from bench.argparse import add_academy_parser_group
 from bench.argparse import add_general_options
 from bench.exchange_perf.agent import Data
 from bench.exchange_perf.agent import ReplyAgent
-from bench.launcher import AerisConfig
+from bench.launcher import AcademyConfig
 from bench.results import CSVResultLogger
 
 logger = logging.getLogger(__name__)
@@ -31,15 +32,33 @@ class Result(NamedTuple):
     latency_s: float
 
 
-def run_benchmark(
-    manager: Manager,
+def test_proxystore() -> tuple[str, ...]:
+    from proxystore.endpoint.config import get_configs
+    from proxystore.utils.environment import home_dir
+
+    available_endpoints = get_configs(home_dir())
+    return tuple(endpoint.uuid for endpoint in available_endpoints)
+
+
+async def run_benchmark(
+    manager: Manager[Any],
     data_sizes: list[int],
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
+    logger.info('Running warmup task...')
+    assert manager._default_executor is not None
+    executor = manager._executors[manager._default_executor]
+    available_endpoints = executor.submit(test_proxystore).result()
+    logger.info(f'Available endpoints: {available_endpoints}')
+
     logger.info('Launching remote agent...')
-    remote = manager.launch(ReplyAgent())
-    remote.action('noop').result(timeout=60)
+    remote = await manager.launch(
+        ReplyAgent, 
+        init_logging=True, 
+        logfile="/flare/workflow_scaling/alokvk2/agents/sc25-evaluation/runs-test/{agent_id}-log.txt"
+    )
+    await remote.action('noop')
     logger.info('Remote agent is ready!')
 
     for data_size in data_sizes:
@@ -53,17 +72,22 @@ def run_benchmark(
 
         for _ in range(repeat):
             with Timer() as action_timer:
-                future = remote.action('process', data)
-                result = future.result(timeout=300)
-                assert result.len() == data.len()
+                action_result: Data = await remote.action('process', data)
+                assert action_result.len() == data.len()
 
             result = Result(
                 exchange=(
-                    type(manager.exchange.exchange).__name__
-                    if isinstance(manager.exchange, ProxyStoreExchange)
-                    else type(manager.exchange).__name__
+                    type(manager.exchange_factory.base).__name__
+                    if isinstance(
+                        manager.exchange_factory,
+                        ProxyStoreExchangeFactory,
+                    )
+                    else type(manager.exchange_factory).__name__
                 ),
-                proxystore=isinstance(manager.exchange, ProxyStoreExchange),
+                proxystore=isinstance(
+                    manager.exchange_factory,
+                    ProxyStoreExchangeFactory,
+                ),
                 data_size_bytes=data_size,
                 latency_s=action_timer.elapsed_s,
             )
@@ -73,14 +97,14 @@ def run_benchmark(
         logger.info('Completed trials in %fs', timer.elapsed_s)
 
     logger.info('Shutting down remote agent...')
-    remote.shutdown()
-    manager.wait(remote.agent_id)
+    await remote.shutdown()
+    await manager.wait((remote,))
     logger.info('Remote agent shutdown!')
 
 
-def run(
+async def run(
     *,
-    config: AerisConfig,
+    config: AcademyConfig,
     data_sizes: list[int],
     repeat: int,
     run_dir: str,
@@ -88,19 +112,19 @@ def run(
     timer = Timer().start()
     logger.info('Starting benchmark...')
 
-    with config.get_launcher() as launcher:
+    async with config.get_launcher() as launcher:
         with CSVResultLogger(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            run_benchmark(launcher, data_sizes, repeat, result_logger)
+            await run_benchmark(launcher, data_sizes, repeat, result_logger)
         logger.info('Saved results to %s', result_logger.filepath)
 
     timer.stop()
     logger.info('Completed benchmark in %.3fs', timer.elapsed_s)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+async def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -130,9 +154,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
 
     logger.info('Args: %s', vars(args))
-    config = AerisConfig.from_args(vars(args), run_dir)
+    config = AcademyConfig.from_args(vars(args), run_dir)
 
-    run(
+    await run(
         config=config,
         data_sizes=[readable_to_bytes(x) for x in args.data_sizes],
         repeat=args.repeat,

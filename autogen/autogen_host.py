@@ -5,7 +5,7 @@ import logging
 
 from autogen_ext.runtimes.grpc import GrpcWorkerAgentRuntimeHost
 
-from aeris.logging import init_logging
+from academy.logging import init_logging
 
 logger = logging.getLogger('main')
 

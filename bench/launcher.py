@@ -7,10 +7,12 @@ import logging
 import multiprocessing
 import os
 import sys
+import uuid
+from concurrent.futures import Executor
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any
-from typing import Generator
+from typing import AsyncGenerator
 from typing import Protocol
 from typing import runtime_checkable
 from typing import TypeVar
@@ -26,18 +28,21 @@ else:
     from typing_extensions import TypeIs
 
 import ray
-from academy.exchange.hybrid import HybridExchange
-from academy.exchange.proxystore import ProxyStoreExchange
-from academy.exchange.redis import RedisExchange
-from academy.launcher.executor import ExecutorLauncher
-from academy.manager import Manager
 from dask.distributed import Client as DaskClient
 from globus_compute_sdk import Executor as GCExecutor
+from globus_compute_sdk.sdk.executor import _ResultWatcher
 from parsl.concurrent import ParslPoolExecutor
 from proxystore.connectors.endpoint import EndpointConnector
 from proxystore.store import Store
 from proxystore.store.executor import ProxyAlways
 
+from academy.exchange import ExchangeFactory
+from academy.exchange import GlobusExchangeFactory
+from academy.exchange import HttpExchangeFactory
+from academy.exchange import HybridExchangeFactory
+from academy.exchange import ProxyStoreExchangeFactory
+from academy.exchange import RedisExchangeFactory
+from academy.manager import Manager
 from bench.parsl import PARSL_CONFIGS
 
 logger = logging.getLogger(__name__)
@@ -52,11 +57,15 @@ class LauncherConfig(Protocol[LauncherT_co]):
     @classmethod
     def from_args(cls, args: dict[str, Any], run_dir: str) -> Self: ...
 
-    @contextlib.contextmanager
-    def get_launcher(self) -> Generator[LauncherT_co]: ...
+    def get_launcher(
+        self,
+    ) -> contextlib._AsyncGeneratorContextManager[
+        LauncherT_co,
+        None,
+    ]: ...
 
 
-class AerisConfig:
+class AcademyConfig:
     def __init__(
         self,
         *,
@@ -66,6 +75,8 @@ class AerisConfig:
         redis_port: int,
         run_dir: str,
         workers_per_node: int,
+        url: str | None = None,
+        project_id: uuid.UUID | None = None,
         interface: str | None = None,
         gc_endpoint: str | None = None,
         ps_endpoints: list[str] | None = None,
@@ -78,6 +89,8 @@ class AerisConfig:
         self.redis_port = redis_port
         self.workers_per_node = workers_per_node
         self.interface = interface
+        self.url = url
+        self.project_id = project_id
         self.gc_endpoint = gc_endpoint
         self.ps_endpoints = ps_endpoints
 
@@ -94,13 +107,16 @@ class AerisConfig:
             redis_port=args['redis_port'],
             run_dir=run_dir,
             workers_per_node=args['workers_per_node'],
+            url=args['url'],
+            project_id=args['project_id'],
             interface=args['interface'],
             gc_endpoint=args['gc_endpoint'],
             ps_endpoints=args['ps_endpoints'],
         )
 
-    @contextlib.contextmanager
-    def get_launcher(self) -> Generator[Manager]:
+    @contextlib.asynccontextmanager
+    async def get_launcher(self) -> AsyncGenerator[Manager[Any]]:
+        executor: Executor
         if self.executor == 'process-pool':
             mp_context = multiprocessing.get_context('spawn')
             executor = ProcessPoolExecutor(
@@ -124,14 +140,21 @@ class AerisConfig:
                 ) from e
             executor = ParslPoolExecutor(config)
 
+        exchange: ExchangeFactory[Any]
         if self.exchange == 'redis':
-            exchange = RedisExchange(self.redis_host, self.redis_port)
+            exchange = RedisExchangeFactory(self.redis_host, self.redis_port)
         elif self.exchange == 'hybrid':
-            exchange = HybridExchange(
+            exchange = HybridExchangeFactory(
                 self.redis_host,
                 self.redis_port,
                 interface=self.interface,
             )
+        elif self.exchange == 'cloud':
+            assert self.url is not None
+            exchange = HttpExchangeFactory(self.url, auth_method='globus')
+        elif self.exchange == 'globus':
+            assert self.project_id is not None
+            exchange = GlobusExchangeFactory(project_id=self.project_id)
         else:
             raise ValueError(f'Unsupported exchange type "{self.exchange}".')
 
@@ -145,19 +168,16 @@ class AerisConfig:
                 cache_size=0,
                 register=True,
             )
-            exchange = ProxyStoreExchange(
+            exchange = ProxyStoreExchangeFactory(
                 exchange,
                 store,
                 should_proxy=ProxyAlways(),
                 resolve_async=False,
             )
 
-        with Manager(
-            exchange=exchange,
-            launcher=ExecutorLauncher(
-                executor,
-                close_exchange=self.exchange != 'thread-pool',
-            ),
+        async with await Manager.from_exchange_factory(
+            factory=exchange,
+            executors=executor,
         ) as manager:
             yield manager
 
@@ -187,8 +207,8 @@ class DaskConfig:
             workers=args['workers_per_node'],
         )
 
-    @contextlib.contextmanager
-    def get_launcher(self) -> Generator[DaskClient]:
+    @contextlib.asynccontextmanager
+    async def get_launcher(self) -> AsyncGenerator[DaskClient]:
         if self.scheduler is not None:
             try:
                 # See if the scheduler is a filepath
@@ -259,8 +279,8 @@ class RayConfig:
             workers=args['workers_per_node'],
         )
 
-    @contextlib.contextmanager
-    def get_launcher(self) -> Generator[RayClient]:
+    @contextlib.asynccontextmanager
+    async def get_launcher(self) -> AsyncGenerator[RayClient]:
         ray.init(
             address=self.address,
             # configure_logging=False,
@@ -277,6 +297,39 @@ class RayConfig:
             ray.shutdown()
 
 
+class GlobusComputeConfig:
+    def __init__(
+        self,
+        *,
+        endpoint_id: str,
+    ) -> None:
+        self.name = 'globus_compute'
+        self.endpoint_id = endpoint_id
+
+    @classmethod
+    def from_args(cls, args: dict[str, Any], run_dir: str) -> Self:
+        endpoint_id = args['endpoint_id']
+        return cls(endpoint_id=endpoint_id)
+
+    @contextlib.asynccontextmanager
+    async def get_launcher(self) -> AsyncGenerator[GCExecutor]:
+        executor = GCExecutor(
+            self.endpoint_id,
+            batch_size=1,
+            api_burst_limit=8,  # Max value allowed
+            api_burst_window_s=1,
+        )
+        _ResultWatcher(
+            task_group_id=executor.task_group_id,
+            client=executor.client,
+            poll_period_s=0.05,
+        )
+        try:
+            yield executor
+        finally:
+            executor.shutdown()
+
+
 def get_launcher_config_from_args(
     args: argparse.Namespace,
     run_dir: str,
@@ -284,16 +337,18 @@ def get_launcher_config_from_args(
     options = vars(args)
     name = options['launcher']
     if name == 'academy':
-        return AerisConfig.from_args(options, run_dir)
+        return AcademyConfig.from_args(options, run_dir)
     elif name == 'dask':
         return DaskConfig.from_args(options, run_dir)
     elif name == 'ray':
         return RayConfig.from_args(options, run_dir)
+    elif name == 'gc':
+        return GlobusComputeConfig.from_args(options, run_dir)
     else:
         raise TypeError(f'Launcher type "{name}" is not supported.')
 
 
-def is_academy_launcher(launcher: Any) -> TypeIs[Manager]:
+def is_academy_launcher(launcher: Any) -> TypeIs[Manager[Any]]:
     return isinstance(launcher, Manager)
 
 
@@ -303,3 +358,7 @@ def is_dask_launcher(launcher: Any) -> TypeIs[DaskClient]:
 
 def is_ray_launcher(launcher: Any) -> TypeIs[RayClient]:
     return isinstance(launcher, RayClient)
+
+
+def is_gc_launcher(launcher: Any) -> TypeIs[GCExecutor]:
+    return isinstance(launcher, GCExecutor)

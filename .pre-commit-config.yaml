@@ -41,3 +41,4 @@ repos:
         additional_dependencies:
           - academy-py
           - dask
+          - proxystore>=0.8.0

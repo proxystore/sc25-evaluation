@@ -34,6 +34,7 @@ def get_htex_aurora_cpu_config(
 ) -> Config:
     # Get the number of nodes:
     node_file = os.getenv('PBS_NODEFILE')
+    assert node_file is not None, 'PBS_NODEFILE must be set'
     with open(node_file, 'r') as f:
         node_list = f.readlines()
         num_nodes = len(node_list)

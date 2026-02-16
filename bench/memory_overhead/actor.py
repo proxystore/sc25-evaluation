@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import ray
-from academy.behavior import action
-from academy.behavior import Behavior
+
+from academy.agent import action
+from academy.agent import Agent
 
 
-class AerisActor(Behavior):
+class AcademyActor(Agent):
     @action
-    def noop(self) -> None:
+    async def noop(self) -> None:
         return None
 
 

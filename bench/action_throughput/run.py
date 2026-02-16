@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import contextlib
 import logging
 import os
@@ -8,19 +9,17 @@ import sys
 import time
 from collections.abc import Sequence
 from concurrent.futures import FIRST_EXCEPTION
-from concurrent.futures import Future
-from concurrent.futures import wait
 from datetime import datetime
 from typing import Any
 from typing import NamedTuple
 
 import ray
-from academy.logging import init_logging
-from academy.manager import Manager
 from dask.distributed import wait as dask_wait
 from proxystore.utils.timer import Timer
 
-from bench.action_throughput.actor import AerisActor
+from academy.logging import init_logging
+from academy.manager import Manager
+from bench.action_throughput.actor import AcademyActor
 from bench.action_throughput.actor import DaskActor
 from bench.action_throughput.actor import RayActor
 from bench.argparse import add_general_options
@@ -40,23 +39,25 @@ logger = logging.getLogger(__name__)
 class Result(NamedTuple):
     framework: str
     actions_per_actor: int
-    action_sleep: int
+    action_sleep: float
     num_nodes: int
     num_workers_per_node: int
     num_actors: int
     runtime: float
 
 
-def run_benchmark_academy(
+async def run_benchmark_academy(
     num_actors: int,
     actions_per_actor: int,
-    action_sleep: int,
+    action_sleep: float,
     repeat: int,
-    manager: Manager,
+    manager: Manager[Any],
 ) -> list[float]:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
-        handles = [manager.launch(AerisActor()) for _ in range(num_actors)]
+        handles = [
+            await manager.launch(AcademyActor) for _ in range(num_actors)
+        ]
     logger.info('Submitted actors in %.3fs', submit_timer.elapsed_s)
 
     logger.warning('Waiting 12 seconds...')
@@ -64,32 +65,37 @@ def run_benchmark_academy(
 
     logger.info('Pinging all actors...')
     with Timer() as ping_timer:
-        ops = [handle.action('noop') for handle in handles]
-        for op in ops:
-            op.result(timeout=60)
+        ops: list[asyncio.Task[None]] = [
+            asyncio.create_task(handle.action('noop')) for handle in handles
+        ]
+        _, pending = await asyncio.wait(ops)
+        assert len(pending) == 0
     logger.info('Pinged all actors in %.3fs', ping_timer.elapsed_s)
 
     runtimes: list[float] = []
     for i in range(repeat):
         logger.info('Submitting bag of tasks %d/%d...', i + 1, repeat)
-        futures: Future[None] = []
+        futures: list[asyncio.Task[None]] = []
         with Timer() as bag_timer:
             for _ in range(actions_per_actor):
                 for handle in handles:
-                    futures.append(handle.action('noop', action_sleep))
-            wait(futures, return_when=FIRST_EXCEPTION)
+                    futures.append(
+                        asyncio.create_task(
+                            handle.action('noop', action_sleep),
+                        ),
+                    )
+            await asyncio.wait(futures, return_when=FIRST_EXCEPTION)
             for future in futures:
                 if future.exception() is not None:
-                    raise future.exception()
+                    raise future.exception()  # type: ignore
         logger.info('Finished bag of tasks in %.3fs', bag_timer.elapsed_s)
         runtimes.append(bag_timer.elapsed_s)
 
     logger.info('Shutting down all actors...')
     with Timer() as shutdown_timer:
         for handle in handles:
-            handle.shutdown()
-        for handle in handles:
-            manager.wait(handle.agent_id)
+            await handle.shutdown()
+        await manager.wait(handles)
     logger.info('Shutdown all actors in %.3fs', shutdown_timer.elapsed_s)
 
     return runtimes
@@ -98,7 +104,7 @@ def run_benchmark_academy(
 def run_benchmark_dask(
     num_actors: int,
     actions_per_actor: int,
-    action_sleep: int,
+    action_sleep: float,
     repeat: int,
     client: DaskClient,
 ) -> list[float]:
@@ -144,15 +150,15 @@ def run_benchmark_dask(
 def run_benchmark_ray(
     num_actors: int,
     actions_per_actor: int,
-    action_sleep: int,
+    action_sleep: float,
     repeat: int,
     client: RayClient,
 ) -> list[float]:
     logger.info('Submitting %d actors...', num_actors)
     with Timer() as submit_timer:
         handles = [
-            RayActor.options(max_concurrency=1).remote()
-            for _ in range(num_actors)  # type: ignore[attr-defined]
+            RayActor.options(max_concurrency=1).remote()  # type: ignore[attr-defined]
+            for _ in range(num_actors)
         ]
     logger.info('Submitted actors in %.3fs', submit_timer.elapsed_s)
 
@@ -188,15 +194,15 @@ def run_benchmark_ray(
     return runtimes
 
 
-def run_benchmark(
+async def run_benchmark(
     num_actors: int,
     actions_per_actor: int,
-    action_sleep: int,
+    action_sleep: float,
     repeat: int,
     launcher: Any,
 ) -> list[float]:
     if is_academy_launcher(launcher):
-        return run_benchmark_academy(
+        return await run_benchmark_academy(
             num_actors,
             actions_per_actor,
             action_sleep,
@@ -223,7 +229,7 @@ def run_benchmark(
         raise TypeError(f'Unsupported launcher type: {type(launcher)}.')
 
 
-def run(
+async def run(
     *,
     launcher_config: LauncherConfig[Any],
     actions_per_actor: int,
@@ -238,10 +244,12 @@ def run(
 
     num_actors = num_nodes * num_workers_per_node
 
-    with launcher_config.get_launcher() as launcher:
+    async with launcher_config.get_launcher() as launcher:
         logger.info('Running warmup task on launcher...')
         if is_academy_launcher(launcher):
-            launcher.launcher._executor.submit(sum, [1, 2, 3]).result()
+            assert launcher._default_executor is not None
+            executor = launcher._executors[launcher._default_executor]
+            executor.submit(sum, [1, 2, 3]).result()
         elif is_dask_launcher(launcher):
             launcher.submit(sum, [1, 2, 3]).result()
         elif is_ray_launcher(launcher):
@@ -255,7 +263,7 @@ def run(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            runtimes = run_benchmark(
+            runtimes = await run_benchmark(
                 num_actors,
                 actions_per_actor,
                 action_sleep,
@@ -279,7 +287,7 @@ def run(
     logger.info('Completed benchmark in %.3fs', timer.elapsed_s)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+async def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -315,7 +323,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     logger.info('Args: %s', vars(args))
     launcher_config = get_launcher_config_from_args(args, run_dir)
 
-    run(
+    await run(
         launcher_config=launcher_config,
         actions_per_actor=args.actions_per_actor,
         action_sleep=args.action_sleep,

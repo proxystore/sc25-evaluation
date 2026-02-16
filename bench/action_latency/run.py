@@ -11,13 +11,13 @@ from typing import Any
 from typing import NamedTuple
 
 import ray
-from academy.logging import init_logging
-from academy.manager import Manager
 from proxystore.utils.data import readable_to_bytes
 from proxystore.utils.timer import Timer
 
-from bench.action_latency.actor import AerisReplyActor
-from bench.action_latency.actor import AerisRequestActor
+from academy.logging import init_logging
+from academy.manager import Manager
+from bench.action_latency.actor import AcademyReplyActor
+from bench.action_latency.actor import AcademyRequestActor
 from bench.action_latency.actor import DaskReplyActor
 from bench.action_latency.actor import DaskRequestActor
 from bench.action_latency.actor import RayReplyActor
@@ -44,23 +44,28 @@ class Result(NamedTuple):
     stdev_latency_s: float
 
 
-def run_benchmark_academy(
-    manager: Manager,
+async def run_benchmark_academy(
+    manager: Manager[Any],
     data_sizes: list[int],
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
     logger.info('Running warmup task...')
-    manager.launcher._executor.submit(sum, [1, 2, 3]).result(timeout=60)
+    assert manager._default_executor is not None
+    executor = manager._executors[manager._default_executor]
+    executor.submit(sum, [1, 2, 3]).result()
     logger.info('Starting actors...')
-    reply_handle = manager.launch(AerisReplyActor())
-    request_handle = manager.launch(AerisRequestActor(reply_handle))
+    reply_handle = await manager.launch(AcademyReplyActor)
+    request_handle = await manager.launch(
+        AcademyRequestActor,
+        args=(reply_handle,),
+    )
     import time
 
     logger.warning('Waiting 5 seconds...')
     time.sleep(30)
-    reply_handle.action('noop').result(timeout=30)
-    request_handle.action('noop').result(timeout=30)
+    await reply_handle.action('noop')
+    await request_handle.action('noop')
     logger.info('Started actors')
 
     for data_size in data_sizes:
@@ -70,14 +75,15 @@ def run_benchmark_academy(
             repeat,
         )
         with Timer() as timer:
-            future = request_handle.action(
+            mean: float
+            std: float
+            mean, std = await request_handle.action(  # type: ignore
                 'run',
                 size=data_size,
                 trials=repeat,
             )
-            mean, std = future.result()
         result = Result(
-            framework=f'Academy[{type(manager.exchange).__name__}]',
+            framework=f'Academy[{type(manager.exchange_factory).__name__}]',
             trials=repeat,
             data_size_bytes=data_size,
             mean_latency_s=mean,
@@ -87,10 +93,9 @@ def run_benchmark_academy(
         logger.info('Completed in %fs: %s', timer.elapsed_s, result)
 
     logger.info('Shutting down all actors...')
-    request_handle.shutdown()
-    reply_handle.shutdown()
-    manager.wait(request_handle.agent_id)
-    manager.wait(reply_handle.agent_id)
+    await request_handle.shutdown()
+    await reply_handle.shutdown()
+    await manager.wait((request_handle, reply_handle))
     logger.info('Shutdown all actors')
 
 
@@ -98,7 +103,7 @@ def run_benchmark_dask(
     client: DaskClient,
     data_sizes: list[int],
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
     logger.info('Starting actors...')
     reply_future = client.submit(DaskReplyActor, actor=True)
@@ -140,11 +145,11 @@ def run_benchmark_ray(
     client: RayClient,
     data_sizes: list[int],
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
     logger.info('Starting actors...')
-    reply_actor = RayReplyActor.remote()
-    request_actor = RayRequestActor.remote(reply_actor)
+    reply_actor = RayReplyActor.remote()  # type: ignore[attr-defined]
+    request_actor = RayRequestActor.remote(reply_actor)  # type: ignore[attr-defined]
     client.get(reply_actor.noop.remote(), timeout=30)
     client.get(request_actor.noop.remote(), timeout=30)
     logger.info('Started actors')
@@ -175,14 +180,14 @@ def run_benchmark_ray(
     logger.info('Shutdown all actors')
 
 
-def run_benchmark(
+async def run_benchmark(
     launcher: Any,
     data_sizes: list[int],
     repeat: int,
-    result_logger: CSVResultLogger,
+    result_logger: CSVResultLogger[Result],
 ) -> None:
     if is_academy_launcher(launcher):
-        return run_benchmark_academy(
+        return await run_benchmark_academy(
             launcher,
             data_sizes,
             repeat,
@@ -196,7 +201,7 @@ def run_benchmark(
         raise TypeError(f'Unsupported launcher type: {type(launcher)}.')
 
 
-def run(
+async def run(
     *,
     launcher_config: LauncherConfig[Any],
     data_sizes: list[int],
@@ -206,19 +211,19 @@ def run(
     timer = Timer().start()
     logger.info('Starting benchmark...')
 
-    with launcher_config.get_launcher() as launcher:
+    async with launcher_config.get_launcher() as launcher:
         with CSVResultLogger(
             os.path.join(run_dir, 'results.csv'),
             Result,
         ) as result_logger:
-            run_benchmark(launcher, data_sizes, repeat, result_logger)
+            await run_benchmark(launcher, data_sizes, repeat, result_logger)
         logger.info('Saved results to %s', result_logger.filepath)
 
     timer.stop()
     logger.info('Completed benchmark in %.3fs', timer.elapsed_s)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+async def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -248,7 +253,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     logger.info('Args: %s', vars(args))
     launcher_config = get_launcher_config_from_args(args, run_dir)
 
-    run(
+    await run(
         launcher_config=launcher_config,
         data_sizes=[readable_to_bytes(x) for x in args.data_sizes],
         repeat=args.repeat,
