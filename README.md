@@ -1,6 +1,6 @@
-# SC25 Academy Evaluation
+# IPDPS26 Academy Evaluation
 
-Benchmarks and evaluation code for the SC25 submission on [Academy](https://github.com/proxystore/academy).
+Benchmarks and evaluation code for the IPDPS25 submission on [Academy](https://github.com/proxystore/academy).
 
 ## Installation
 
